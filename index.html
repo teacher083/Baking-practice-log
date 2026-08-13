@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>제과·제빵 AI 실습코치 | 범용 실습일지</title>
+<style>
+:root{
+  --bg:#fff8f7; --bg2:#fffdfc; --card:#ffffff; --ink:#2f2726; --muted:#7c6f6c;
+  --accent:#b51f3f; --accent2:#7e1430; --soft:#fde9ee; --line:#ead9dd;
+  --ok:#1f7a53; --warn:#a26a00; --danger:#b42318;
+  --shadow:0 14px 35px rgba(92,44,55,.10);
+}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(180deg,var(--bg),var(--bg2));font-family:Arial,"Noto Sans KR",sans-serif;color:var(--ink)}
+.wrap{max-width:980px;margin:auto;padding:18px}
+header{display:flex;gap:14px;align-items:center;margin-bottom:16px}
+.logo{width:58px;height:58px;border-radius:18px;background:var(--accent);display:grid;place-items:center;color:#fff;font-size:30px;box-shadow:var(--shadow)}
+h1{font-size:23px;margin:0 0 4px}.sub{color:var(--muted);font-size:14px}
+.badges{display:flex;flex-wrap:wrap;gap:7px;margin-top:8px}
+.badge{font-size:12px;padding:6px 9px;border-radius:999px;background:var(--soft);color:var(--accent2);border:1px solid color-mix(in srgb, var(--accent) 20%, white)}
+.themeHint{margin-top:10px;font-size:12px;color:var(--accent2);background:var(--soft);border:1px dashed color-mix(in srgb, var(--accent) 28%, white);padding:7px 10px;border-radius:12px;display:inline-block}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:var(--shadow)}
+.card h2{font-size:17px;margin:0 0 14px}.card h3{font-size:14px;margin:16px 0 8px}
+.full{grid-column:1/-1}
+label{display:block;font-size:13px;font-weight:700;margin:11px 0 6px}
+input,textarea,select{width:100%;border:1px solid #dccdd1;border-radius:12px;padding:11px 12px;font-size:14px;background:#fff;color:var(--ink);outline:none}
+input:focus,textarea:focus,select:focus{border-color:#cc7185;box-shadow:0 0 0 3px rgba(181,31,63,.08)}
+textarea{min-height:90px;resize:vertical}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+button{border:0;border-radius:12px;padding:11px 14px;font-weight:800;cursor:pointer}
+.primary{background:var(--accent);color:#fff}.secondary{background:#f5ecee;color:var(--accent2)}
+.ghost{background:#fff;border:1px solid var(--line);color:var(--ink)}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.photoBox{border:2px dashed color-mix(in srgb, var(--accent) 26%, white);border-radius:16px;padding:14px;text-align:center;background:color-mix(in srgb, var(--soft) 45%, white)}
+.photoBox input{border:0;padding:5px;background:transparent}
+#preview{display:none;max-width:100%;max-height:330px;margin:12px auto 0;border-radius:14px;border:1px solid var(--line)}
+.note{font-size:12px;color:var(--muted);line-height:1.55;margin-top:8px}
+.coach{background:linear-gradient(135deg,color-mix(in srgb, var(--soft) 55%, white),#fff);border:1px solid color-mix(in srgb, var(--accent) 20%, white);border-radius:18px;padding:16px}
+.coachHead{display:flex;gap:10px;align-items:center;margin-bottom:10px}
+.avatar{width:42px;height:42px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-size:21px}
+.chat{padding:11px 13px;background:#fff;border:1px solid var(--line);border-radius:14px;margin:8px 0;line-height:1.6;font-size:14px}
+.chat strong{color:var(--accent2)}
+.metric{display:grid;grid-template-columns:120px 1fr 44px;align-items:center;gap:8px;margin:9px 0}
+.bar{height:10px;background:#f2e8ea;border-radius:99px;overflow:hidden}.fill{height:100%;background:var(--accent);border-radius:99px}
+.checks{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.check{display:flex;align-items:center;gap:8px;padding:10px;border:1px solid var(--line);border-radius:12px;background:#fff}
+.check input{width:auto}
+.mission{border-left:5px solid var(--accent);background:#fff4f6;padding:13px;border-radius:12px;margin-top:12px}
+.small{font-size:12px;color:var(--muted)}
+.saved{font-size:13px;color:var(--ok);font-weight:700;display:none;margin-top:8px}
+.footer{font-size:12px;color:var(--muted);text-align:center;padding:18px 4px}
+.gradeWrap{margin-top:16px;padding:16px;border:2px solid color-mix(in srgb, var(--accent) 28%, white);border-radius:18px;background:color-mix(in srgb, var(--soft) 35%, white);text-align:center}
+.gradeStamp{width:92px;height:92px;margin:8px auto;border:5px solid #d81e3f;border-radius:50%;display:grid;place-items:center;color:#d81e3f;font-size:52px;font-weight:900;line-height:1;transform:rotate(-7deg);box-shadow:inset 0 0 0 3px rgba(216,30,63,.12)}
+.gradeTitle{font-size:15px;font-weight:900;color:#7e1430}.gradeReason{font-size:13px;line-height:1.6;color:var(--ink);margin-top:8px}.gradeMeta{font-size:12px;color:var(--muted);margin-top:6px}.gradePolicy{font-size:11px;color:var(--muted);line-height:1.55;margin-top:10px;padding-top:9px;border-top:1px dashed #e5c7ce}
+hr{border:0;border-top:1px solid var(--line);margin:16px 0}
+@media(max-width:760px){.grid,.row{grid-template-columns:1fr}.full{grid-column:auto}.metric{grid-template-columns:95px 1fr 38px}.checks{grid-template-columns:1fr}}
+
+
+/* ===== 제출용 A4 1장 보기 ===== */
+#submitView{display:none;position:fixed;inset:0;z-index:9999;background:#eef1f4;overflow:auto;padding:24px 12px}
+.submitToolbar{max-width:210mm;margin:0 auto 12px;display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap}
+.submitToolbar button{box-shadow:0 4px 14px rgba(0,0,0,.08)}
+.a4Page{width:210mm;min-height:297mm;margin:0 auto;background:#fff;padding:12mm 13mm;box-shadow:0 10px 32px rgba(0,0,0,.14);font-family:Arial,"Noto Sans KR",sans-serif;color:#242020;position:relative}
+.a4Header{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:start;border-bottom:3px solid var(--accent);padding-bottom:7px;margin-bottom:8px}
+.a4Title{font-size:21px;font-weight:900;margin:0 0 4px;color:var(--accent2)}
+.a4Sub{font-size:11px;color:#686060;line-height:1.4}
+.a4Grade{width:58px;height:58px;border:4px solid #d81e3f;border-radius:50%;display:grid;place-items:center;color:#d81e3f;font-size:30px;font-weight:1000;transform:rotate(-7deg)}
+.a4Meta{display:grid;grid-template-columns:1.3fr .9fr .9fr;gap:6px;margin-bottom:8px}
+.a4MetaItem{border:1px solid #ddd;border-radius:8px;padding:6px 8px;background:#fafafa}
+.a4MetaItem b{display:block;font-size:9px;color:#777;margin-bottom:2px}.a4MetaItem span{font-size:12px;font-weight:800}
+.a4Top{display:grid;grid-template-columns:1.12fr .88fr;gap:8px;margin-bottom:8px}
+.a4Photo{border:1px solid #ddd;border-radius:9px;min-height:118px;background:#fafafa;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.a4Photo img{width:100%;height:150px;object-fit:cover;display:block}
+.a4NoPhoto{font-size:11px;color:#999}
+.a4Box{border:1px solid #ddd;border-radius:9px;padding:7px 8px;margin-bottom:6px;break-inside:avoid}
+.a4Box h3{margin:0 0 4px;font-size:11px;color:var(--accent2)}
+.a4Box p{margin:0;font-size:10.5px;line-height:1.38;white-space:pre-wrap;word-break:break-word}
+.a4CompactGrid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.a4Reflect{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:8px}
+.a4Reflect .a4Box{margin-bottom:0;min-height:86px}
+.a4Coach{border:1.5px solid color-mix(in srgb,var(--accent) 35%,#ddd);background:color-mix(in srgb,var(--soft) 45%,white);border-radius:10px;padding:8px}
+.a4Coach h3{margin:0 0 5px;color:var(--accent2);font-size:11px}
+.a4Coach p{margin:0;font-size:10px;line-height:1.35}
+.a4Footer{position:absolute;left:13mm;right:13mm;bottom:8mm;border-top:1px solid #ddd;padding-top:4px;display:flex;justify-content:space-between;font-size:8.5px;color:#777}
+.a4Status{color:#d81e3f;font-weight:900}
+@media(max-width:900px){#submitView{padding:8px}.a4Page{width:100%;min-height:auto;padding:14px}.submitToolbar{max-width:none}.a4Footer{position:static;margin-top:10px}.a4Meta{grid-template-columns:1fr 1fr}.a4Top,.a4Reflect{grid-template-columns:1fr}.a4Photo img{height:210px}}
+@media print{
+  @page{size:A4 portrait;margin:0}
+  body>*:not(#submitView){display:none!important}
+  #submitView{display:block!important;position:static;background:#fff;padding:0;overflow:visible}
+  .submitToolbar{display:none!important}
+  .a4Page{width:210mm;height:297mm;min-height:297mm;margin:0;box-shadow:none;padding:10mm 12mm;overflow:hidden}
+  .a4Footer{left:12mm;right:12mm;bottom:7mm}
+}
+
+
+.integrityBox{margin-top:12px;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:color-mix(in srgb,var(--soft) 35%,white);font-size:13px;line-height:1.55}
+.integrityBox b{color:var(--accent2)}
+.integrityGood{color:#1f7a53;font-weight:800}.integrityWarn{color:#a26a00;font-weight:800}.integrityBad{color:#b42318;font-weight:800}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="logo" id="logo">🥐</div>
+  <div>
+    <h1>제과·제빵 AI 실습코치</h1>
+    <div class="sub">제과·제빵·디저트 등 다양한 실습에 사용할 수 있는 코칭형 AI 실습일지</div>
+    <div class="badges">
+      <span class="badge">범용 실습일지</span><span class="badge">규칙 기반 코칭</span><span class="badge">학급 공통 저장</span><span class="badge" id="classBadge">학급 확인 중</span><span class="badge" id="themeBadge">이번 달 테마</span>
+    </div>
+    <div class="themeHint" id="themeHint">이번 달 디저트 테마를 불러오는 중입니다.</div>
+  </div>
+</header>
+
+<div class="grid">
+  <section class="card">
+    <h2>① 오늘의 실습</h2>
+    <label>실습 분야</label>
+    <select id="category" onchange="updateProducts()">
+      <option value="pastry">제과기능사 20품목</option>
+      <option value="bread">제빵기능사 20품목</option>
+      <option value="custom">기타 실습 · 직접 입력</option>
+    </select>
+
+    <label>실습 품목</label>
+    <select id="product" onchange="toggleCustomProduct()"></select>
+    <input id="customProduct" placeholder="목록에 없는 실습 품목을 직접 입력하세요. 예: 동백 마들렌, 티라미수, 부산 시그니처 디저트" style="display:none;margin-top:8px">
+    <div class="note">제과·제빵기능사 품목은 목록에서 선택하고, 교과서·학교 자체 실습·창작 제품은 직접 입력할 수 있습니다.</div>
+
+    <label>실습일</label>
+    <input id="date" type="date">
+    <div class="note">실습일지가 곧 제출기한입니다. 코칭을 받은 날짜가 실습일과 같으면 당일 제출로 자동 인정됩니다.</div>
+
+    <label>오늘의 목표</label>
+    <input id="goal" value="제품의 표준 공정을 지키고 완제품의 형태·색·굽기 상태를 스스로 평가한다.">
+
+    <label>표준 배합/공정 메모</label>
+    <textarea id="process" placeholder="예: 버터 120g / 달걀 100g / 170℃ 13분 ..."></textarea>
+  </section>
+
+  <section class="card">
+    <h2>② 완제품 사진</h2>
+    <div class="photoBox">
+      <strong>📷 완제품 사진을 올려 주세요</strong>
+      <div class="note">정면 또는 45° 각도에서 제품 전체가 보이도록 촬영하세요.</div>
+      <input id="photo" type="file" accept="image/*" capture="environment">
+      <img id="preview" alt="업로드 미리보기">
+    </div>
+    <div class="note">※ 현재 버전에서는 사진을 <b>미리보기만</b> 합니다. 실제 형태·색상·균열·굽기 상태 분석은 추후 이미지 분석 API를 연결하면 작동하도록 설계되어 있습니다.</div>
+  </section>
+
+  <section class="card">
+    <h2>③ 과정 기록</h2>
+    <div class="row">
+      <div><label>실제 오븐 온도(℃)</label><input id="temp" type="number" placeholder="170"></div>
+      <div><label>실제 굽기 시간(분)</label><input id="time" type="number" placeholder="13"></div>
+    </div>
+    <label>실습 중 달라진 점</label>
+    <textarea id="change" placeholder="예: 반죽 휴지시간이 15분 부족했다. 팬에 반죽을 조금 많이 담았다."></textarea>
+
+    <label>가장 어려웠던 점</label>
+    <textarea id="difficulty" placeholder="예: 반죽 농도를 판단하기 어려웠다."></textarea>
+  </section>
+
+  <section class="card">
+    <h2>④ 학생 자기평가</h2>
+
+    <label>오늘 제품 만족도</label>
+    <input id="score" type="range" min="1" max="5" value="3" oninput="scoreText.textContent=this.value+' / 5'">
+    <div id="scoreText" class="small">3 / 5</div>
+
+    <label>오늘의 잘한 점</label>
+    <textarea id="strength" placeholder="오늘 실습에서 내가 잘했다고 생각하는 점을 구체적으로 적어 보세요. 예: 반죽 온도를 확인하며 작업하여 지난 실습보다 상태가 안정적이었다."></textarea>
+
+    <label>반성할 점</label>
+    <textarea id="reflection" placeholder="실습 과정이나 완제품에서 아쉬웠던 점과 그 이유를 생각하여 적어 보세요."></textarea>
+
+    <label>보완할 점</label>
+    <textarea id="improvement" placeholder="다음 실습에서 무엇을 어떻게 바꿀 것인지 구체적인 행동으로 적어 보세요."></textarea>
+  </section>
+
+  <section class="card full">
+    <h2>⑤ AI 실습코치</h2>
+    <div class="coach">
+      <div class="coachHead"><div class="avatar">👩‍🍳</div><div><strong>제과·제빵 AI 실습코치</strong><div class="small">정답을 대신 주기보다 원인을 찾고 다음 행동을 제안합니다.</div></div></div>
+      <div id="coachIntro" class="chat">실습기록과 자기평가를 작성한 뒤 <strong>「코칭 받기」</strong>를 눌러 주세요.</div>
+
+      <div id="analysisArea" style="display:none">
+        <h3>코칭 결과</h3>
+        <div id="good" class="chat"></div>
+        <div id="cause" class="chat"></div>
+        <div id="fix" class="chat"></div>
+        <div id="question" class="chat"></div>
+
+        <h3>자기평가 기반 품질 점검</h3>
+        <div class="metric"><span>공정 기록</span><div class="bar"><div id="m1" class="fill" style="width:0%"></div></div><b id="m1t">0</b></div>
+        <div class="metric"><span>원인 추론</span><div class="bar"><div id="m2" class="fill" style="width:0%"></div></div><b id="m2t">0</b></div>
+        <div class="metric"><span>성찰 기록</span><div class="bar"><div id="m3" class="fill" style="width:0%"></div></div><b id="m3t">0</b></div>
+
+        <div id="mission" class="mission"></div>
+
+        <div id="gradeArea" class="gradeWrap" style="display:none">
+          <div class="gradeTitle">실습일지 자동 평가</div>
+          <div id="gradeStamp" class="gradeStamp">A</div>
+          <div id="gradeReason" class="gradeReason"></div>
+          <div id="gradeMeta" class="gradeMeta"></div>
+          <div id="integrityBox" class="integrityBox">작성 진정성 분석은 코칭 후 자동 표시됩니다.</div>
+          <div class="gradePolicy">A는 실습일 당일 제출자 중 기록과 자기성찰이 매우 충실한 학생을 대상으로 합니다. 평균 20명 학급 기준 최대 4명(20%)까지 최종 확정합니다. F는 사실상 미작성 수준에만 적용하며 평균 20명 기준 최대 2명(10%) 이내이고, 해당 학생이 없으면 부여하지 않습니다.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="primary" onclick="coach()">✨ 코칭 받기</button>
+      <button class="secondary" onclick="showSubmitView()">📄 제출하기</button>
+      <button class="ghost" onclick="saveLog()">💾 임시 저장</button>
+      <button class="ghost" onclick="downloadTxt()">⬇ 기록 내려받기</button>
+      <button class="ghost" onclick="resetForm()">↻ 새 실습 시작</button>
+    </div>
+    <div id="saved" class="saved">임시 저장되었습니다. 이 브라우저에 실습기록이 보관됩니다.</div><div id="submitStatus" class="note" style="display:none;font-weight:700"></div>
+  </section>
+
+
+</div>
+
+<div class="footer">제과·제빵 실습코치 · Supabase 학급 공통 저장 · 구체성·독창성·제출기한 자동 평가</div>
+</div>
+
+
+<div id="submitView" aria-hidden="true">
+  <div class="submitToolbar">
+    <button class="ghost" onclick="closeSubmitView()">← 작성 화면으로</button>
+    <button class="primary" onclick="window.print()">🖨 인쇄 · PDF 저장</button><button class="ghost" onclick="window.open('teacher.html?class='+encodeURIComponent(getClassId()),'_blank')">📊 교사용 현황</button>
+  </div>
+  <article class="a4Page" id="a4Page">
+    <div class="a4Header">
+      <div>
+        <div class="a4Title">제과·제빵 AI 실습일지</div>
+        <div class="a4Sub" id="a4Theme">월별 디저트 테마 · 제출 확인용 A4 요약본</div>
+      </div>
+      <div class="a4Grade" id="a4Grade">-</div>
+    </div>
+
+    <div class="a4Meta">
+      <div class="a4MetaItem"><b>실습 품목</b><span id="a4Product">-</span></div>
+      <div class="a4MetaItem"><b>실습일</b><span id="a4Date">-</span></div>
+      <div class="a4MetaItem"><b>제출 상태</b><span id="a4Deadline" class="a4Status">-</span></div>
+    </div>
+
+    <div class="a4Top">
+      <div class="a4Photo" id="a4PhotoWrap"><span class="a4NoPhoto">완제품 사진 없음</span></div>
+      <div>
+        <div class="a4Box"><h3>오늘의 목표</h3><p id="a4Goal">-</p></div>
+        <div class="a4CompactGrid">
+          <div class="a4Box"><h3>실제 오븐 온도</h3><p id="a4Temp">-</p></div>
+          <div class="a4Box"><h3>실제 굽기 시간</h3><p id="a4Time">-</p></div>
+        </div>
+        <div class="a4Box"><h3>오늘 제품 만족도</h3><p id="a4Score">-</p></div>
+      </div>
+    </div>
+
+    <div class="a4Box"><h3>표준 배합 · 공정 기록</h3><p id="a4Process">-</p></div>
+    <div class="a4CompactGrid">
+      <div class="a4Box"><h3>실습 중 달라진 점</h3><p id="a4Change">-</p></div>
+      <div class="a4Box"><h3>가장 어려웠던 점</h3><p id="a4Difficulty">-</p></div>
+    </div>
+
+    <div class="a4Reflect">
+      <div class="a4Box"><h3>✓ 오늘의 잘한 점</h3><p id="a4Strength">-</p></div>
+      <div class="a4Box"><h3>↺ 반성할 점</h3><p id="a4Reflection">-</p></div>
+      <div class="a4Box"><h3>→ 보완할 점</h3><p id="a4Improvement">-</p></div>
+    </div>
+
+    <div class="a4Coach">
+      <h3>AI 실습코치 요약</h3>
+      <p id="a4CoachText">코칭 결과가 아직 없습니다.</p>
+    </div>
+
+    <div class="a4Footer">
+      <span id="a4Completeness">작성 충실도 -</span>
+      <span id="a4Integrity">작성 진정성 -</span>
+      <span>※ A는 학급 최대 20%(20명 기준 최대 4명) 범위에서 최종 확정</span>
+    </div>
+  </article>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+
+function getClassId(){
+  const params=new URLSearchParams(location.search);
+  return (params.get('class') || 'default').trim().slice(0,40) || 'default';
+}
+function applyClassBadge(){
+  const id=getClassId();
+  const el=$('classBadge');
+  if(el) el.textContent=id==='default' ? '기본 학급' : `학급 · ${id}`;
+}
+
+
+
+const monthlyThemes = {
+  1:{season:'겨울', name:'바닐라 머랭', icon:'❄️', accent:'#7d92c8', accent2:'#4d5f96', soft:'#edf3ff', bg:'#f6f9ff', bg2:'#ffffff', line:'#d9e3f4'},
+  2:{season:'겨울', name:'딸기 쇼트케이크', icon:'🍓', accent:'#d96a88', accent2:'#a63f60', soft:'#fdeaf0', bg:'#fff8fb', bg2:'#ffffff', line:'#f1d5de'},
+  3:{season:'봄', name:'레몬 마들렌', icon:'🍋', accent:'#d3b24a', accent2:'#977d23', soft:'#fff6d8', bg:'#fffdf3', bg2:'#fffefb', line:'#efe3b7'},
+  4:{season:'봄', name:'체리 마카롱', icon:'🌸', accent:'#c983b7', accent2:'#8f5b81', soft:'#f9ecf5', bg:'#fff9fc', bg2:'#ffffff', line:'#ebd7e6'},
+  5:{season:'봄', name:'피스타치오 케이크', icon:'🍰', accent:'#84b07e', accent2:'#567754', soft:'#eef8ec', bg:'#f9fdf8', bg2:'#ffffff', line:'#d8e8d5'},
+  6:{season:'여름', name:'블루베리 무스', icon:'🫐', accent:'#6c82d6', accent2:'#4457a4', soft:'#edf1ff', bg:'#f8faff', bg2:'#ffffff', line:'#d9e1f8'},
+  7:{season:'여름', name:'민트 파르페', icon:'🍨', accent:'#53b8b0', accent2:'#2c7f79', soft:'#e7fbf8', bg:'#f4fffd', bg2:'#ffffff', line:'#cdebe6'},
+  8:{season:'여름', name:'복숭아 빙수', icon:'🍧', accent:'#f0a28a', accent2:'#be6f58', soft:'#fff0ea', bg:'#fffaf7', bg2:'#ffffff', line:'#f3d9cf'},
+  9:{season:'가을', name:'버터 쿠키', icon:'🍪', accent:'#c39563', accent2:'#875f39', soft:'#f9efe4', bg:'#fdf9f4', bg2:'#ffffff', line:'#ead9c5'},
+ 10:{season:'가을', name:'펌킨 타르트', icon:'🎃', accent:'#d58a48', accent2:'#925926', soft:'#fff0e3', bg:'#fff9f4', bg2:'#ffffff', line:'#f1d8bf'},
+ 11:{season:'가을', name:'티라미수', icon:'☕', accent:'#9a7b63', accent2:'#684e3b', soft:'#f5ede7', bg:'#fbf8f5', bg2:'#ffffff', line:'#e4d6cb'},
+ 12:{season:'겨울', name:'초코 브라우니', icon:'🍫', accent:'#8f6352', accent2:'#5d3d31', soft:'#f4ebe7', bg:'#fbf7f5', bg2:'#ffffff', line:'#e3d4cd'}
+};
+
+function applyMonthlyTheme(){
+  const month=(new Date()).getMonth()+1;
+  const theme=monthlyThemes[month] || monthlyThemes[1];
+  const root=document.documentElement;
+  root.style.setProperty('--bg', theme.bg);
+  root.style.setProperty('--bg2', theme.bg2);
+  root.style.setProperty('--accent', theme.accent);
+  root.style.setProperty('--accent2', theme.accent2);
+  root.style.setProperty('--soft', theme.soft);
+  root.style.setProperty('--line', theme.line);
+  const logo=$('logo');
+  if(logo) logo.textContent=theme.icon;
+  const badge=$('themeBadge');
+  if(badge) badge.textContent=`${month}월 ${theme.season} 테마 · ${theme.name}`;
+  const hint=$('themeHint');
+  if(hint) hint.textContent=`이번 달은 ${theme.season} 느낌의 「${theme.name}」 테마입니다. ${theme.icon} 계절감에 맞춘 부드러운 색감으로 자동 적용됩니다.`;
+}
+
+const productLists = {
+  pastry: [
+    '초코머핀','버터스펀지케이크(별립법)','젤리롤케이크','소프트롤케이크','버터스펀지케이크(공립법)',
+    '마들렌','쇼트브레드쿠키','슈','브라우니','과일케이크','파운드케이크','다쿠아즈','타르트',
+    '흑미롤케이크','마데라컵케이크','버터쿠키','치즈케이크','호두파이','초코롤케이크','시퐁케이크'
+  ],
+  bread: [
+    '빵도넛','소시지빵','비상식빵','단팥빵','그리시니','밤식빵','베이글','스위트롤','우유식빵','트위스트',
+    '크림빵','풀먼식빵','소보로빵','통밀빵','호밀빵','버터식빵','옥수수식빵','모카빵','버터롤','쌀식빵'
+  ]
+};
+
+function updateProducts(){
+  const category=$('category').value;
+  const select=$('product');
+  select.innerHTML='';
+  if(category==='custom'){
+    select.style.display='none';
+    $('customProduct').style.display='block';
+    return;
+  }
+  select.style.display='block';
+  (productLists[category]||[]).forEach(name=>{
+    const opt=document.createElement('option'); opt.value=name; opt.textContent=name; select.appendChild(opt);
+  });
+  const customOpt=document.createElement('option'); customOpt.value='__custom__'; customOpt.textContent='✍️ 직접 입력'; select.appendChild(customOpt);
+  toggleCustomProduct();
+}
+
+function toggleCustomProduct(){
+  const isCustom=$('category').value==='custom' || $('product').value==='__custom__';
+  $('customProduct').style.display=isCustom?'block':'none';
+}
+
+function getProduct(){
+  const category=$('category').value;
+  const custom=$('customProduct').value.trim();
+  if(category==='custom' || $('product').value==='__custom__') return custom || '직접 입력 품목';
+  return $('product').value;
+}
+
+
+$('date').valueAsDate = new Date();
+applyMonthlyTheme();
+applyClassBadge();
+updateProducts();
+
+// ===== 작성 과정·독창성 점검 =====
+// 붙여넣기 자체는 부정행위의 증거가 아니므로 단독으로 감점하지 않습니다.
+// 붙여넣기 + 낮은 구체성, 또는 기존 저장 기록과 매우 높은 유사성이 함께 나타날 때만 감점합니다.
+const writingAudit={pasteCount:0,pasteChars:0,pastedFields:{},inputEvents:{}};
+['change','difficulty','strength','reflection','improvement'].forEach(id=>{
+  const el=$(id);
+  if(!el) return;
+  el.addEventListener('paste',e=>{
+    const pasted=(e.clipboardData||window.clipboardData)?.getData('text')||'';
+    writingAudit.pasteCount++;
+    writingAudit.pasteChars+=pasted.length;
+    writingAudit.pastedFields[id]=(writingAudit.pastedFields[id]||0)+1;
+  });
+  el.addEventListener('input',()=>{writingAudit.inputEvents[id]=(writingAudit.inputEvents[id]||0)+1;});
+});
+
+function normalizeKoreanText(s){
+  return String(s||'').toLowerCase().replace(/[^가-힣a-z0-9\s]/g,' ').replace(/\s+/g,' ').trim();
+}
+
+function tokenSet(s){
+  const stop=new Set(['그리고','하지만','그래서','오늘','실습','제품','다음','했다','한다','것','점','잘','좀','더','수','있다','있는','하였다']);
+  return new Set(normalizeKoreanText(s).split(' ').filter(x=>x.length>=2&&!stop.has(x)));
+}
+
+function jaccardSimilarity(a,b){
+  const A=tokenSet(a), B=tokenSet(b);
+  if(A.size<4||B.size<4) return 0;
+  let inter=0; A.forEach(x=>{if(B.has(x)) inter++;});
+  const union=new Set([...A,...B]).size;
+  return union?inter/union:0;
+}
+
+function specificityScore(textValue){
+  const t=String(textValue||'').trim();
+  if(!t) return 0;
+  let score=0;
+  score+=Math.min(35,t.length/2);
+  if(/\d/.test(t)) score+=12;
+  if(/(℃|도|분|초|g|그램|%|회|개|cm|mm|ml|배|단계)/i.test(t)) score+=12;
+  if(/(때문|원인|그래서|따라서|결과|보다|달라|부족|과다|높|낮|진|연|균일|불균일|발효|반죽|성형|팬닝|굽|혼합|휴지|온도|시간|중량|수분)/.test(t)) score+=20;
+  if(/(다음에는|다음 실습|확인하|측정하|계량하|조절하|줄이|늘리|유지하|비교하|기록하|바꾸|개선하)/.test(t)) score+=16;
+  if(t.split(/\s+/).length>=8) score+=5;
+  return Math.min(100,Math.round(score));
+}
+
+function analyzeIntegrity(){
+  const current={
+    strength:$('strength').value.trim(), reflection:$('reflection').value.trim(), improvement:$('improvement').value.trim(),
+    change:$('change').value.trim(), difficulty:$('difficulty').value.trim()
+  };
+  const reflectionBundle=[current.strength,current.reflection,current.improvement].join(' ');
+  const specifics=[specificityScore(current.strength),specificityScore(current.reflection),specificityScore(current.improvement)];
+  const specificity=Math.round(specifics.reduce((a,b)=>a+b,0)/3);
+
+  const within=Math.max(
+    jaccardSimilarity(current.strength,current.reflection),
+    jaccardSimilarity(current.strength,current.improvement),
+    jaccardSimilarity(current.reflection,current.improvement)
+  );
+
+  let priorMax=0;
+  try{
+    const logs=JSON.parse(localStorage.getItem('bakingPracticeLogs')||'[]');
+    for(const log of logs.slice(-30)){
+      const old=[log.strength||'',log.reflection||'',log.improvement||''].join(' ');
+      priorMax=Math.max(priorMax,jaccardSimilarity(reflectionBundle,old));
+    }
+  }catch(e){}
+
+  const totalLen=reflectionBundle.length;
+  const pasteRatio=totalLen?Math.min(1,writingAudit.pasteChars/Math.max(1,totalLen)):0;
+  let penalty=0;
+  const flags=[];
+
+  // 붙여넣기만으로는 감점하지 않음. 낮은 구체성과 함께 나타날 때만 감점.
+  if(writingAudit.pasteCount>=2 && pasteRatio>=0.45 && specificity<60){
+    penalty+=12; flags.push('붙여넣기 비중이 높고 개인 실습 근거가 부족함');
+  }else if(writingAudit.pasteCount>=1){
+    flags.push('붙여넣기 사용 감지(단독 감점 없음)');
+  }
+  if(within>=0.72){ penalty+=8; flags.push('자기평가 항목 간 표현이 지나치게 반복됨'); }
+  if(priorMax>=0.78){ penalty+=18; flags.push('이 브라우저의 기존 저장 기록과 문장 유사도가 매우 높음'); }
+  else if(priorMax>=0.62){ penalty+=8; flags.push('이 브라우저의 기존 저장 기록과 유사한 표현이 많음'); }
+  if(specificity<40){ penalty+=12; flags.push('실제 수치·상황·원인·행동이 부족한 상투적 기록'); }
+  else if(specificity<55){ penalty+=5; flags.push('자기 실습을 보여 주는 구체적 근거가 다소 부족함'); }
+
+  penalty=Math.min(35,penalty);
+  const originality=Math.max(0,100-penalty);
+  const needsReview = penalty>=18 || priorMax>=0.78;
+  const status = penalty===0 ? '독창적 기록' : (penalty<18 ? '일부 보완 필요' : '독창성 확인 필요');
+  return {specificity,originality,penalty,flags,needsReview,pasteCount:writingAudit.pasteCount,pasteRatio:Math.round(pasteRatio*100),withinSimilarity:Math.round(within*100),priorSimilarity:Math.round(priorMax*100),status};
+}
+
+$('photo').addEventListener('change', e=>{
+  const f=e.target.files?.[0];
+  if(!f) return;
+  const r=new FileReader();
+  r.onload=()=>{$('preview').src=r.result;$('preview').style.display='block';};
+  r.readAsDataURL(f);
+});
+
+function coach(){
+  const p=getProduct();
+  const temp=Number($('temp').value||0);
+  const time=Number($('time').value||0);
+  const change=$('change').value.trim();
+  const diff=$('difficulty').value.trim();
+  const strength=$('strength').value.trim();
+  const reflection=$('reflection').value.trim();
+  const improvement=$('improvement').value.trim();
+
+  let positives=[];
+  if(strength.length>=12) positives.push(strength);
+  else if($('process').value.trim().length>20) positives.push('표준 배합과 공정을 비교적 충실하게 기록했습니다.');
+  else positives.push('실습 결과를 스스로 돌아보고 다음 실습을 개선하려는 태도가 좋습니다.');
+
+  let causes=[];
+  if(reflection.length>=12){
+    causes.push('학생이 기록한 반성 내용: '+reflection);
+  }else{
+    causes.push('반성 내용이 짧아 실패나 아쉬움의 원인을 구체적으로 판단하기 어렵습니다.');
+  }
+  if(change.length>=10) causes.push('실습 중 달라진 조건도 함께 기록되어 있으므로 표준 공정과 비교해 원인을 찾아볼 수 있습니다.');
+  if(temp && (temp<120 || temp>250)) causes.push('입력한 오븐 온도가 일반적인 제과·제빵 범위에서 크게 벗어나 있으므로 기록값을 다시 확인해 보세요.');
+  if(time && (time<3 || time>90)) causes.push('입력한 굽기 시간이 매우 짧거나 길어 기록값 확인이 필요합니다.');
+
+  let fixes=[];
+  if(improvement.length>=12){
+    fixes.push('학생이 계획한 보완 행동: '+improvement);
+  }else{
+    fixes.push('다음 실습에서 바꿀 행동을 한 가지 정하고, 온도·시간·반죽 상태·성형 방법처럼 확인 가능한 표현으로 적어 보세요.');
+  }
+  if(diff.length>=10) fixes.push('가장 어려웠던 점을 다음 실습의 집중 관찰 항목으로 정해 전·후 결과를 비교해 보세요.');
+
+  $('good').innerHTML='<strong>👍 잘한 점</strong><br>'+positives.join('<br>');
+  $('cause').innerHTML='<strong>🔎 돌아볼 점</strong><br>'+causes.map((x,i)=>(i+1)+'. '+x).join('<br>');
+  $('fix').innerHTML='<strong>🛠 다음 실습 보완</strong><br>'+fixes.map((x,i)=>(i+1)+'. '+x).join('<br>');
+  $('question').innerHTML='<strong>💬 코치 질문</strong><br>“'+p+'을 다시 만든다면, 오늘보다 더 나은 결과를 위해 <b>가장 먼저 바꿀 한 가지 행동</b>은 무엇인가요?”';
+
+  const m1=Math.min(100, ($('process').value.length*2)+($('temp').value?15:0)+($('time').value?15:0));
+  const m2=Math.min(100, reflection.length*2 + improvement.length*2);
+  const m3=Math.min(100, strength.length + reflection.length + improvement.length + Number($('score').value)*5);
+  setMetric('m1',m1);setMetric('m2',m2);setMetric('m3',m3);
+
+  const missionText = improvement.length>=12
+    ? `🎯 <b>다음 실습 미션:</b> “${escapeHtml(improvement)}”을 실제로 적용하고, 오늘 결과와 비교하여 달라진 점을 기록하세요.`
+    : '🎯 <b>다음 실습 미션:</b> 오늘의 반성 내용을 바탕으로 다음 실습에서 바꿀 행동 한 가지를 정하고 결과를 비교하세요.';
+  $('mission').innerHTML=missionText;
+  $('analysisArea').style.display='block';
+  $('coachIntro').style.display='none';
+  window.lastGradeResult=evaluateLog();
+
+  // ===== API 연결 지점 =====
+  // 추후 서버의 AI 모델에 학생의 주관식 자기평가와 완제품 사진을 보내면
+  // 더 구체적인 원인 분석·피드백·사진 평가를 제공할 수 있습니다.
+  // API Key는 HTML에 직접 넣지 말고 서버에서 보관하세요.
+}
+
+function escapeHtml(text){
+  return String(text).replace(/[&<>'"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+}
+
+function evaluateLog(){
+  const now=new Date();
+  const practiceDate=$('date').value;
+  const pad=n=>String(n).padStart(2,'0');
+  const todayStr=`${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;
+  const onTime = !!practiceDate && practiceDate === todayStr;
+  const isLate = !!practiceDate && practiceDate < todayStr;
+
+  const fields=[
+    {ok:getProduct().trim().length>0, label:'실습 품목', weight:1},
+    {ok:$('date').value.trim().length>0, label:'실습일', weight:1},
+    {ok:$('goal').value.trim().length>=10, label:'오늘의 목표', weight:1},
+    {ok:$('process').value.trim().length>=20, label:'표준 배합/공정', weight:2},
+    {ok:$('temp').value.trim().length>0, label:'오븐 온도', weight:1},
+    {ok:$('time').value.trim().length>0, label:'굽기 시간', weight:1},
+    {ok:$('change').value.trim().length>=10, label:'실습 중 달라진 점', weight:1},
+    {ok:$('difficulty').value.trim().length>=10, label:'가장 어려웠던 점', weight:1},
+    {ok:$('strength').value.trim().length>=15, label:'오늘의 잘한 점', weight:2},
+    {ok:$('reflection').value.trim().length>=15, label:'반성할 점', weight:2},
+    {ok:$('improvement').value.trim().length>=15, label:'보완할 점', weight:2},
+    {ok:$('photo').files && $('photo').files.length>0, label:'완제품 사진', weight:2}
+  ];
+
+  const totalWeight=fields.reduce((a,x)=>a+x.weight,0);
+  const completedWeight=fields.filter(x=>x.ok).reduce((a,x)=>a+x.weight,0);
+  const completeness=Math.round((completedWeight/totalWeight)*100);
+  const missing=fields.filter(x=>!x.ok).map(x=>x.label);
+  const integrity=analyzeIntegrity();
+
+  const reflectionFields=[$('strength').value.trim().length>=15,$('reflection').value.trim().length>=15,$('improvement').value.trim().length>=15].filter(Boolean).length;
+  const coreFilled=[$('process').value.trim().length>=20,$('strength').value.trim().length>=15,$('reflection').value.trim().length>=15,$('improvement').value.trim().length>=15,$('photo').files&&$('photo').files.length>0].filter(Boolean).length;
+
+  let grade='C', reason='', candidate=false;
+  if(onTime && completeness>=90 && reflectionFields===3 && coreFilled>=4 && integrity.specificity>=55){
+    grade='A'; candidate=true;
+    reason='A 후보입니다. 실습일 당일 제출, 기록 충실도와 자기성찰의 구체성이 모두 우수합니다.';
+  }else if(onTime && completeness>=72 && reflectionFields>=2){
+    grade='B'; reason='실습일 당일에 제출했습니다. 주요 기록은 작성했지만 일부 기록의 구체성이나 완성도를 더 높일 수 있습니다.';
+  }else if(onTime){
+    grade='C'; reason='실습일 당일에 제출했지만 핵심 공정 기록 또는 자기성찰의 보완이 필요합니다.';
+  }else if(isLate && completeness>=75 && reflectionFields>=2){
+    grade='C'; reason='기록은 비교적 충실하지만 실습일 당일 제출 원칙을 지키지 못했습니다.';
+  }else if(isLate && completeness>=50){
+    grade='D'; reason='제출이 늦었고 실습 과정 또는 자기성찰 기록이 충분하지 않습니다.';
+  }else if(isLate && completeness>=30){
+    grade='E'; reason='제출이 늦었으며 핵심 기록과 자기성찰이 많이 비어 있어 보완이 필요합니다.';
+  }else if(isLate && completeness<30 && coreFilled<=1){
+    grade='F'; candidate=true; reason='F 후보입니다. 제출이 늦고 평가할 수 있는 실습 기록이 거의 없습니다.';
+  }else{
+    grade='D'; reason='실습일 또는 작성 상태를 충분히 확인하기 어렵습니다. 핵심 기록을 보완해 주세요.';
+  }
+
+  // 독창성 감점: 자동 AI 판별이 아니라 작성 흔적·구체성·문장 유사성을 함께 봄
+  const order=['A','B','C','D','E','F'];
+  const baseIndex=order.indexOf(grade);
+  let downgrade=0;
+  if(integrity.penalty>=25) downgrade=2;
+  else if(integrity.penalty>=12) downgrade=1;
+  if(downgrade>0){
+    const newIndex=Math.min(order.length-1,baseIndex+downgrade);
+    const old=grade; grade=order[newIndex]; candidate=(grade==='A'||grade==='F')?candidate:false;
+    reason += ` 작성 진정성 점검에서 ${integrity.penalty}점 감점되어 ${old}에서 ${grade}로 조정되었습니다.`;
+  }
+
+  const deadlineText = !practiceDate ? '실습일 미입력' : (onTime ? '당일 제출' : (isLate ? '제출 지연' : '실습일 확인 필요'));
+  const titleText = grade==='A' && candidate ? '실습일지 자동 평가 · A 후보' : (grade==='F' && candidate ? '실습일지 자동 평가 · F 후보' : `실습일지 자동 평가 · ${grade}`);
+  document.querySelector('#gradeArea .gradeTitle').textContent=titleText;
+  $('gradeStamp').textContent=grade;
+  $('gradeReason').textContent=reason;
+  $('gradeMeta').textContent=`작성 충실도 ${completeness}% · 구체성 ${integrity.specificity}% · ${deadlineText}` + (missing.length ? ` · 보완: ${missing.slice(0,3).join(', ')}${missing.length>3?' 외':''}` : ' · 핵심 기록 충실');
+
+  const cls=integrity.penalty===0?'integrityGood':(integrity.penalty<18?'integrityWarn':'integrityBad');
+  const detail=integrity.flags.length?integrity.flags.join(' · '):'개인 실습의 구체적 기록이 확인되었습니다.';
+  $('integrityBox').innerHTML=`<b>작성 진정성</b> <span class="${cls}">${integrity.status}</span> · 독창성 ${integrity.originality}%${integrity.penalty?` · 감점 ${integrity.penalty}점`:''}<br><span class="small">${escapeHtml(detail)} ※ 붙여넣기 사용만으로 AI·친구 복사로 단정하지 않습니다.</span>`;
+  $('gradeArea').style.display='block';
+
+  return {
+    grade,candidate,completeness,onTime,deadlineText,missing,integrity,
+    evaluatedAt:now.toISOString(),classSize:20,aMax:4,fMax:2,
+    policy: grade==='A' ? '평균 20명 기준 최대 4명(20%) 범위에서 최종 A 확정' : (grade==='F' ? '평균 20명 기준 필요 시 최대 2명(10%), 해당자 없으면 F 미부여' : '절대기준 자동 판정')
+  };
+}
+
+function setMetric(id,val){
+  $(id).style.width=val+'%';
+  $(id+'t').textContent=Math.round(val);
+}
+
+
+function plainTextFrom(id){
+  const el=$(id);
+  return el ? el.innerText.replace(/\s+/g,' ').trim() : '';
+}
+
+function fitText(text, max=230){
+  const t=(text||'').trim();
+  if(!t) return '-';
+  return t.length>max ? t.slice(0,max-1)+'…' : t;
+}
+
+async function showSubmitView(){
+  window.lastGradeResult=evaluateLog();
+  const status=$('submitStatus');
+  status.style.display='block';
+  status.style.color='var(--accent2)';
+  status.textContent='학급 공통 저장소에 제출하고 유사도를 확인하는 중입니다...';
+
+  try{
+    const d=collect();
+    const payload={
+      class_id:d.classId,
+      product:d.product,
+      practice_date:d.date,
+      strength:d.strength,
+      reflection:d.reflection,
+      improvement:d.improvement,
+      process_note:[d.process, d.temp?`오븐 ${d.temp}℃`:'', d.time?`굽기 ${d.time}분`:'', d.change?`달라진 점: ${d.change}`:'', d.difficulty?`어려웠던 점: ${d.difficulty}`:''].filter(Boolean).join(' | '),
+      completeness:Number(d.completeness||0),
+      originality:Number(d.integrity?.originality||0),
+      grade:d.grade||'D'
+    };
+    const res=await fetch('/api/submit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+    const out=await res.json().catch(()=>({}));
+    if(!res.ok) throw new Error(out.error||'제출 저장에 실패했습니다.');
+
+    if(window.lastGradeResult){
+      window.lastGradeResult.grade=out.grade||window.lastGradeResult.grade;
+      window.lastGradeResult.groupSimilarity=out.similarity||0;
+      if(window.lastGradeResult.integrity){
+        window.lastGradeResult.integrity.originality=out.originality ?? window.lastGradeResult.integrity.originality;
+        if(out.similarity>=70){
+          window.lastGradeResult.integrity.status='학급 유사도 확인 필요';
+          window.lastGradeResult.integrity.flags=[...(window.lastGradeResult.integrity.flags||[]),`동일 학급 기존 제출물과 최고 유사도 ${out.similarity}%`];
+        }
+      }
+    }
+    status.style.color='var(--ok)';
+    status.textContent=`제출 완료 · 학급 ${d.classId} · 최고 유사도 ${out.similarity||0}% · 등급 ${out.grade||d.grade}`;
+  }catch(err){
+    status.style.color='var(--danger)';
+    status.textContent='공통 저장소 제출 실패: '+err.message+'  (A4 확인 화면은 계속 볼 수 있습니다.)';
+  }
+
+  renderSubmitView();
+}
+
+function renderSubmitView(){
+  const d=collect();
+  const r=window.lastGradeResult||{};
+  const month=(new Date()).getMonth()+1;
+  const theme=monthlyThemes[month]||monthlyThemes[1];
+
+  $('a4Theme').textContent=`${month}월 ${theme.season} · ${theme.name} ${theme.icon} · 학급 ${d.classId} · 제출 확인용 A4 요약본`;
+  $('a4Product').textContent=d.product||'-';
+  $('a4Date').textContent=d.date||'-';
+  $('a4Deadline').textContent=r.deadlineText||'확인 필요';
+  $('a4Grade').textContent=d.grade ? d.grade : '-';
+  $('a4Goal').textContent=fitText(d.goal,150);
+  $('a4Temp').textContent=d.temp ? d.temp+'℃' : '-';
+  $('a4Time').textContent=d.time ? d.time+'분' : '-';
+  $('a4Score').textContent=(d.score||'-')+' / 5';
+  $('a4Process').textContent=fitText(d.process,420);
+  $('a4Change').textContent=fitText(d.change,190);
+  $('a4Difficulty').textContent=fitText(d.difficulty,190);
+  $('a4Strength').textContent=fitText(d.strength,180);
+  $('a4Reflection').textContent=fitText(d.reflection,180);
+  $('a4Improvement').textContent=fitText(d.improvement,180);
+  $('a4Completeness').textContent=`작성 충실도 ${d.completeness===''?'-':d.completeness+'%'} · ${r.deadlineText||'제출 상태 확인 필요'}`;
+  const ir=r.integrity||{};
+  $('a4Integrity').textContent=`작성 진정성 ${ir.status||'-'}${ir.originality!==undefined?' · 독창성 '+ir.originality+'%':''}${r.groupSimilarity?` · 학급 최고 유사도 ${r.groupSimilarity}%`:''}`;
+
+  const coachParts=[plainTextFrom('good'),plainTextFrom('cause'),plainTextFrom('fix'),plainTextFrom('question')].filter(Boolean);
+  $('a4CoachText').textContent=fitText(coachParts.join('  |  '),520);
+
+  const wrap=$('a4PhotoWrap');
+  wrap.innerHTML='';
+  if($('preview').src && $('preview').style.display!=='none'){
+    const img=document.createElement('img'); img.src=$('preview').src; img.alt='완제품 사진'; wrap.appendChild(img);
+  }else{
+    const s=document.createElement('span'); s.className='a4NoPhoto'; s.textContent='완제품 사진 없음'; wrap.appendChild(s);
+  }
+
+  $('submitView').style.display='block';
+  $('submitView').setAttribute('aria-hidden','false');
+  document.body.style.overflow='hidden';
+}
+
+function closeSubmitView(){
+  $('submitView').style.display='none';
+  $('submitView').setAttribute('aria-hidden','true');
+  document.body.style.overflow='';
+}
+
+function collect(){
+  return {
+    category:$('category').value, product:getProduct(), date:$('date').value,
+    goal:$('goal').value, process:$('process').value, temp:$('temp').value,
+    time:$('time').value, change:$('change').value, difficulty:$('difficulty').value,
+    score:$('score').value, strength:$('strength').value, reflection:$('reflection').value,
+    improvement:$('improvement').value,
+    grade:(window.lastGradeResult||{}).grade||'', candidate:(window.lastGradeResult||{}).candidate||false,
+    completeness:(window.lastGradeResult||{}).completeness||'',
+    deadlineStatus:(window.lastGradeResult||{}).deadlineText||'', policy:(window.lastGradeResult||{}).policy||'',
+    evaluatedAt:(window.lastGradeResult||{}).evaluatedAt||'',
+    integrity:(window.lastGradeResult||{}).integrity||analyzeIntegrity(),
+    classId:getClassId(), groupSimilarity:(window.lastGradeResult||{}).groupSimilarity||0,
+    savedAt:new Date().toISOString()
+  };
+}
+
+function saveLog(){
+  window.lastGradeResult=evaluateLog();
+  const data=collect();
+  const logs=JSON.parse(localStorage.getItem('bakingPracticeLogs')||'[]');
+  logs.push(data);
+  localStorage.setItem('bakingPracticeLogs',JSON.stringify(logs));
+  $('saved').style.display='block';
+  setTimeout(()=>$('saved').style.display='none',3000);
+}
+
+function downloadTxt(){
+  const d=collect();
+  const text=`[제과·제빵 AI 실습일지]\n실습 품목: ${d.product}\n실습일: ${d.date}\n제출기준: 실습일 당일 제출\n자동 등급: ${d.grade ? (d.grade + (d.candidate ? ' 후보' : '')) : '코칭 후 산출'}\n등급 적용 기준: ${d.policy || '코칭 후 산출'}\n작성 충실도: ${d.completeness === '' ? '코칭 후 산출' : d.completeness+'%'}\n제출 상태: ${d.deadlineStatus || '코칭 후 산출'}\n작성 진정성: ${d.integrity?.status || '코칭 후 산출'}\n독창성 점수: ${d.integrity?.originality ?? '-'}%\n진정성 감점: ${d.integrity?.penalty ?? 0}점\n\n1. 오늘의 목표\n${d.goal}\n\n2. 표준 배합/공정\n${d.process}\n\n3. 실제 조건\n오븐 온도: ${d.temp}℃\n굽기 시간: ${d.time}분\n\n4. 실습 중 달라진 점\n${d.change}\n\n5. 가장 어려웠던 점\n${d.difficulty}\n\n6. 자기평가\n만족도: ${d.score}/5\n오늘의 잘한 점: ${d.strength}\n반성할 점: ${d.reflection}\n보완할 점: ${d.improvement}\n`;
+  const blob=new Blob([text],{type:'text/plain;charset=utf-8'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  const safeProduct=(d.product||'실습').replace(/[\\/:*?"<>|]/g,'_');
+  a.download=`AI실습일지_${safeProduct}_${d.date||'날짜'}.txt`;
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+function resetForm(){
+  if(!confirm('현재 입력 내용을 지우고 새 실습을 시작할까요?')) return;
+  ['process','temp','time','change','difficulty','strength','reflection','improvement','customProduct'].forEach(id=>$(id).value='');
+  $('category').value='pastry'; updateProducts();
+  $('score').value=3;$('scoreText').textContent='3 / 5';
+  $('preview').style.display='none';$('photo').value='';
+  $('analysisArea').style.display='none';$('coachIntro').style.display='block';$('gradeArea').style.display='none';window.lastGradeResult=null;
+  $('date').valueAsDate=new Date();
+  writingAudit.pasteCount=0; writingAudit.pasteChars=0; writingAudit.pastedFields={}; writingAudit.inputEvents={};
+}
+</script>
+</body>
+</html>
