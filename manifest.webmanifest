@@ -1,0 +1,21 @@
+{
+  "name": "제과·제빵 AI 실습코치",
+  "short_name": "실습코치",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#fff9fc",
+  "theme_color": "#c983b7",
+  "description": "최초 평가 등급 잠금과 보완학습 기록을 지원하는 제과·제빵 실습일지",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
