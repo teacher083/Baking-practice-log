@@ -9,7 +9,7 @@
 <meta name="apple-mobile-web-app-title" content="실습코치"/>
 <link rel="manifest" href="manifest.webmanifest"/>
 <link rel="apple-touch-icon" href="icon-192.png"/>
-<title>제과·제빵 AI 실습코치 | 학습성장형 앱</title>
+<title>제과·제빵 AI 실습코치 | V6 실시간 카메라 촬영형</title>
 <style>
 :root{
   --bg:#fff8f7; --bg2:#fffdfc; --card:#ffffff; --ink:#2f2726; --muted:#7c6f6c;
@@ -144,6 +144,20 @@ hr{border:0;border-top:1px solid var(--line);margin:16px 0}
 @media(max-width:760px){.progressPanel{grid-template-columns:1fr 1fr}.a4Progress{grid-template-columns:1fr 1fr}}
 @media print{.learningPolicy,.progressPanel{break-inside:avoid;page-break-inside:avoid}}
 
+
+.processLarge{min-height:180px!important;line-height:1.6}
+
+
+.photoActions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+.photoActions button{min-width:140px}
+@media(max-width:520px){.photoActions{display:grid;grid-template-columns:1fr 1fr}.photoActions button{min-width:0}}
+
+
+.cameraPanel,.capturedPanel{margin-top:14px;padding:10px;border:1px solid var(--line);border-radius:14px;background:#fff}
+#cameraVideo,#capturedPreview{width:100%;max-height:360px;object-fit:contain;border-radius:12px;background:#111;display:block}
+.cameraControls{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:10px}
+@media(max-width:520px){#cameraVideo,#capturedPreview{max-height:280px}}
+
 </style>
 </head>
 <body>
@@ -178,24 +192,53 @@ hr{border:0;border-top:1px solid var(--line);margin:16px 0}
 
     <label>실습일</label>
     <input id="date" type="date">
-    <div class="note">실습일지가 곧 제출기한입니다. 코칭을 받은 날짜가 실습일과 같으면 당일 제출로 자동 인정됩니다.</div>
+    <div class="note">실습일이 제출기한입니다. 코칭 횟수와 관계없이 최초 제출 시점과 실습일을 비교하여 제출 상태를 판단합니다.</div>
 
     <label>요구사항</label>
     <input id="goal" value="제품의 표준 공정을 지키고 완제품의 형태·색·굽기 상태를 스스로 평가한다.">
 
-    <label>표준 배합/공정 메모</label>
-    <textarea id="process" placeholder="예: 버터 120g / 달걀 100g / 170℃ 13분 ..."></textarea>
+    <label>표준 배합</label>
+    <textarea id="formula" placeholder="예: 박력분 100g / 버터 100g / 설탕 90g / 달걀 100g"></textarea>
   </section>
 
   <section class="card">
-    <h2>② 완제품 사진</h2>
+    <h2>② 완제품 사진 · 만드는 방법</h2>
+    <label>만드는 방법</label>
+    <textarea id="process" class="processLarge" placeholder="예: 1. 버터를 부드럽게 풀어 준다.&#10;2. 설탕을 2~3회 나누어 넣고 충분히 혼합한다.&#10;3. 달걀을 조금씩 나누어 넣어 분리되지 않도록 혼합한다.&#10;4. 체친 가루류를 넣고 주걱으로 섞는다.&#10;5. 팬닝 후 윗불·아랫불 온도에 맞춰 굽는다."></textarea>
+    <div class="note">제품을 실제로 만든 순서대로 단계별로 적고, 중요한 작업 포인트도 함께 기록하세요.</div>
+
     <div class="photoBox">
       <strong>📷 완제품 사진을 올려 주세요</strong>
       <div class="note">정면 또는 45° 각도에서 제품 전체가 보이도록 촬영하세요.</div>
-      <input id="photo" type="file" accept="image/*" capture="environment">
+
+      <div class="photoActions">
+        <button type="button" class="secondary" id="photoCameraBtn">📷 사진 촬영</button>
+        <button type="button" class="secondary" id="photoSelectBtn">📁 사진 선택</button>
+      </div>
+
+      <input id="photo" type="file" accept="image/*" hidden>
+
+      <div id="cameraPanel" class="cameraPanel" style="display:none">
+        <video id="cameraVideo" autoplay playsinline muted></video>
+        <canvas id="cameraCanvas" style="display:none"></canvas>
+        <div class="cameraControls">
+          <button type="button" class="primary" id="cameraShotBtn">📸 촬영</button>
+          <button type="button" class="ghost" id="cameraCloseBtn">✕ 카메라 닫기</button>
+        </div>
+      </div>
+
+      <div id="capturedPanel" class="capturedPanel" style="display:none">
+        <img id="capturedPreview" alt="촬영 사진 미리보기">
+        <div class="cameraControls">
+          <button type="button" class="secondary" id="retakeBtn">↻ 다시 찍기</button>
+          <button type="button" class="primary" id="usePhotoBtn">✓ 이 사진 사용</button>
+        </div>
+      </div>
+
+      <div id="photoFileName" class="small" style="margin-top:8px">선택된 사진 없음</div>
       <img id="preview" alt="업로드 미리보기">
     </div>
-    <div class="note">※ 현재 버전에서는 사진을 <b>미리보기만</b> 합니다. 실제 형태·색상·균열·굽기 상태 분석은 추후 이미지 분석 API를 연결하면 작동하도록 설계되어 있습니다.</div>
+    <div class="note">※ 사진은 현재 브라우저에서 미리보기와 A4 제출본에만 사용됩니다.</div>
   </section>
 
   <section class="card">
@@ -234,8 +277,8 @@ hr{border:0;border-top:1px solid var(--line);margin:16px 0}
     <h2>⑤ AI 실습코치</h2>
     <div class="learningPolicy">
       <b>📌 학습성장형 평가 안내</b><br>
-      처음 <b>「코칭 받기」 또는 「제출하기」</b>를 누르는 순간의 등급이 <b>최초 평가 등급으로 잠금</b>됩니다.
-      이후 수정은 점수 올리기가 아니라 <b>보완 제출</b>로 기록되며, 최초 등급은 바뀌지 않습니다.
+      「코칭 받기」는 여러 번 사용할 수 있으며 <b>등급에 영향을 주지 않습니다.</b><br>
+      내용을 충분히 작성한 뒤 <b>「최초 제출」</b>을 눌렀을 때만 최초 평가 등급이 잠깁니다. 이후 수정은 <b>보완 제출</b>로 기록되며 최초 등급은 바뀌지 않습니다.
     </div>
     <div class="coach">
       <div class="coachHead"><div class="avatar">👩‍🍳</div><div><strong>제과·제빵 AI 실습코치</strong><div class="small">정답을 대신 주기보다 원인을 찾고 다음 행동을 제안합니다.</div></div></div>
@@ -262,7 +305,7 @@ hr{border:0;border-top:1px solid var(--line);margin:16px 0}
           <div id="gradeMeta" class="gradeMeta"></div>
           <div id="integrityBox" class="integrityBox">작성 진정성 분석은 코칭 후 자동 표시됩니다.</div>
           <div class="progressPanel">
-            <div class="progressItem"><b>최초 평가</b><span id="lockedGradeText" class="lockedGrade">-</span></div>
+            <div class="progressItem"><b>최초 평가</b><span id="lockedGradeText" class="lockedGrade">미제출</span></div>
             <div class="progressItem"><b>코칭 횟수</b><span id="coachingCountText">0회</span></div>
             <div class="progressItem"><b>보완 제출</b><span id="revisionCountText">0회</span></div>
             <div class="progressItem"><b>성장 상태</b><span id="growthStatusText" style="font-size:12px">최초 제출 전</span></div>
@@ -274,7 +317,7 @@ hr{border:0;border-top:1px solid var(--line);margin:16px 0}
 
     <div class="actions">
       <button class="primary" onclick="coach()">✨ 코칭 받기</button>
-      <button class="secondary" onclick="showSubmitView()">📄 제출하기</button>
+      <button class="secondary" id="submitBtn" onclick="submitPractice()">📄 최초 제출</button>
       <button class="ghost" onclick="saveLog()">💾 임시 저장</button>
       <button class="ghost" onclick="downloadTxt()">⬇ 기록 내려받기</button>
       <button class="ghost" onclick="resetForm()">↻ 새 실습 시작</button>
@@ -328,7 +371,8 @@ hr{border:0;border-top:1px solid var(--line);margin:16px 0}
       </div>
     </div>
 
-    <div class="a4Box"><h3>표준 배합 · 공정 기록</h3><p id="a4Process">-</p></div>
+    <div class="a4Box"><h3>표준 배합</h3><p id="a4Formula">-</p></div>
+    <div class="a4Box"><h3>만드는 방법</h3><p id="a4Process">-</p></div>
     <div class="a4CompactGrid">
       <div class="a4Box"><h3>실습 중 달라진 점</h3><p id="a4Change">-</p></div>
       <div class="a4Box"><h3>가장 어려웠던 점</h3><p id="a4Difficulty">-</p></div>
@@ -532,6 +576,7 @@ function analyzeIntegrity(){
 }
 
 
+const REVIEW_MODE = new URLSearchParams(location.search).get('review')==='1';
 const SESSION_KEY='bakingGrowthSessionV1';
 
 function freshSession(){
@@ -563,7 +608,7 @@ function saveSession(){
 function currentSnapshot(){
   return {
     product:getProduct(), date:$('date').value, goal:$('goal').value.trim(),
-    process:$('process').value.trim(), topTemp:$('topTemp').value, bottomTemp:$('bottomTemp').value,
+    formula:$('formula').value.trim(), process:$('process').value.trim(), topTemp:$('topTemp').value, bottomTemp:$('bottomTemp').value,
     time:$('time').value, change:$('change').value.trim(), difficulty:$('difficulty').value.trim(),
     score:$('score').value, strength:$('strength').value.trim(), reflection:$('reflection').value.trim(),
     improvement:$('improvement').value.trim()
@@ -625,6 +670,7 @@ function renderGrowthPanel(currentResult){
   if($('coachingCountText')) $('coachingCountText').textContent=(growthSession.coachingCount||0)+'회';
   if($('revisionCountText')) $('revisionCountText').textContent=(growthSession.revisionCount||0)+'회';
   if($('growthStatusText')) $('growthStatusText').textContent=status;
+  if($('submitBtn')) $('submitBtn').textContent=growthSession.firstLocked ? '📄 보완 제출' : '📄 최초 제출';
 
   if(first){
     const title=first.grade==='A' && first.candidate ? '최초 평가 · A 후보(잠금)' :
@@ -636,16 +682,131 @@ function renderGrowthPanel(currentResult){
 }
 
 // 초기 복원
-setTimeout(()=>{ if(growthSession.firstLocked && growthSession.firstResult){ $('analysisArea').style.display='block'; $('coachIntro').style.display='none'; $('gradeArea').style.display='block'; renderGrowthPanel(growthSession.firstResult); } },0);
+setTimeout(()=>{ if($('submitBtn')) $('submitBtn').textContent=growthSession.firstLocked?'📄 보완 제출':'📄 최초 제출'; if(growthSession.firstLocked && growthSession.firstResult){ $('analysisArea').style.display='block'; $('coachIntro').style.display='none'; $('gradeArea').style.display='block'; renderGrowthPanel(growthSession.firstResult); } },0);
 
 
-$('photo').addEventListener('change', e=>{
-  const f=e.target.files?.[0];
-  if(!f) return;
+const photoInput=$('photo');
+const photoSelectBtn=$('photoSelectBtn');
+const photoCameraBtn=$('photoCameraBtn');
+const cameraPanel=$('cameraPanel');
+const cameraVideo=$('cameraVideo');
+const cameraCanvas=$('cameraCanvas');
+const cameraShotBtn=$('cameraShotBtn');
+const cameraCloseBtn=$('cameraCloseBtn');
+const capturedPanel=$('capturedPanel');
+const capturedPreview=$('capturedPreview');
+const retakeBtn=$('retakeBtn');
+const usePhotoBtn=$('usePhotoBtn');
+
+let cameraStream=null;
+let capturedDataUrl='';
+
+function stopCamera(){
+  if(cameraStream){
+    cameraStream.getTracks().forEach(track=>track.stop());
+    cameraStream=null;
+  }
+  if(cameraVideo) cameraVideo.srcObject=null;
+}
+
+async function openCamera(){
+  if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+    alert('이 브라우저에서는 카메라 직접 촬영 기능을 지원하지 않습니다. 「사진 선택」을 이용해 주세요.');
+    return;
+  }
+
+  try{
+    stopCamera();
+    cameraStream=await navigator.mediaDevices.getUserMedia({
+      video:{facingMode:{ideal:'environment'}},
+      audio:false
+    });
+
+    cameraVideo.srcObject=cameraStream;
+    cameraPanel.style.display='block';
+    capturedPanel.style.display='none';
+    capturedDataUrl='';
+  }catch(err){
+    let msg='카메라를 열 수 없습니다.';
+    if(err && err.name==='NotAllowedError') msg='카메라 권한이 허용되지 않았습니다. 브라우저 주소창의 카메라 권한을 허용한 뒤 다시 시도해 주세요.';
+    else if(err && err.name==='NotFoundError') msg='사용 가능한 카메라를 찾지 못했습니다.';
+    else if(err && err.name==='NotReadableError') msg='다른 프로그램이 카메라를 사용 중일 수 있습니다.';
+    alert(msg);
+  }
+}
+
+function captureCameraPhoto(){
+  if(!cameraVideo || !cameraVideo.videoWidth){
+    alert('카메라 화면이 준비될 때까지 잠시 기다린 뒤 다시 촬영해 주세요.');
+    return;
+  }
+
+  cameraCanvas.width=cameraVideo.videoWidth;
+  cameraCanvas.height=cameraVideo.videoHeight;
+  const ctx=cameraCanvas.getContext('2d');
+  ctx.drawImage(cameraVideo,0,0,cameraCanvas.width,cameraCanvas.height);
+  capturedDataUrl=cameraCanvas.toDataURL('image/jpeg',0.9);
+
+  capturedPreview.src=capturedDataUrl;
+  capturedPanel.style.display='block';
+  cameraPanel.style.display='none';
+  stopCamera();
+}
+
+function useCapturedPhoto(){
+  if(!capturedDataUrl) return;
+  $('preview').src=capturedDataUrl;
+  $('preview').style.display='block';
+  if($('photoFileName')) $('photoFileName').textContent='촬영한 사진 사용 중';
+  capturedPanel.style.display='none';
+}
+
+function handleSelectedPhoto(file){
+  if(!file){
+    if($('photoFileName')) $('photoFileName').textContent='선택된 사진 없음';
+    return;
+  }
+
+  if(!file.type.startsWith('image/')){
+    alert('이미지 파일만 사용할 수 있습니다.');
+    return;
+  }
+
   const r=new FileReader();
-  r.onload=()=>{$('preview').src=r.result;$('preview').style.display='block';};
-  r.readAsDataURL(f);
+  r.onload=()=>{
+    $('preview').src=r.result;
+    $('preview').style.display='block';
+    if($('photoFileName')) $('photoFileName').textContent=`선택 사진: ${file.name}`;
+  };
+  r.onerror=()=>alert('사진을 불러오지 못했습니다.');
+  r.readAsDataURL(file);
+}
+
+if(photoCameraBtn) photoCameraBtn.addEventListener('click',openCamera);
+if(photoSelectBtn && photoInput) photoSelectBtn.addEventListener('click',()=>photoInput.click());
+if(cameraShotBtn) cameraShotBtn.addEventListener('click',captureCameraPhoto);
+if(cameraCloseBtn) cameraCloseBtn.addEventListener('click',()=>{
+  stopCamera();
+  cameraPanel.style.display='none';
 });
+if(retakeBtn) retakeBtn.addEventListener('click',()=>{
+  capturedPanel.style.display='none';
+  capturedDataUrl='';
+  openCamera();
+});
+if(usePhotoBtn) usePhotoBtn.addEventListener('click',useCapturedPhoto);
+
+if(photoInput){
+  photoInput.addEventListener('change',e=>{
+    stopCamera();
+    cameraPanel.style.display='none';
+    capturedPanel.style.display='none';
+    capturedDataUrl='';
+    handleSelectedPhoto(e.target.files?.[0]);
+  });
+}
+
+window.addEventListener('beforeunload',stopCamera);
 
 function coach(){
   const p=getProduct();
@@ -660,7 +821,7 @@ function coach(){
 
   let positives=[];
   if(strength.length>=12) positives.push(strength);
-  else if($('process').value.trim().length>20) positives.push('표준 배합과 공정을 비교적 충실하게 기록했습니다.');
+  else if(($('formula').value.trim().length+$('process').value.trim().length)>20) positives.push('표준 배합과 공정을 비교적 충실하게 기록했습니다.');
   else positives.push('실습 결과를 스스로 돌아보고 다음 실습을 개선하려는 태도가 좋습니다.');
 
   let causes=[];
@@ -687,7 +848,7 @@ function coach(){
   $('fix').innerHTML='<strong>🛠 다음 실습 보완</strong><br>'+fixes.map((x,i)=>(i+1)+'. '+x).join('<br>');
   $('question').innerHTML='<strong>💬 코치 질문</strong><br>“'+p+'을 다시 만든다면, 오늘보다 더 나은 결과를 위해 <b>가장 먼저 바꿀 한 가지 행동</b>은 무엇인가요?”';
 
-  const m1=Math.min(100, ($('process').value.length*2)+($('topTemp').value?10:0)+($('bottomTemp').value?10:0)+($('time').value?15:0));
+  const m1=Math.min(100, ($('formula').value.length)+($('process').value.length)+($('topTemp').value?10:0)+($('bottomTemp').value?10:0)+($('time').value?15:0));
   const m2=Math.min(100, reflection.length*2 + improvement.length*2);
   const m3=Math.min(100, strength.length + reflection.length + improvement.length + Number($('score').value)*5);
   setMetric('m1',m1);setMetric('m2',m2);setMetric('m3',m3);
@@ -702,8 +863,17 @@ function coach(){
   growthSession.coachingCount=(growthSession.coachingCount||0)+1;
   const currentResult=evaluateLog();
   window.lastGradeResult=currentResult;
-  lockFirstAssessment(currentResult,'코칭 받기');
-  renderGrowthPanel(currentResult);
+
+  if(!growthSession.firstLocked){
+    document.querySelector('#gradeArea .gradeTitle').textContent='제출 전 학습 코칭';
+    $('gradeStamp').textContent='—';
+    $('gradeReason').textContent='코칭은 여러 번 받아도 등급에 영향을 주지 않습니다. 충분히 작성한 뒤 「최초 제출」을 눌렀을 때만 최초 등급이 확정됩니다.';
+    if($('lockedGradeText')) $('lockedGradeText').textContent='미제출';
+    if($('growthStatusText')) $('growthStatusText').textContent='코칭 진행 중';
+  }else{
+    renderGrowthPanel(currentResult);
+  }
+  if($('coachingCountText')) $('coachingCountText').textContent=(growthSession.coachingCount||0)+'회';
   saveSession();
 
   // ===== API 연결 지점 =====
@@ -721,72 +891,120 @@ function evaluateLog(){
   const practiceDate=$('date').value;
   const pad=n=>String(n).padStart(2,'0');
   const todayStr=`${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;
-  const onTime = !!practiceDate && practiceDate === todayStr;
-  const isLate = !!practiceDate && practiceDate < todayStr;
+  const onTime = REVIEW_MODE ? true : (!!practiceDate && practiceDate === todayStr);
+  const isLate = REVIEW_MODE ? false : (!!practiceDate && practiceDate < todayStr);
 
-  const fields=[
-    {ok:getProduct().trim().length>0, label:'실습 품목', weight:1},
-    {ok:$('date').value.trim().length>0, label:'실습일', weight:1},
-    {ok:$('goal').value.trim().length>=10, label:'요구사항', weight:1},
-    {ok:$('process').value.trim().length>=20, label:'표준 배합/공정', weight:2},
-    {ok:$('topTemp').value.trim().length>0, label:'오븐 윗불', weight:1},
-    {ok:$('bottomTemp').value.trim().length>0, label:'오븐 아랫불', weight:1},
-    {ok:$('time').value.trim().length>0, label:'굽기 시간', weight:1},
-    {ok:$('change').value.trim().length>=10, label:'실습 중 달라진 점', weight:1},
-    {ok:$('difficulty').value.trim().length>=10, label:'가장 어려웠던 점', weight:1},
-    {ok:$('strength').value.trim().length>=15, label:'오늘의 잘한 점', weight:2},
-    {ok:$('reflection').value.trim().length>=15, label:'반성할 점', weight:2},
-    {ok:$('improvement').value.trim().length>=15, label:'보완할 점', weight:2},
-    {ok:$('photo').files && $('photo').files.length>0, label:'완제품 사진', weight:2}
+  const formula=$('formula').value.trim();
+  const process=$('process').value.trim();
+  const change=$('change').value.trim();
+  const difficulty=$('difficulty').value.trim();
+  const strength=$('strength').value.trim();
+  const reflection=$('reflection').value.trim();
+  const improvement=$('improvement').value.trim();
+
+  // 핵심 원칙: 글자 수보다 실제 제조 과정 근거·원인·개선 행동을 더 중요하게 평가
+  const hasTop=$('topTemp').value.trim().length>0;
+  const hasBottom=$('bottomTemp').value.trim().length>0;
+  const hasTime=$('time').value.trim().length>0;
+  const bundle=[formula,process,change,difficulty,strength,reflection,improvement].join(' ');
+  const hasNumbers=/\d/.test(bundle);
+  const hasUnits=/(℃|도|분|초|g|그램|%|회|개|cm|mm|ml|배|단계)/i.test(bundle);
+  const hasCause=/(때문|원인|그래서|따라서|결과|부족|과다|높|낮|진|연|균일|불균일|발효|반죽|성형|팬닝|굽|혼합|휴지|온도|시간|중량|수분)/.test(reflection+' '+change+' '+difficulty);
+  const hasAction=/(다음에는|다음 실습|확인하|측정하|계량하|조절하|줄이|늘리|유지하|비교하|기록하|바꾸|개선하|적용하)/.test(improvement+' '+strength);
+
+  const processQuality=Math.min(100,
+    (formula ? 15:0) + (process ? 20:0) +
+    (hasTop?12:0)+(hasBottom?12:0)+(hasTime?12:0) +
+    (hasNumbers?12:0)+(hasUnits?12:0) +
+    (formula.length>=8?5:0)+(process.length>=12?5:0)
+  );
+
+  const reflectionQuality=Math.round(
+    (specificityScore(strength)+specificityScore(reflection)+specificityScore(improvement))/3
+  );
+
+  const reasoningQuality=Math.min(100,
+    (change ? 18:0)+(difficulty ? 18:0)+(reflection ? 20:0)+(improvement ? 20:0) +
+    (hasCause?12:0)+(hasAction?12:0)
+  );
+
+  const coreItems=[
+    getProduct().trim().length>0,
+    !!practiceDate,
+    $('goal').value.trim().length>0,
+    !!formula,
+    !!process,
+    hasTop,hasBottom,hasTime,
+    !!change,!!difficulty,!!strength,!!reflection,!!improvement
   ];
+  const completeness=Math.round(coreItems.filter(Boolean).length/coreItems.length*100);
 
-  const totalWeight=fields.reduce((a,x)=>a+x.weight,0);
-  const completedWeight=fields.filter(x=>x.ok).reduce((a,x)=>a+x.weight,0);
-  const completeness=Math.round((completedWeight/totalWeight)*100);
-  const missing=fields.filter(x=>!x.ok).map(x=>x.label);
   const integrity=analyzeIntegrity();
-
-  const reflectionFields=[$('strength').value.trim().length>=15,$('reflection').value.trim().length>=15,$('improvement').value.trim().length>=15].filter(Boolean).length;
-  const coreFilled=[$('process').value.trim().length>=20,$('strength').value.trim().length>=15,$('reflection').value.trim().length>=15,$('improvement').value.trim().length>=15,$('photo').files&&$('photo').files.length>0].filter(Boolean).length;
+  const evidenceScore=Math.round(
+    processQuality*0.35 +
+    reflectionQuality*0.35 +
+    reasoningQuality*0.20 +
+    completeness*0.10
+  );
 
   let grade='C', reason='', candidate=false;
-  if(onTime && completeness>=90 && reflectionFields===3 && coreFilled>=4 && integrity.specificity>=55){
+
+  if(evidenceScore>=82 && completeness>=85 && reflection && improvement){
     grade='A'; candidate=true;
-    reason='A 후보입니다. 실습일 당일 제출, 기록 충실도와 자기성찰의 구체성이 모두 우수합니다.';
-  }else if(onTime && completeness>=72 && reflectionFields>=2){
-    grade='B'; reason='실습일 당일에 제출했습니다. 주요 기록은 작성했지만 일부 기록의 구체성이나 완성도를 더 높일 수 있습니다.';
-  }else if(onTime){
-    grade='C'; reason='실습일 당일에 제출했지만 핵심 공정 기록 또는 자기성찰의 보완이 필요합니다.';
-  }else if(isLate && completeness>=75 && reflectionFields>=2){
-    grade='C'; reason='기록은 비교적 충실하지만 실습일 당일 제출 원칙을 지키지 못했습니다.';
-  }else if(isLate && completeness>=50){
-    grade='D'; reason='제출이 늦었고 실습 과정 또는 자기성찰 기록이 충분하지 않습니다.';
-  }else if(isLate && completeness>=30){
-    grade='E'; reason='제출이 늦었으며 핵심 기록과 자기성찰이 많이 비어 있어 보완이 필요합니다.';
-  }else if(isLate && completeness<30 && coreFilled<=1){
-    grade='F'; candidate=true; reason='F 후보입니다. 제출이 늦고 평가할 수 있는 실습 기록이 거의 없습니다.';
+    reason='A 후보입니다. 실제 제조 과정 근거, 원인 분석, 자기성찰과 개선 행동이 모두 구체적입니다.';
+  }else if(evidenceScore>=68 && completeness>=72){
+    grade='B';
+    reason='제조 과정 이해와 자기성찰이 전반적으로 충실합니다. 일부 기록을 조금 더 구체화하면 더욱 좋습니다.';
+  }else if(evidenceScore>=50 && completeness>=55){
+    grade='C';
+    reason='핵심 실습 내용은 작성했지만 제조 과정 근거, 원인 분석 또는 개선 행동 중 일부 보완이 필요합니다.';
+  }else if(evidenceScore>=35 || completeness>=40){
+    grade='D';
+    reason='실습 기록의 핵심 내용이 부족하여 제조 과정과 자기성찰을 더 구체적으로 작성할 필요가 있습니다.';
+  }else if(evidenceScore>=18 || completeness>=22){
+    grade='E';
+    reason='평가 가능한 기록이 매우 부족합니다. 실습 조건과 자기성찰의 핵심 항목을 보완해 주세요.';
   }else{
-    grade='D'; reason='실습일 또는 작성 상태를 충분히 확인하기 어렵습니다. 핵심 기록을 보완해 주세요.';
+    grade='F'; candidate=true;
+    reason='F 후보입니다. 평가할 수 있는 실습 기록이 거의 없습니다.';
   }
 
-  // 독창성 감점: 자동 AI 판별이 아니라 작성 흔적·구체성·문장 유사성을 함께 봄
-  const order=['A','B','C','D','E','F'];
-  const baseIndex=order.indexOf(grade);
-  let downgrade=0;
-  if(integrity.penalty>=25) downgrade=2;
-  else if(integrity.penalty>=12) downgrade=1;
-  if(downgrade>0){
-    const newIndex=Math.min(order.length-1,baseIndex+downgrade);
-    const old=grade; grade=order[newIndex]; candidate=(grade==='A'||grade==='F')?candidate:false;
-    reason += ` 작성 진정성 점검에서 ${integrity.penalty}점 감점되어 ${old}에서 ${grade}로 조정되었습니다.`;
+  // 지각 제출은 내용 등급에서 한 단계만 조정
+  if(isLate){
+    const order=['A','B','C','D','E','F'];
+    grade=order[Math.min(order.length-1,order.indexOf(grade)+1)];
+    candidate=false;
+    reason += ' 다만 실습일 당일 최초 제출 원칙을 지키지 않아 한 단계 조정되었습니다.';
   }
 
-  const deadlineText = !practiceDate ? '실습일 미입력' : (onTime ? '당일 제출' : (isLate ? '제출 지연' : '실습일 확인 필요'));
-  const titleText = grade==='A' && candidate ? '실습일지 자동 평가 · A 후보' : (grade==='F' && candidate ? '실습일지 자동 평가 · F 후보' : `실습일지 자동 평가 · ${grade}`);
+  // 작성 진정성 감점은 매우 높은 위험 신호가 함께 있을 때만 한 단계 반영
+  if(integrity.penalty>=25){
+    const order=['A','B','C','D','E','F'];
+    grade=order[Math.min(order.length-1,order.indexOf(grade)+1)];
+    candidate=false;
+    reason += ' 작성 진정성 점검에서 높은 유사성과 낮은 구체성이 함께 확인되어 한 단계 조정되었습니다.';
+  }
+
+  const missing=[];
+  if(!formula) missing.push('표준 배합');
+  if(!process) missing.push('만드는 방법');
+  if(!hasTop) missing.push('오븐 윗불');
+  if(!hasBottom) missing.push('오븐 아랫불');
+  if(!hasTime) missing.push('굽기 시간');
+  if(!reflection) missing.push('반성할 점');
+  if(!improvement) missing.push('보완할 점');
+
+  const deadlineText = REVIEW_MODE ? '과거 기록 평가모드' :
+    (!practiceDate ? '실습일 미입력' : (onTime ? '당일 제출' : (isLate ? '제출 지연' : '실습일 확인 필요')));
+
+  const titleText = grade==='A' && candidate ? '실습일지 자동 평가 · A 후보' :
+    (grade==='F' && candidate ? '실습일지 자동 평가 · F 후보' : `실습일지 자동 평가 · ${grade}`);
+
   document.querySelector('#gradeArea .gradeTitle').textContent=titleText;
   $('gradeStamp').textContent=grade;
   $('gradeReason').textContent=reason;
-  $('gradeMeta').textContent=`작성 충실도 ${completeness}% · 구체성 ${integrity.specificity}% · ${deadlineText}` + (missing.length ? ` · 보완: ${missing.slice(0,3).join(', ')}${missing.length>3?' 외':''}` : ' · 핵심 기록 충실');
+  $('gradeMeta').textContent=`실습 근거 ${evidenceScore}% · 작성 충실도 ${completeness}% · 성찰 구체성 ${reflectionQuality}% · ${deadlineText}` +
+    (missing.length ? ` · 보완: ${missing.slice(0,3).join(', ')}${missing.length>3?' 외':''}` : ' · 핵심 기록 충실');
 
   const cls=integrity.penalty===0?'integrityGood':(integrity.penalty<18?'integrityWarn':'integrityBad');
   const detail=integrity.flags.length?integrity.flags.join(' · '):'개인 실습의 구체적 기록이 확인되었습니다.';
@@ -795,8 +1013,10 @@ function evaluateLog(){
 
   return {
     grade,candidate,completeness,onTime,deadlineText,missing,integrity,reason,
+    evidenceScore,reflectionQuality,processQuality,reasoningQuality,
     evaluatedAt:now.toISOString(),classSize:20,aMax:4,fMax:2,
-    policy: grade==='A' ? '평균 20명 기준 최대 4명(20%) 범위에서 최종 A 확정' : (grade==='F' ? '평균 20명 기준 필요 시 최대 2명(10%), 해당자 없으면 F 미부여' : '절대기준 자동 판정')
+    policy: grade==='A' ? '평균 20명 기준 최대 4명(20%) 범위에서 최종 A 확정' :
+      (grade==='F' ? '평균 20명 기준 필요 시 최대 2명(10%), 해당자 없으면 F 미부여' : '실습 근거·제조 과정 이해·성찰 중심 자동 판정')
   };
 }
 
@@ -816,15 +1036,26 @@ function fitText(text, max=230){
   return t || '-';
 }
 
-function showSubmitView(){
-  // 최초 제출 시 등급을 잠그고, 이후 제출은 보완 제출로 기록
+function submitPractice(){
   const currentResult=evaluateLog();
   window.lastGradeResult=currentResult;
+
   if(!growthSession.firstLocked){
-    lockFirstAssessment(currentResult,'제출하기');
+    lockFirstAssessment(currentResult,'최초 제출');
+    growthSession.growthStatus='최초 평가 완료';
   }else{
     registerRevisionIfChanged();
+    growthSession.growthStatus=calculateGrowthStatus(currentResult);
   }
+
+  renderGrowthPanel(currentResult);
+  saveSession();
+  showSubmitView();
+}
+
+function showSubmitView(){
+  const currentResult=evaluateLog();
+  window.lastGradeResult=currentResult;
   renderGrowthPanel(currentResult);
   saveSession();
 
@@ -848,6 +1079,7 @@ function showSubmitView(){
   $('a4BottomTemp').textContent=d.bottomTemp ? d.bottomTemp+'℃' : '-';
   $('a4Time').textContent=d.time ? d.time+'분' : '-';
   $('a4Score').textContent=(d.score||'-')+' / 5';
+  $('a4Formula').textContent=fitText(d.formula);
   $('a4Process').textContent=fitText(d.process);
   $('a4Change').textContent=fitText(d.change);
   $('a4Difficulty').textContent=fitText(d.difficulty);
@@ -883,7 +1115,7 @@ function closeSubmitView(){
 function collect(){
   return {
     category:$('category').value, product:getProduct(), date:$('date').value,
-    goal:$('goal').value, process:$('process').value, topTemp:$('topTemp').value,
+    goal:$('goal').value, formula:$('formula').value, process:$('process').value, topTemp:$('topTemp').value,
     bottomTemp:$('bottomTemp').value, time:$('time').value, change:$('change').value, difficulty:$('difficulty').value,
     score:$('score').value, strength:$('strength').value, reflection:$('reflection').value,
     improvement:$('improvement').value,
@@ -915,11 +1147,11 @@ function saveLog(){
 
 function downloadTxt(){
   const d=collect();
-  const text=`[제과·제빵 AI 실습일지]\n실습 품목: ${d.product}\n실습일: ${d.date}\n제출기준: 실습일 당일 제출\n최초 평가 등급: ${d.firstGrade ? (d.firstGrade + (d.firstCandidate ? ' 후보' : '')) : '최초 코칭/제출 후 확정'}
+  const text=`[제과·제빵 AI 실습일지]\n실습 품목: ${d.product}\n실습일: ${d.date}\n제출기준: 코칭은 자유롭게 사용 가능 / 최초 제출 시 등급 확정\n최초 평가 등급: ${d.firstGrade ? (d.firstGrade + (d.firstCandidate ? ' 후보' : '')) : '최초 제출 후 확정'}
 현재 자동 분석 등급: ${d.grade ? (d.grade + (d.candidate ? ' 후보' : '')) : '코칭 후 산출'}
 코칭 횟수: ${d.coachingCount}회
 보완 제출: ${d.revisionCount}회
-성장 상태: ${d.growthStatus}\n등급 적용 기준: ${d.policy || '코칭 후 산출'}\n작성 충실도: ${d.completeness === '' ? '코칭 후 산출' : d.completeness+'%'}\n제출 상태: ${d.deadlineStatus || '코칭 후 산출'}\n작성 진정성: ${d.integrity?.status || '코칭 후 산출'}\n독창성 점수: ${d.integrity?.originality ?? '-'}%\n진정성 감점: ${d.integrity?.penalty ?? 0}점\n\n1. 요구사항\n${d.goal}\n\n2. 표준 배합/공정\n${d.process}\n\n3. 실제 조건\n오븐 윗불: ${d.topTemp}℃\n오븐 아랫불: ${d.bottomTemp}℃\n굽기 시간: ${d.time}분\n\n4. 실습 중 달라진 점\n${d.change}\n\n5. 가장 어려웠던 점\n${d.difficulty}\n\n6. 자기평가\n만족도: ${d.score}/5\n오늘의 잘한 점: ${d.strength}\n반성할 점: ${d.reflection}\n보완할 점: ${d.improvement}\n`;
+성장 상태: ${d.growthStatus}\n등급 적용 기준: ${d.policy || '코칭 후 산출'}\n작성 충실도: ${d.completeness === '' ? '코칭 후 산출' : d.completeness+'%'}\n제출 상태: ${d.deadlineStatus || '코칭 후 산출'}\n작성 진정성: ${d.integrity?.status || '코칭 후 산출'}\n독창성 점수: ${d.integrity?.originality ?? '-'}%\n진정성 감점: ${d.integrity?.penalty ?? 0}점\n\n1. 요구사항\n${d.goal}\n\n2. 표준 배합/만드는 방법\n${d.process}\n\n4. 실제 조건\n오븐 윗불: ${d.topTemp}℃\n오븐 아랫불: ${d.bottomTemp}℃\n굽기 시간: ${d.time}분\n\n5. 실습 중 달라진 점\n${d.change}\n\n6. 가장 어려웠던 점\n${d.difficulty}\n\n7. 자기평가\n만족도: ${d.score}/5\n오늘의 잘한 점: ${d.strength}\n반성할 점: ${d.reflection}\n보완할 점: ${d.improvement}\n`;
   const blob=new Blob([text],{type:'text/plain;charset=utf-8'});
   const a=document.createElement('a');
   a.href=URL.createObjectURL(blob);
@@ -931,18 +1163,19 @@ function downloadTxt(){
 
 function resetForm(){
   if(!confirm('현재 입력 내용을 지우고 새 실습을 시작할까요?')) return;
-  ['process','topTemp','bottomTemp','time','change','difficulty','strength','reflection','improvement','customProduct'].forEach(id=>$(id).value='');
+  ['formula','process','topTemp','bottomTemp','time','change','difficulty','strength','reflection','improvement','customProduct'].forEach(id=>$(id).value='');
   $('category').value='pastry'; updateProducts();
   $('score').value=3;$('scoreText').textContent='3 / 5';
-  $('preview').style.display='none';$('photo').value='';
+  $('preview').style.display='none'; $('preview').src=''; $('photo').value=''; stopCamera(); if(cameraPanel) cameraPanel.style.display='none'; if(capturedPanel) capturedPanel.style.display='none'; capturedDataUrl=''; if($('photoFileName')) $('photoFileName').textContent='선택된 사진 없음';
   $('analysisArea').style.display='none';$('coachIntro').style.display='block';$('gradeArea').style.display='none';window.lastGradeResult=null;
   $('date').valueAsDate=new Date();
   writingAudit.pasteCount=0; writingAudit.pasteChars=0; writingAudit.pastedFields={}; writingAudit.inputEvents={};
   growthSession=freshSession(); saveSession();
-  if($('lockedGradeText')) $('lockedGradeText').textContent='-';
+  if($('lockedGradeText')) $('lockedGradeText').textContent='미제출';
   if($('coachingCountText')) $('coachingCountText').textContent='0회';
   if($('revisionCountText')) $('revisionCountText').textContent='0회';
   if($('growthStatusText')) $('growthStatusText').textContent='최초 제출 전';
+  if($('submitBtn')) $('submitBtn').textContent='📄 최초 제출';
 }
 
 // ===== PWA 설치 =====
