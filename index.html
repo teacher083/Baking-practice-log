@@ -6,7 +6,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
 <meta http-equiv="Pragma" content="no-cache"/>
 <meta http-equiv="Expires" content="0"/>
-<title>제과·제빵 AI 실습코치 | V7 주소배포 최신반영형</title>
+<title>제과·제빵 AI 실습코치 | V8 캐시초기화 주소배포형</title>
 <style>
 :root{
   --bg:#fff8f7; --bg2:#fffdfc; --card:#ffffff; --ink:#2f2726; --muted:#7c6f6c;
@@ -60,8 +60,7 @@ button{border:0;border-radius:12px;padding:11px 14px;font-weight:800;cursor:poin
 hr{border:0;border-top:1px solid var(--line);margin:16px 0}
 @media(max-width:760px){.grid,.row{grid-template-columns:1fr}.full{grid-column:auto}.metric{grid-template-columns:95px 1fr 38px}.checks{grid-template-columns:1fr}}
 
-
-/* ===== 제출용 A4 자동 페이지 보기 (내용에 따라 1~2장 이상) ===== */
+/* ===== 제출용 A4 자동 페이지 보기 ===== */
 #submitView{display:none;position:fixed;inset:0;z-index:9999;background:#eef1f4;overflow:auto;padding:24px 12px}
 .submitToolbar{max-width:210mm;margin:0 auto 12px;display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap}
 .submitToolbar button{box-shadow:0 4px 14px rgba(0,0,0,.08)}
@@ -88,7 +87,17 @@ hr{border:0;border-top:1px solid var(--line);margin:16px 0}
 .a4Coach p{margin:0;font-size:10pt;line-height:1.55;white-space:pre-wrap;word-break:break-word;overflow-wrap:anywhere}
 .a4Footer{position:static;margin-top:10px;border-top:1px solid #ddd;padding-top:5px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:8.5pt;color:#777;break-inside:avoid;page-break-inside:avoid}
 .a4Status{color:#d81e3f;font-weight:900}
-@media(max-width:900px){#submitView{padding:8px}.a4Page{width:100%;min-height:auto;padding:14px}.submitToolbar{max-width:none}.a4Footer{position:static;margin-top:10px}.a4Meta{grid-template-columns:1fr 1fr}.a4Top,.a4Reflect{grid-template-columns:1fr}.a4Photo img{height:210px}}
+
+@media(max-width:900px){
+  #submitView{padding:8px}
+  .a4Page{width:100%;min-height:auto;padding:14px}
+  .submitToolbar{max-width:none}
+  .a4Footer{position:static;margin-top:10px}
+  .a4Meta{grid-template-columns:1fr 1fr}
+  .a4Top,.a4Reflect{grid-template-columns:1fr}
+  .a4Photo img{height:210px}
+}
+
 @media print{
   @page{size:A4 portrait;margin:10mm 10mm 11mm}
   html,body{background:#fff!important;height:auto!important;overflow:visible!important}
@@ -123,40 +132,66 @@ hr{border:0;border-top:1px solid var(--line);margin:16px 0}
   .a4Photo img{max-height:62mm;object-fit:contain;background:#fff}
 }
 
-
 .integrityBox{margin-top:12px;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:color-mix(in srgb,var(--soft) 35%,white);font-size:13px;line-height:1.55}
 .integrityBox b{color:var(--accent2)}
-.integrityGood{color:#1f7a53;font-weight:800}.integrityWarn{color:#a26a00;font-weight:800}.integrityBad{color:#b42318;font-weight:800}
+.integrityGood{color:#1f7a53;font-weight:800}
+.integrityWarn{color:#a26a00;font-weight:800}
+.integrityBad{color:#b42318;font-weight:800}
 
 .learningPolicy{margin-top:12px;padding:12px 14px;border-radius:14px;background:linear-gradient(135deg,color-mix(in srgb,var(--soft) 60%,white),white);border:1px solid color-mix(in srgb,var(--accent) 25%,white);font-size:12px;line-height:1.6}
 .learningPolicy b{color:var(--accent2)}
 .progressPanel{margin-top:12px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
 .progressItem{border:1px solid var(--line);background:#fff;border-radius:12px;padding:10px;text-align:center}
-.progressItem b{display:block;font-size:11px;color:var(--muted);margin-bottom:4px}.progressItem span{font-size:15px;font-weight:900;color:var(--accent2)}
+.progressItem b{display:block;font-size:11px;color:var(--muted);margin-bottom:4px}
+.progressItem span{font-size:15px;font-weight:900;color:var(--accent2)}
 .lockedGrade{color:#d81e3f!important}
-.growthBadge{display:inline-block;padding:5px 9px;border-radius:999px;background:var(--soft);color:var(--accent2);font-weight:800;font-size:12px;margin-top:6px}
 
 .a4Progress{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:7px 0 9px}
 .a4Progress .a4MetaItem{text-align:center}
-@media(max-width:760px){.progressPanel{grid-template-columns:1fr 1fr}.a4Progress{grid-template-columns:1fr 1fr}}
-@media print{.learningPolicy,.progressPanel{break-inside:avoid;page-break-inside:avoid}}
 
+@media(max-width:760px){
+  .progressPanel{grid-template-columns:1fr 1fr}
+  .a4Progress{grid-template-columns:1fr 1fr}
+}
 
 .processLarge{min-height:180px!important;line-height:1.6}
 
-
 .photoActions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:12px}
 .photoActions button{min-width:140px}
-@media(max-width:520px){.photoActions{display:grid;grid-template-columns:1fr 1fr}.photoActions button{min-width:0}}
-
+@media(max-width:520px){
+  .photoActions{display:grid;grid-template-columns:1fr 1fr}
+  .photoActions button{min-width:0}
+}
 
 .cameraPanel,.capturedPanel{margin-top:14px;padding:10px;border:1px solid var(--line);border-radius:14px;background:#fff}
 #cameraVideo,#capturedPreview{width:100%;max-height:360px;object-fit:contain;border-radius:12px;background:#111;display:block}
 .cameraControls{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:10px}
-@media(max-width:520px){#cameraVideo,#capturedPreview{max-height:280px}}
-
+@media(max-width:520px){
+  #cameraVideo,#capturedPreview{max-height:280px}
+}
 </style>
+
+<script>
+(function(){
+  async function clearOldAppCache(){
+    try{
+      if('serviceWorker' in navigator){
+        const regs=await navigator.serviceWorker.getRegistrations();
+        await Promise.all(regs.map(r=>r.unregister()));
+      }
+      if('caches' in window){
+        const keys=await caches.keys();
+        await Promise.all(keys.map(k=>caches.delete(k)));
+      }
+    }catch(e){
+      console.warn('기존 캐시 정리 실패',e);
+    }
+  }
+  clearOldAppCache();
+})();
+</script>
 </head>
+
 <body>
 <div class="wrap">
 <header>
@@ -165,7 +200,11 @@ hr{border:0;border-top:1px solid var(--line);margin:16px 0}
     <h1>제과·제빵 AI 실습코치</h1>
     <div class="sub">제과·제빵·디저트 등 다양한 실습에 사용할 수 있는 코칭형 AI 실습일지</div>
     <div class="badges">
-      <span class="badge">범용 실습일지</span><span class="badge">학습성장형 평가</span><span class="badge">주소 접속형</span><span class="badge">V7 최신반영형</span><span class="badge" id="themeBadge">이번 달 테마</span>
+      <span class="badge">범용 실습일지</span>
+      <span class="badge">학습성장형 평가</span>
+      <span class="badge">주소 접속형</span>
+      <span class="badge">V8 캐시초기화형</span>
+      <span class="badge" id="themeBadge">이번 달 테마</span>
     </div>
     <div class="themeHint" id="themeHint">이번 달 디저트 테마를 불러오는 중입니다.</div>
   </div>
@@ -174,6 +213,7 @@ hr{border:0;border-top:1px solid var(--line);margin:16px 0}
 <div class="grid">
   <section class="card">
     <h2>① 오늘의 실습</h2>
+
     <label>실습 분야</label>
     <select id="category" onchange="updateProducts()">
       <option value="pastry">제과기능사 20품목</option>
@@ -183,33 +223,67 @@ hr{border:0;border-top:1px solid var(--line);margin:16px 0}
 
     <label>실습 품목</label>
     <select id="product" onchange="toggleCustomProduct()"></select>
-    <input id="customProduct" placeholder="목록에 없는 실습 품목을 직접 입력하세요. 예: 동백 마들렌, 티라미수, 부산 시그니처 디저트" style="display:none;margin-top:8px">
-    <div class="note">제과·제빵기능사 품목은 목록에서 선택하고, 교과서·학교 자체 실습·창작 제품은 직접 입력할 수 있습니다.</div>
+
+    <input
+      id="customProduct"
+      placeholder="목록에 없는 실습 품목을 직접 입력하세요."
+      style="display:none;margin-top:8px"
+    >
 
     <label>실습일</label>
     <input id="date" type="date">
-    <div class="note">실습일이 제출기한입니다. 코칭 횟수와 관계없이 최초 제출 시점과 실습일을 비교하여 제출 상태를 판단합니다.</div>
+
+    <div class="note">
+      실습일이 제출기한입니다. 코칭은 여러 번 받을 수 있으며 최초 제출 시에만 등급이 확정됩니다.
+    </div>
 
     <label>요구사항</label>
-    <input id="goal" value="제품의 표준 공정을 지키고 완제품의 형태·색·굽기 상태를 스스로 평가한다.">
+    <input
+      id="goal"
+      value="제품의 표준 공정을 지키고 완제품의 형태·색·굽기 상태를 스스로 평가한다."
+    >
 
     <label>표준 배합</label>
-    <textarea id="formula" placeholder="예: 박력분 100g / 버터 100g / 설탕 90g / 달걀 100g"></textarea>
+    <textarea
+      id="formula"
+      placeholder="예: 박력분 100g / 버터 100g / 설탕 90g / 달걀 100g"
+    ></textarea>
   </section>
 
   <section class="card">
     <h2>② 완제품 사진 · 만드는 방법</h2>
+
     <label>만드는 방법</label>
-    <textarea id="process" class="processLarge" placeholder="예: 1. 버터를 부드럽게 풀어 준다.&#10;2. 설탕을 2~3회 나누어 넣고 충분히 혼합한다.&#10;3. 달걀을 조금씩 나누어 넣어 분리되지 않도록 혼합한다.&#10;4. 체친 가루류를 넣고 주걱으로 섞는다.&#10;5. 팬닝 후 윗불·아랫불 온도에 맞춰 굽는다."></textarea>
-    <div class="note">제품을 실제로 만든 순서대로 단계별로 적고, 중요한 작업 포인트도 함께 기록하세요.</div>
+    <textarea
+      id="process"
+      class="processLarge"
+      placeholder="예:
+1. 버터를 부드럽게 풀어 준다.
+2. 설탕을 나누어 넣고 충분히 혼합한다.
+3. 달걀을 조금씩 나누어 넣는다.
+4. 체친 가루류를 넣는다.
+5. 팬닝 후 굽는다."
+    ></textarea>
+
+    <div class="note">
+      제품을 실제로 만든 순서대로 단계별로 기록하세요.
+    </div>
 
     <div class="photoBox">
       <strong>📷 완제품 사진을 올려 주세요</strong>
-      <div class="note">정면 또는 45° 각도에서 제품 전체가 보이도록 촬영하세요.</div>
+
+      <div class="note">
+        정면 또는 45° 각도에서 제품 전체가 보이도록 촬영하세요.
+      </div>
 
       <div class="photoActions">
-        <button type="button" class="secondary" id="photoCameraBtn">📷 사진 촬영</button>
-        <button type="button" class="secondary" id="photoSelectBtn">📁 사진 선택</button>
+        <button type="button" class="secondary" id="photoCameraBtn">
+          📷 사진 촬영
+        </button>
+
+        <button type="button" class="secondary" id="photoSelectBtn">
+          📁 사진 선택
+        </button>
       </div>
 
       <input id="photo" type="file" accept="image/*" hidden>
@@ -217,965 +291,2302 @@ hr{border:0;border-top:1px solid var(--line);margin:16px 0}
       <div id="cameraPanel" class="cameraPanel" style="display:none">
         <video id="cameraVideo" autoplay playsinline muted></video>
         <canvas id="cameraCanvas" style="display:none"></canvas>
+
         <div class="cameraControls">
-          <button type="button" class="primary" id="cameraShotBtn">📸 촬영</button>
-          <button type="button" class="ghost" id="cameraCloseBtn">✕ 카메라 닫기</button>
+          <button type="button" class="primary" id="cameraShotBtn">
+            📸 촬영
+          </button>
+
+          <button type="button" class="ghost" id="cameraCloseBtn">
+            ✕ 카메라 닫기
+          </button>
         </div>
       </div>
 
       <div id="capturedPanel" class="capturedPanel" style="display:none">
         <img id="capturedPreview" alt="촬영 사진 미리보기">
+
         <div class="cameraControls">
-          <button type="button" class="secondary" id="retakeBtn">↻ 다시 찍기</button>
-          <button type="button" class="primary" id="usePhotoBtn">✓ 이 사진 사용</button>
+          <button type="button" class="secondary" id="retakeBtn">
+            ↻ 다시 찍기
+          </button>
+
+          <button type="button" class="primary" id="usePhotoBtn">
+            ✓ 이 사진 사용
+          </button>
         </div>
       </div>
 
-      <div id="photoFileName" class="small" style="margin-top:8px">선택된 사진 없음</div>
+      <div id="photoFileName" class="small" style="margin-top:8px">
+        선택된 사진 없음
+      </div>
+
       <img id="preview" alt="업로드 미리보기">
     </div>
-    <div class="note">※ 사진은 현재 브라우저에서 미리보기와 A4 제출본에만 사용됩니다.</div>
   </section>
 
   <section class="card">
     <h2>③ 과정 기록</h2>
+
     <div class="row">
-      <div><label>실제 오븐 윗불(℃)</label><input id="topTemp" type="number" placeholder="180"></div>
-      <div><label>실제 오븐 아랫불(℃)</label><input id="bottomTemp" type="number" placeholder="160"></div>
+      <div>
+        <label>실제 오븐 윗불(℃)</label>
+        <input id="topTemp" type="number" placeholder="180">
+      </div>
+
+      <div>
+        <label>실제 오븐 아랫불(℃)</label>
+        <input id="bottomTemp" type="number" placeholder="160">
+      </div>
     </div>
+
     <label>실제 굽기 시간(분)</label>
     <input id="time" type="number" placeholder="13">
+
     <label>실습 중 달라진 점</label>
-    <textarea id="change" placeholder="예: 반죽 휴지시간이 15분 부족했다. 팬에 반죽을 조금 많이 담았다."></textarea>
+    <textarea
+      id="change"
+      placeholder="예: 반죽 휴지시간이 부족했다."
+    ></textarea>
 
     <label>가장 어려웠던 점</label>
-    <textarea id="difficulty" placeholder="예: 반죽 농도를 판단하기 어려웠다."></textarea>
+    <textarea
+      id="difficulty"
+      placeholder="예: 반죽 농도를 판단하기 어려웠다."
+    ></textarea>
   </section>
 
   <section class="card">
     <h2>④ 학생 자기평가</h2>
 
     <label>오늘 제품 만족도</label>
-    <input id="score" type="range" min="1" max="5" value="3" oninput="scoreText.textContent=this.value+' / 5'">
+    <input
+      id="score"
+      type="range"
+      min="1"
+      max="5"
+      value="3"
+      oninput="scoreText.textContent=this.value+' / 5'"
+    >
+
     <div id="scoreText" class="small">3 / 5</div>
 
     <label>오늘의 잘한 점</label>
-    <textarea id="strength" placeholder="오늘 실습에서 내가 잘했다고 생각하는 점을 구체적으로 적어 보세요. 예: 반죽 온도를 확인하며 작업하여 지난 실습보다 상태가 안정적이었다."></textarea>
+    <textarea id="strength"></textarea>
 
     <label>반성할 점</label>
-    <textarea id="reflection" placeholder="실습 과정이나 완제품에서 아쉬웠던 점과 그 이유를 생각하여 적어 보세요."></textarea>
+    <textarea id="reflection"></textarea>
 
     <label>보완할 점</label>
-    <textarea id="improvement" placeholder="다음 실습에서 무엇을 어떻게 바꿀 것인지 구체적인 행동으로 적어 보세요."></textarea>
+    <textarea id="improvement"></textarea>
   </section>
 
   <section class="card full">
     <h2>⑤ AI 실습코치</h2>
+
     <div class="learningPolicy">
       <b>📌 학습성장형 평가 안내</b><br>
-      「코칭 받기」는 여러 번 사용할 수 있으며 <b>등급에 영향을 주지 않습니다.</b><br>
-      내용을 충분히 작성한 뒤 <b>「최초 제출」</b>을 눌렀을 때만 최초 평가 등급이 잠깁니다. 이후 수정은 <b>보완 제출</b>로 기록되며 최초 등급은 바뀌지 않습니다.
+      「코칭 받기」는 여러 번 사용할 수 있으며 등급에 영향을 주지 않습니다.<br>
+      「최초 제출」을 눌렀을 때만 최초 평가 등급이 확정됩니다.<br>
+      이후 수정은 보완 제출로 기록됩니다.
     </div>
+
     <div class="coach">
-      <div class="coachHead"><div class="avatar">👩‍🍳</div><div><strong>제과·제빵 AI 실습코치</strong><div class="small">정답을 대신 주기보다 원인을 찾고 다음 행동을 제안합니다.</div></div></div>
-      <div id="coachIntro" class="chat">실습기록과 자기평가를 작성한 뒤 <strong>「코칭 받기」</strong>를 눌러 주세요.</div>
+      <div class="coachHead">
+        <div class="avatar">👩‍🍳</div>
+        <div>
+          <strong>제과·제빵 AI 실습코치</strong>
+          <div class="small">
+            원인을 찾고 다음 행동을 제안합니다.
+          </div>
+        </div>
+      </div>
+
+      <div id="coachIntro" class="chat">
+        실습기록과 자기평가를 작성한 뒤
+        <strong>「코칭 받기」</strong>를 눌러 주세요.
+      </div>
 
       <div id="analysisArea" style="display:none">
+
         <h3>코칭 결과</h3>
+
         <div id="good" class="chat"></div>
         <div id="cause" class="chat"></div>
         <div id="fix" class="chat"></div>
         <div id="question" class="chat"></div>
 
         <h3>자기평가 기반 품질 점검</h3>
-        <div class="metric"><span>공정 기록</span><div class="bar"><div id="m1" class="fill" style="width:0%"></div></div><b id="m1t">0</b></div>
-        <div class="metric"><span>원인 추론</span><div class="bar"><div id="m2" class="fill" style="width:0%"></div></div><b id="m2t">0</b></div>
-        <div class="metric"><span>성찰 기록</span><div class="bar"><div id="m3" class="fill" style="width:0%"></div></div><b id="m3t">0</b></div>
+
+        <div class="metric">
+          <span>공정 기록</span>
+          <div class="bar">
+            <div id="m1" class="fill" style="width:0%"></div>
+          </div>
+          <b id="m1t">0</b>
+        </div>
+
+        <div class="metric">
+          <span>원인 추론</span>
+          <div class="bar">
+            <div id="m2" class="fill" style="width:0%"></div>
+          </div>
+          <b id="m2t">0</b>
+        </div>
+
+        <div class="metric">
+          <span>성찰 기록</span>
+          <div class="bar">
+            <div id="m3" class="fill" style="width:0%"></div>
+          </div>
+          <b id="m3t">0</b>
+        </div>
 
         <div id="mission" class="mission"></div>
 
         <div id="gradeArea" class="gradeWrap" style="display:none">
           <div class="gradeTitle">실습일지 자동 평가</div>
+
           <div id="gradeStamp" class="gradeStamp">A</div>
+
           <div id="gradeReason" class="gradeReason"></div>
+
           <div id="gradeMeta" class="gradeMeta"></div>
-          <div id="integrityBox" class="integrityBox">작성 진정성 분석은 코칭 후 자동 표시됩니다.</div>
-          <div class="progressPanel">
-            <div class="progressItem"><b>최초 평가</b><span id="lockedGradeText" class="lockedGrade">미제출</span></div>
-            <div class="progressItem"><b>코칭 횟수</b><span id="coachingCountText">0회</span></div>
-            <div class="progressItem"><b>보완 제출</b><span id="revisionCountText">0회</span></div>
-            <div class="progressItem"><b>성장 상태</b><span id="growthStatusText" style="font-size:12px">최초 제출 전</span></div>
+
+          <div id="integrityBox" class="integrityBox">
+            작성 진정성 분석은 코칭 후 자동 표시됩니다.
           </div>
-          <div class="gradePolicy">A는 실습일 당일 제출자 중 기록과 자기성찰이 매우 충실한 학생을 대상으로 합니다. 평균 20명 학급 기준 최대 4명(20%)까지 최종 확정합니다. F는 사실상 미작성 수준에만 적용하며 평균 20명 기준 최대 2명(10%) 이내이고, 해당 학생이 없으면 부여하지 않습니다.</div>
+
+          <div class="progressPanel">
+            <div class="progressItem">
+              <b>최초 평가</b>
+              <span id="lockedGradeText" class="lockedGrade">미제출</span>
+            </div>
+
+            <div class="progressItem">
+              <b>코칭 횟수</b>
+              <span id="coachingCountText">0회</span>
+            </div>
+
+            <div class="progressItem">
+              <b>보완 제출</b>
+              <span id="revisionCountText">0회</span>
+            </div>
+
+            <div class="progressItem">
+              <b>성장 상태</b>
+              <span id="growthStatusText" style="font-size:12px">
+                최초 제출 전
+              </span>
+            </div>
+          </div>
+
+          <div class="gradePolicy">
+            A는 학급 전체 결과를 비교하여 최종 확정합니다.
+          </div>
         </div>
       </div>
     </div>
 
     <div class="actions">
-      <button class="primary" onclick="coach()">✨ 코칭 받기</button>
-      <button class="secondary" id="submitBtn" onclick="submitPractice()">📄 최초 제출</button>
-      <button class="ghost" onclick="saveLog()">💾 임시 저장</button>
-      <button class="ghost" onclick="downloadTxt()">⬇ 기록 내려받기</button>
-      <button class="ghost" onclick="resetForm()">↻ 새 실습 시작</button>
+      <button class="primary" onclick="coach()">
+        ✨ 코칭 받기
+      </button>
+
+      <button
+        class="secondary"
+        id="submitBtn"
+        onclick="submitPractice()"
+      >
+        📄 최초 제출
+      </button>
+
+      <button class="ghost" onclick="saveLog()">
+        💾 임시 저장
+      </button>
+
+      <button class="ghost" onclick="downloadTxt()">
+        ⬇ 기록 내려받기
+      </button>
+
+      <button class="ghost" onclick="resetForm()">
+        ↻ 새 실습 시작
+      </button>
     </div>
-    <div id="saved" class="saved">저장되었습니다. 이 브라우저에 실습기록이 보관됩니다.</div>
+
+    <div id="saved" class="saved">
+      저장되었습니다.
+    </div>
   </section>
-
-
 </div>
 
-<div class="footer">제과·제빵 실습코치 · 주소 접속형 · 월별 디저트 테마 · 최신 버전 자동 반영</div>
+<div class="footer">
+  제과·제빵 실습코치 · 주소 접속형 · 월별 디저트 테마 · 최신 버전 반영
 </div>
-
+</div>
 
 <div id="submitView" aria-hidden="true">
+
   <div class="submitToolbar">
-    <button class="ghost" onclick="closeSubmitView()">← 작성 화면으로</button>
-    <button class="primary" onclick="window.print()">🖨 인쇄 · PDF 저장</button>
+    <button class="ghost" onclick="closeSubmitView()">
+      ← 작성 화면으로
+    </button>
+
+    <button class="primary" onclick="window.print()">
+      🖨 인쇄 · PDF 저장
+    </button>
   </div>
+
   <article class="a4Page" id="a4Page">
+
     <div class="a4Header">
       <div>
-        <div class="a4Title">제과·제빵 AI 실습일지</div>
-        <div class="a4Sub" id="a4Theme">월별 디저트 테마 · 제출 확인용 A4 출력본 · 내용에 따라 자동 1~2장</div>
+        <div class="a4Title">
+          제과·제빵 AI 실습일지
+        </div>
+
+        <div class="a4Sub" id="a4Theme">
+          제출 확인용 A4 출력본
+        </div>
       </div>
+
       <div class="a4Grade" id="a4Grade">-</div>
     </div>
 
     <div class="a4Meta">
-      <div class="a4MetaItem"><b>실습 품목</b><span id="a4Product">-</span></div>
-      <div class="a4MetaItem"><b>실습일</b><span id="a4Date">-</span></div>
-      <div class="a4MetaItem"><b>제출 상태</b><span id="a4Deadline" class="a4Status">-</span></div>
-    </div>
-    <div class="a4Progress">
-      <div class="a4MetaItem"><b>최초 평가 등급</b><span id="a4FirstGrade" class="a4Status">-</span></div>
-      <div class="a4MetaItem"><b>코칭 횟수</b><span id="a4CoachCount">0회</span></div>
-      <div class="a4MetaItem"><b>보완 제출</b><span id="a4RevisionCount">0회</span></div>
-      <div class="a4MetaItem"><b>성장 상태</b><span id="a4Growth">최초 제출 전</span></div>
-    </div>
+      <div class="a4MetaItem">
+        <b>실습 품목</b>
+        <span id="a4Product">-</span>
+      </div>
 
-    <div class="a4Top">
-      <div class="a4Photo" id="a4PhotoWrap"><span class="a4NoPhoto">완제품 사진 없음</span></div>
-      <div>
-        <div class="a4Box"><h3>요구사항</h3><p id="a4Goal">-</p></div>
-        <div class="a4CompactGrid">
-          <div class="a4Box"><h3>오븐 윗불</h3><p id="a4TopTemp">-</p></div>
-          <div class="a4Box"><h3>오븐 아랫불</h3><p id="a4BottomTemp">-</p></div>
-        </div>
-        <div class="a4Box"><h3>실제 굽기 시간</h3><p id="a4Time">-</p></div>
-        <div class="a4Box"><h3>오늘 제품 만족도</h3><p id="a4Score">-</p></div>
+      <div class="a4MetaItem">
+        <b>실습일</b>
+        <span id="a4Date">-</span>
+      </div>
+
+      <div class="a4MetaItem">
+        <b>제출 상태</b>
+        <span id="a4Deadline" class="a4Status">-</span>
       </div>
     </div>
 
-    <div class="a4Box"><h3>표준 배합</h3><p id="a4Formula">-</p></div>
-    <div class="a4Box"><h3>만드는 방법</h3><p id="a4Process">-</p></div>
+    <div class="a4Progress">
+      <div class="a4MetaItem">
+        <b>최초 평가 등급</b>
+        <span id="a4FirstGrade" class="a4Status">-</span>
+      </div>
+
+      <div class="a4MetaItem">
+        <b>코칭 횟수</b>
+        <span id="a4CoachCount">0회</span>
+      </div>
+
+      <div class="a4MetaItem">
+        <b>보완 제출</b>
+        <span id="a4RevisionCount">0회</span>
+      </div>
+
+      <div class="a4MetaItem">
+        <b>성장 상태</b>
+        <span id="a4Growth">최초 제출 전</span>
+      </div>
+    </div>
+
+    <div class="a4Top">
+
+      <div class="a4Photo" id="a4PhotoWrap">
+        <span class="a4NoPhoto">
+          완제품 사진 없음
+        </span>
+      </div>
+
+      <div>
+
+        <div class="a4Box">
+          <h3>요구사항</h3>
+          <p id="a4Goal">-</p>
+        </div>
+
+        <div class="a4CompactGrid">
+          <div class="a4Box">
+            <h3>오븐 윗불</h3>
+            <p id="a4TopTemp">-</p>
+          </div>
+
+          <div class="a4Box">
+            <h3>오븐 아랫불</h3>
+            <p id="a4BottomTemp">-</p>
+          </div>
+        </div>
+
+        <div class="a4Box">
+          <h3>실제 굽기 시간</h3>
+          <p id="a4Time">-</p>
+        </div>
+
+        <div class="a4Box">
+          <h3>오늘 제품 만족도</h3>
+          <p id="a4Score">-</p>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="a4Box">
+      <h3>표준 배합</h3>
+      <p id="a4Formula">-</p>
+    </div>
+
+    <div class="a4Box">
+      <h3>만드는 방법</h3>
+      <p id="a4Process">-</p>
+    </div>
+
     <div class="a4CompactGrid">
-      <div class="a4Box"><h3>실습 중 달라진 점</h3><p id="a4Change">-</p></div>
-      <div class="a4Box"><h3>가장 어려웠던 점</h3><p id="a4Difficulty">-</p></div>
+      <div class="a4Box">
+        <h3>실습 중 달라진 점</h3>
+        <p id="a4Change">-</p>
+      </div>
+
+      <div class="a4Box">
+        <h3>가장 어려웠던 점</h3>
+        <p id="a4Difficulty">-</p>
+      </div>
     </div>
 
     <div class="a4Reflect">
-      <div class="a4Box"><h3>✓ 오늘의 잘한 점</h3><p id="a4Strength">-</p></div>
-      <div class="a4Box"><h3>↺ 반성할 점</h3><p id="a4Reflection">-</p></div>
-      <div class="a4Box"><h3>→ 보완할 점</h3><p id="a4Improvement">-</p></div>
+      <div class="a4Box">
+        <h3>✓ 오늘의 잘한 점</h3>
+        <p id="a4Strength">-</p>
+      </div>
+
+      <div class="a4Box">
+        <h3>↺ 반성할 점</h3>
+        <p id="a4Reflection">-</p>
+      </div>
+
+      <div class="a4Box">
+        <h3>→ 보완할 점</h3>
+        <p id="a4Improvement">-</p>
+      </div>
     </div>
 
     <div class="a4Coach">
       <h3>AI 실습코치 요약</h3>
-      <p id="a4CoachText">코칭 결과가 아직 없습니다.</p>
+      <p id="a4CoachText">
+        코칭 결과가 아직 없습니다.
+      </p>
     </div>
 
     <div class="a4Footer">
-      <span id="a4Completeness">작성 충실도 -</span>
-      <span id="a4Integrity">작성 진정성 -</span>
-      <span>※ A는 학급 최대 20%(20명 기준 최대 4명) 범위에서 최종 확정</span>
+      <span id="a4Completeness">
+        작성 충실도 -
+      </span>
+
+      <span id="a4Integrity">
+        작성 진정성 -
+      </span>
+
+      <span>
+        ※ A는 교사가 학급 전체 결과를 검토하여 최종 확정
+      </span>
     </div>
+
   </article>
 </div>
 
 <script>
-const $ = id => document.getElementById(id);
+const $=id=>document.getElementById(id);
 
-
-
-const monthlyThemes = {
-  1:{season:'겨울', name:'바닐라 머랭', icon:'❄️', accent:'#7d92c8', accent2:'#4d5f96', soft:'#edf3ff', bg:'#f6f9ff', bg2:'#ffffff', line:'#d9e3f4'},
-  2:{season:'겨울', name:'딸기 쇼트케이크', icon:'🍓', accent:'#d96a88', accent2:'#a63f60', soft:'#fdeaf0', bg:'#fff8fb', bg2:'#ffffff', line:'#f1d5de'},
-  3:{season:'봄', name:'레몬 마들렌', icon:'🍋', accent:'#d3b24a', accent2:'#977d23', soft:'#fff6d8', bg:'#fffdf3', bg2:'#fffefb', line:'#efe3b7'},
-  4:{season:'봄', name:'체리 마카롱', icon:'🌸', accent:'#c983b7', accent2:'#8f5b81', soft:'#f9ecf5', bg:'#fff9fc', bg2:'#ffffff', line:'#ebd7e6'},
-  5:{season:'봄', name:'피스타치오 케이크', icon:'🍰', accent:'#84b07e', accent2:'#567754', soft:'#eef8ec', bg:'#f9fdf8', bg2:'#ffffff', line:'#d8e8d5'},
-  6:{season:'여름', name:'블루베리 무스', icon:'🫐', accent:'#6c82d6', accent2:'#4457a4', soft:'#edf1ff', bg:'#f8faff', bg2:'#ffffff', line:'#d9e1f8'},
-  7:{season:'여름', name:'민트 파르페', icon:'🍨', accent:'#53b8b0', accent2:'#2c7f79', soft:'#e7fbf8', bg:'#f4fffd', bg2:'#ffffff', line:'#cdebe6'},
-  8:{season:'여름', name:'복숭아 빙수', icon:'🍧', accent:'#f0a28a', accent2:'#be6f58', soft:'#fff0ea', bg:'#fffaf7', bg2:'#ffffff', line:'#f3d9cf'},
-  9:{season:'가을', name:'버터 쿠키', icon:'🍪', accent:'#c39563', accent2:'#875f39', soft:'#f9efe4', bg:'#fdf9f4', bg2:'#ffffff', line:'#ead9c5'},
- 10:{season:'가을', name:'펌킨 타르트', icon:'🎃', accent:'#d58a48', accent2:'#925926', soft:'#fff0e3', bg:'#fff9f4', bg2:'#ffffff', line:'#f1d8bf'},
- 11:{season:'가을', name:'티라미수', icon:'☕', accent:'#9a7b63', accent2:'#684e3b', soft:'#f5ede7', bg:'#fbf8f5', bg2:'#ffffff', line:'#e4d6cb'},
- 12:{season:'겨울', name:'초코 브라우니', icon:'🍫', accent:'#8f6352', accent2:'#5d3d31', soft:'#f4ebe7', bg:'#fbf7f5', bg2:'#ffffff', line:'#e3d4cd'}
+const monthlyThemes={
+1:{season:'겨울',name:'바닐라 머랭',icon:'❄️',accent:'#7d92c8',accent2:'#4d5f96',soft:'#edf3ff',bg:'#f6f9ff',bg2:'#ffffff',line:'#d9e3f4'},
+2:{season:'겨울',name:'딸기 쇼트케이크',icon:'🍓',accent:'#d96a88',accent2:'#a63f60',soft:'#fdeaf0',bg:'#fff8fb',bg2:'#ffffff',line:'#f1d5de'},
+3:{season:'봄',name:'레몬 마들렌',icon:'🍋',accent:'#d3b24a',accent2:'#977d23',soft:'#fff6d8',bg:'#fffdf3',bg2:'#fffefb',line:'#efe3b7'},
+4:{season:'봄',name:'체리 마카롱',icon:'🌸',accent:'#c983b7',accent2:'#8f5b81',soft:'#f9ecf5',bg:'#fff9fc',bg2:'#ffffff',line:'#ebd7e6'},
+5:{season:'봄',name:'피스타치오 케이크',icon:'🍰',accent:'#84b07e',accent2:'#567754',soft:'#eef8ec',bg:'#f9fdf8',bg2:'#ffffff',line:'#d8e8d5'},
+6:{season:'여름',name:'블루베리 무스',icon:'🫐',accent:'#6c82d6',accent2:'#4457a4',soft:'#edf1ff',bg:'#f8faff',bg2:'#ffffff',line:'#d9e1f8'},
+7:{season:'여름',name:'민트 파르페',icon:'🍨',accent:'#53b8b0',accent2:'#2c7f79',soft:'#e7fbf8',bg:'#f4fffd',bg2:'#ffffff',line:'#cdebe6'},
+8:{season:'여름',name:'복숭아 빙수',icon:'🍧',accent:'#f0a28a',accent2:'#be6f58',soft:'#fff0ea',bg:'#fffaf7',bg2:'#ffffff',line:'#f3d9cf'},
+9:{season:'가을',name:'버터 쿠키',icon:'🍪',accent:'#c39563',accent2:'#875f39',soft:'#f9efe4',bg:'#fdf9f4',bg2:'#ffffff',line:'#ead9c5'},
+10:{season:'가을',name:'펌킨 타르트',icon:'🎃',accent:'#d58a48',accent2:'#925926',soft:'#fff0e3',bg:'#fff9f4',bg2:'#ffffff',line:'#f1d8bf'},
+11:{season:'가을',name:'티라미수',icon:'☕',accent:'#9a7b63',accent2:'#684e3b',soft:'#f5ede7',bg:'#fbf8f5',bg2:'#ffffff',line:'#e4d6cb'},
+12:{season:'겨울',name:'초코 브라우니',icon:'🍫',accent:'#8f6352',accent2:'#5d3d31',soft:'#f4ebe7',bg:'#fbf7f5',bg2:'#ffffff',line:'#e3d4cd'}
 };
 
 function applyMonthlyTheme(){
-  const month=(new Date()).getMonth()+1;
-  const theme=monthlyThemes[month] || monthlyThemes[1];
-  const root=document.documentElement;
-  root.style.setProperty('--bg', theme.bg);
-  root.style.setProperty('--bg2', theme.bg2);
-  root.style.setProperty('--accent', theme.accent);
-  root.style.setProperty('--accent2', theme.accent2);
-  root.style.setProperty('--soft', theme.soft);
-  root.style.setProperty('--line', theme.line);
-  const logo=$('logo');
-  if(logo) logo.textContent=theme.icon;
-  const badge=$('themeBadge');
-  if(badge) badge.textContent=`${month}월 ${theme.season} 테마 · ${theme.name}`;
-  const hint=$('themeHint');
-  if(hint) hint.textContent=`이번 달은 ${theme.season} 느낌의 「${theme.name}」 테마입니다. ${theme.icon} 계절감에 맞춘 부드러운 색감으로 자동 적용됩니다.`;
+const month=new Date().getMonth()+1;
+const theme=monthlyThemes[month];
+const root=document.documentElement;
+
+root.style.setProperty('--bg',theme.bg);
+root.style.setProperty('--bg2',theme.bg2);
+root.style.setProperty('--accent',theme.accent);
+root.style.setProperty('--accent2',theme.accent2);
+root.style.setProperty('--soft',theme.soft);
+root.style.setProperty('--line',theme.line);
+
+$('logo').textContent=theme.icon;
+
+$('themeBadge').textContent=
+`${month}월 ${theme.season} 테마 · ${theme.name}`;
+
+$('themeHint').textContent=
+`이번 달은 ${theme.season} 느낌의 「${theme.name}」 테마입니다. ${theme.icon}`;
 }
 
-const productLists = {
-  pastry: [
-    '초코머핀','버터스펀지케이크(별립법)','젤리롤케이크','소프트롤케이크','버터스펀지케이크(공립법)',
-    '마들렌','쇼트브레드쿠키','슈','브라우니','과일케이크','파운드케이크','다쿠아즈','타르트',
-    '흑미롤케이크','마데라컵케이크','버터쿠키','치즈케이크','호두파이','초코롤케이크','시퐁케이크'
-  ],
-  bread: [
-    '빵도넛','소시지빵','비상식빵','단팥빵','그리시니','밤식빵','베이글','스위트롤','우유식빵','트위스트',
-    '크림빵','풀먼식빵','소보로빵','통밀빵','호밀빵','버터식빵','옥수수식빵','모카빵','버터롤','쌀식빵'
-  ]
+const productLists={
+pastry:[
+'초코머핀',
+'버터스펀지케이크(별립법)',
+'젤리롤케이크',
+'소프트롤케이크',
+'버터스펀지케이크(공립법)',
+'마들렌',
+'쇼트브레드쿠키',
+'슈',
+'브라우니',
+'과일케이크',
+'파운드케이크',
+'다쿠아즈',
+'타르트',
+'흑미롤케이크',
+'마데라컵케이크',
+'버터쿠키',
+'치즈케이크',
+'호두파이',
+'초코롤케이크',
+'시퐁케이크'
+],
+
+bread:[
+'빵도넛',
+'소시지빵',
+'비상식빵',
+'단팥빵',
+'그리시니',
+'밤식빵',
+'베이글',
+'스위트롤',
+'우유식빵',
+'트위스트',
+'크림빵',
+'풀먼식빵',
+'소보로빵',
+'통밀빵',
+'호밀빵',
+'버터식빵',
+'옥수수식빵',
+'모카빵',
+'버터롤',
+'쌀식빵'
+]
 };
 
 function updateProducts(){
-  const category=$('category').value;
-  const select=$('product');
-  select.innerHTML='';
-  if(category==='custom'){
-    select.style.display='none';
-    $('customProduct').style.display='block';
-    return;
-  }
-  select.style.display='block';
-  (productLists[category]||[]).forEach(name=>{
-    const opt=document.createElement('option'); opt.value=name; opt.textContent=name; select.appendChild(opt);
-  });
-  const customOpt=document.createElement('option'); customOpt.value='__custom__'; customOpt.textContent='✍️ 직접 입력'; select.appendChild(customOpt);
-  toggleCustomProduct();
+const category=$('category').value;
+const select=$('product');
+
+select.innerHTML='';
+
+if(category==='custom'){
+select.style.display='none';
+$('customProduct').style.display='block';
+return;
+}
+
+select.style.display='block';
+
+productLists[category].forEach(name=>{
+const opt=document.createElement('option');
+opt.value=name;
+opt.textContent=name;
+select.appendChild(opt);
+});
+
+const customOpt=document.createElement('option');
+customOpt.value='__custom__';
+customOpt.textContent='✍️ 직접 입력';
+select.appendChild(customOpt);
+
+toggleCustomProduct();
 }
 
 function toggleCustomProduct(){
-  const isCustom=$('category').value==='custom' || $('product').value==='__custom__';
-  $('customProduct').style.display=isCustom?'block':'none';
+const custom=
+$('category').value==='custom' ||
+$('product').value==='__custom__';
+
+$('customProduct').style.display=
+custom?'block':'none';
 }
 
 function getProduct(){
-  const category=$('category').value;
-  const custom=$('customProduct').value.trim();
-  if(category==='custom' || $('product').value==='__custom__') return custom || '직접 입력 품목';
-  return $('product').value;
+if(
+$('category').value==='custom' ||
+$('product').value==='__custom__'
+){
+return $('customProduct').value.trim() || '직접 입력 품목';
 }
 
+return $('product').value;
+}
 
-$('date').valueAsDate = new Date();
+$('date').valueAsDate=new Date();
+
 applyMonthlyTheme();
 updateProducts();
 
-// ===== 작성 과정·독창성 점검 =====
-// 붙여넣기 자체는 부정행위의 증거가 아니므로 단독으로 감점하지 않습니다.
-// 붙여넣기 + 낮은 구체성, 또는 기존 저장 기록과 매우 높은 유사성이 함께 나타날 때만 감점합니다.
-const writingAudit={pasteCount:0,pasteChars:0,pastedFields:{},inputEvents:{}};
-['change','difficulty','strength','reflection','improvement'].forEach(id=>{
-  const el=$(id);
-  if(!el) return;
-  el.addEventListener('paste',e=>{
-    const pasted=(e.clipboardData||window.clipboardData)?.getData('text')||'';
-    writingAudit.pasteCount++;
-    writingAudit.pasteChars+=pasted.length;
-    writingAudit.pastedFields[id]=(writingAudit.pastedFields[id]||0)+1;
-  });
-  el.addEventListener('input',()=>{writingAudit.inputEvents[id]=(writingAudit.inputEvents[id]||0)+1;});
+const writingAudit={
+pasteCount:0,
+pasteChars:0
+};
+
+[
+'change',
+'difficulty',
+'strength',
+'reflection',
+'improvement'
+].forEach(id=>{
+
+const el=$(id);
+
+el.addEventListener('paste',e=>{
+
+const pasted=
+(e.clipboardData||window.clipboardData)
+?.getData('text')||'';
+
+writingAudit.pasteCount++;
+writingAudit.pasteChars+=pasted.length;
+
+});
+
 });
 
 function normalizeKoreanText(s){
-  return String(s||'').toLowerCase().replace(/[^가-힣a-z0-9\s]/g,' ').replace(/\s+/g,' ').trim();
+
+return String(s||'')
+.toLowerCase()
+.replace(/[^가-힣a-z0-9\s]/g,' ')
+.replace(/\s+/g,' ')
+.trim();
+
 }
 
 function tokenSet(s){
-  const stop=new Set(['그리고','하지만','그래서','오늘','실습','제품','다음','했다','한다','것','점','잘','좀','더','수','있다','있는','하였다']);
-  return new Set(normalizeKoreanText(s).split(' ').filter(x=>x.length>=2&&!stop.has(x)));
+
+const stop=new Set([
+'그리고',
+'하지만',
+'그래서',
+'오늘',
+'실습',
+'제품',
+'다음',
+'했다',
+'한다',
+'것',
+'점'
+]);
+
+return new Set(
+normalizeKoreanText(s)
+.split(' ')
+.filter(x=>x.length>=2&&!stop.has(x))
+);
+
 }
 
 function jaccardSimilarity(a,b){
-  const A=tokenSet(a), B=tokenSet(b);
-  if(A.size<4||B.size<4) return 0;
-  let inter=0; A.forEach(x=>{if(B.has(x)) inter++;});
-  const union=new Set([...A,...B]).size;
-  return union?inter/union:0;
+
+const A=tokenSet(a);
+const B=tokenSet(b);
+
+if(A.size<4||B.size<4)return 0;
+
+let inter=0;
+
+A.forEach(x=>{
+if(B.has(x))inter++;
+});
+
+const union=
+new Set([...A,...B]).size;
+
+return union?
+inter/union:
+0;
 }
 
-function specificityScore(textValue){
-  const t=String(textValue||'').trim();
-  if(!t) return 0;
-  let score=0;
-  score+=Math.min(35,t.length/2);
-  if(/\d/.test(t)) score+=12;
-  if(/(℃|도|분|초|g|그램|%|회|개|cm|mm|ml|배|단계)/i.test(t)) score+=12;
-  if(/(때문|원인|그래서|따라서|결과|보다|달라|부족|과다|높|낮|진|연|균일|불균일|발효|반죽|성형|팬닝|굽|혼합|휴지|온도|시간|중량|수분)/.test(t)) score+=20;
-  if(/(다음에는|다음 실습|확인하|측정하|계량하|조절하|줄이|늘리|유지하|비교하|기록하|바꾸|개선하)/.test(t)) score+=16;
-  if(t.split(/\s+/).length>=8) score+=5;
-  return Math.min(100,Math.round(score));
+function specificityScore(text){
+
+const t=String(text||'').trim();
+
+if(!t)return 0;
+
+let score=0;
+
+score+=Math.min(35,t.length/2);
+
+if(/\d/.test(t))score+=12;
+
+if(
+/(℃|도|분|초|g|그램|%|회|개|cm|mm|ml)/i.test(t)
+)score+=12;
+
+if(
+/(원인|때문|결과|반죽|굽|온도|시간|중량|휴지|성형|팬닝)/.test(t)
+)score+=20;
+
+if(
+/(다음에는|조절|확인|측정|개선|바꾸|유지)/.test(t)
+)score+=16;
+
+return Math.min(100,Math.round(score));
 }
 
 function analyzeIntegrity(){
-  const current={
-    strength:$('strength').value.trim(), reflection:$('reflection').value.trim(), improvement:$('improvement').value.trim(),
-    change:$('change').value.trim(), difficulty:$('difficulty').value.trim()
-  };
-  const reflectionBundle=[current.strength,current.reflection,current.improvement].join(' ');
-  const specifics=[specificityScore(current.strength),specificityScore(current.reflection),specificityScore(current.improvement)];
-  const specificity=Math.round(specifics.reduce((a,b)=>a+b,0)/3);
 
-  const within=Math.max(
-    jaccardSimilarity(current.strength,current.reflection),
-    jaccardSimilarity(current.strength,current.improvement),
-    jaccardSimilarity(current.reflection,current.improvement)
-  );
+const strength=$('strength').value;
+const reflection=$('reflection').value;
+const improvement=$('improvement').value;
 
-  let priorMax=0;
-  try{
-    const logs=JSON.parse(localStorage.getItem('bakingPracticeLogs')||'[]');
-    for(const log of logs.slice(-30)){
-      const old=[log.strength||'',log.reflection||'',log.improvement||''].join(' ');
-      priorMax=Math.max(priorMax,jaccardSimilarity(reflectionBundle,old));
-    }
-  }catch(e){}
+const specificity=
+Math.round(
+(
+specificityScore(strength)+
+specificityScore(reflection)+
+specificityScore(improvement)
+)/3
+);
 
-  const totalLen=reflectionBundle.length;
-  const pasteRatio=totalLen?Math.min(1,writingAudit.pasteChars/Math.max(1,totalLen)):0;
-  let penalty=0;
-  const flags=[];
+const text=
+`${strength} ${reflection} ${improvement}`;
 
-  // 붙여넣기만으로는 감점하지 않음. 낮은 구체성과 함께 나타날 때만 감점.
-  if(writingAudit.pasteCount>=2 && pasteRatio>=0.45 && specificity<60){
-    penalty+=12; flags.push('붙여넣기 비중이 높고 개인 실습 근거가 부족함');
-  }else if(writingAudit.pasteCount>=1){
-    flags.push('붙여넣기 사용 감지(단독 감점 없음)');
-  }
-  if(within>=0.72){ penalty+=8; flags.push('자기평가 항목 간 표현이 지나치게 반복됨'); }
-  if(priorMax>=0.78){ penalty+=18; flags.push('이 브라우저의 기존 저장 기록과 문장 유사도가 매우 높음'); }
-  else if(priorMax>=0.62){ penalty+=8; flags.push('이 브라우저의 기존 저장 기록과 유사한 표현이 많음'); }
-  if(specificity<40){ penalty+=12; flags.push('실제 수치·상황·원인·행동이 부족한 상투적 기록'); }
-  else if(specificity<55){ penalty+=5; flags.push('자기 실습을 보여 주는 구체적 근거가 다소 부족함'); }
+let penalty=0;
+const flags=[];
 
-  penalty=Math.min(35,penalty);
-  const originality=Math.max(0,100-penalty);
-  const needsReview = penalty>=18 || priorMax>=0.78;
-  const status = penalty===0 ? '독창적 기록' : (penalty<18 ? '일부 보완 필요' : '독창성 확인 필요');
-  return {specificity,originality,penalty,flags,needsReview,pasteCount:writingAudit.pasteCount,pasteRatio:Math.round(pasteRatio*100),withinSimilarity:Math.round(within*100),priorSimilarity:Math.round(priorMax*100),status};
+if(
+writingAudit.pasteCount>=2 &&
+specificity<50
+){
+
+penalty+=10;
+flags.push(
+'붙여넣기 비중이 높고 개인 실습 근거가 부족함'
+);
+
 }
 
+let priorMax=0;
 
-const REVIEW_MODE = new URLSearchParams(location.search).get('review')==='1';
-const SESSION_KEY='bakingGrowthSessionV1';
+try{
+
+const logs=
+JSON.parse(
+localStorage.getItem('bakingPracticeLogs')||'[]'
+);
+
+for(const log of logs.slice(-30)){
+
+const old=
+`${log.strength||''}
+${log.reflection||''}
+${log.improvement||''}`;
+
+priorMax=
+Math.max(
+priorMax,
+jaccardSimilarity(text,old)
+);
+
+}
+
+}catch(e){}
+
+if(priorMax>=0.78){
+
+penalty+=18;
+
+flags.push(
+'기존 저장 기록과 문장 유사도가 높음'
+);
+
+}
+
+if(specificity<35){
+
+penalty+=10;
+
+flags.push(
+'개인 실습 근거가 부족함'
+);
+
+}
+
+penalty=
+Math.min(35,penalty);
+
+return{
+
+specificity,
+
+originality:
+Math.max(0,100-penalty),
+
+penalty,
+
+status:
+penalty===0?
+'독창적 기록':
+penalty<18?
+'일부 보완 필요':
+'독창성 확인 필요',
+
+flags
+};
+
+}
+
+const REVIEW_MODE=
+new URLSearchParams(location.search)
+.get('review')==='1';
+
+const SESSION_KEY=
+'bakingGrowthSessionV1';
 
 function freshSession(){
-  return {
-    id:(crypto.randomUUID ? crypto.randomUUID() : 's_'+Date.now()+'_'+Math.random().toString(36).slice(2)),
-    firstLocked:false,
-    firstResult:null,
-    firstSnapshot:null,
-    firstLockedAt:null,
-    coachingCount:0,
-    revisionCount:0,
-    lastSubmittedFingerprint:'',
-    growthStatus:'최초 제출 전'
-  };
+
+return{
+
+firstLocked:false,
+
+firstResult:null,
+
+firstSnapshot:null,
+
+coachingCount:0,
+
+revisionCount:0,
+
+growthStatus:'최초 제출 전',
+
+lastSubmittedFingerprint:''
+
+};
+
 }
 
 function loadSession(){
-  try{
-    const saved=JSON.parse(localStorage.getItem(SESSION_KEY)||'null');
-    return saved && saved.id ? saved : freshSession();
-  }catch(e){ return freshSession(); }
+
+try{
+
+return(
+JSON.parse(
+localStorage.getItem(SESSION_KEY)
+)
+||
+freshSession()
+);
+
+}catch(e){
+
+return freshSession();
+
 }
-let growthSession=loadSession();
+
+}
+
+let growthSession=
+loadSession();
 
 function saveSession(){
-  localStorage.setItem(SESSION_KEY,JSON.stringify(growthSession));
+
+localStorage.setItem(
+SESSION_KEY,
+JSON.stringify(growthSession)
+);
+
 }
 
 function currentSnapshot(){
-  return {
-    product:getProduct(), date:$('date').value, goal:$('goal').value.trim(),
-    formula:$('formula').value.trim(), process:$('process').value.trim(), topTemp:$('topTemp').value, bottomTemp:$('bottomTemp').value,
-    time:$('time').value, change:$('change').value.trim(), difficulty:$('difficulty').value.trim(),
-    score:$('score').value, strength:$('strength').value.trim(), reflection:$('reflection').value.trim(),
-    improvement:$('improvement').value.trim()
-  };
+
+return{
+
+product:getProduct(),
+
+date:$('date').value,
+
+goal:$('goal').value,
+
+formula:$('formula').value,
+
+process:$('process').value,
+
+topTemp:$('topTemp').value,
+
+bottomTemp:$('bottomTemp').value,
+
+time:$('time').value,
+
+change:$('change').value,
+
+difficulty:$('difficulty').value,
+
+score:$('score').value,
+
+strength:$('strength').value,
+
+reflection:$('reflection').value,
+
+improvement:$('improvement').value
+
+};
+
 }
 
 function fingerprintSnapshot(s){
-  return JSON.stringify(s);
+return JSON.stringify(s);
 }
 
-function lockFirstAssessment(result, trigger){
-  if(growthSession.firstLocked) return false;
-  const snap=currentSnapshot();
-  growthSession.firstLocked=true;
-  growthSession.firstResult=JSON.parse(JSON.stringify(result));
-  growthSession.firstSnapshot=snap;
-  growthSession.firstLockedAt=new Date().toISOString();
-  growthSession.lastSubmittedFingerprint=fingerprintSnapshot(snap);
-  growthSession.growthStatus='최초 평가 완료';
-  growthSession.firstTrigger=trigger;
-  saveSession();
-  return true;
-}
+function lockFirstAssessment(result){
 
-function calculateGrowthStatus(currentResult){
-  if(!growthSession.firstLocked || !growthSession.firstResult) return '최초 제출 전';
-  const first=growthSession.firstResult;
-  const currentSnap=currentSnapshot();
-  if(fingerprintSnapshot(currentSnap)===fingerprintSnapshot(growthSession.firstSnapshot)) return '최초 제출본 유지';
+if(growthSession.firstLocked)return;
 
-  const completenessGain=(currentResult.completeness||0)-(first.completeness||0);
-  const currentSpec=currentResult.integrity?.specificity||0;
-  const firstSpec=first.integrity?.specificity||0;
-  const penaltyGain=(first.integrity?.penalty||0)-(currentResult.integrity?.penalty||0);
+growthSession.firstLocked=true;
 
-  if(completenessGain>=8 || currentSpec-firstSpec>=12 || penaltyGain>=10) return '성찰 개선 우수';
-  if(completenessGain>=3 || currentSpec-firstSpec>=5 || penaltyGain>=4) return '보완 완료';
-  if((currentResult.completeness||0) < (first.completeness||0)-5) return '재작성 필요';
-  return '보완 진행 중';
+growthSession.firstResult=
+JSON.parse(
+JSON.stringify(result)
+);
+
+growthSession.firstSnapshot=
+currentSnapshot();
+
+growthSession.lastSubmittedFingerprint=
+fingerprintSnapshot(
+growthSession.firstSnapshot
+);
+
+growthSession.growthStatus=
+'최초 평가 완료';
+
+saveSession();
 }
 
 function registerRevisionIfChanged(){
-  if(!growthSession.firstLocked) return;
-  const fp=fingerprintSnapshot(currentSnapshot());
-  if(fp!==growthSession.lastSubmittedFingerprint){
-    growthSession.revisionCount++;
-    growthSession.lastSubmittedFingerprint=fp;
-  }
+
+if(!growthSession.firstLocked)return;
+
+const fp=
+fingerprintSnapshot(
+currentSnapshot()
+);
+
+if(
+fp!==
+growthSession.lastSubmittedFingerprint
+){
+
+growthSession.revisionCount++;
+
+growthSession.lastSubmittedFingerprint=fp;
+
 }
 
-function renderGrowthPanel(currentResult){
-  const first=growthSession.firstResult;
-  const firstGrade=first ? (first.grade + (first.candidate ? ' 후보' : '')) : '-';
-  const status=calculateGrowthStatus(currentResult||first||{});
-  growthSession.growthStatus=status;
-  saveSession();
-
-  if($('lockedGradeText')) $('lockedGradeText').textContent=firstGrade;
-  if($('coachingCountText')) $('coachingCountText').textContent=(growthSession.coachingCount||0)+'회';
-  if($('revisionCountText')) $('revisionCountText').textContent=(growthSession.revisionCount||0)+'회';
-  if($('growthStatusText')) $('growthStatusText').textContent=status;
-  if($('submitBtn')) $('submitBtn').textContent=growthSession.firstLocked ? '📄 보완 제출' : '📄 최초 제출';
-
-  if(first){
-    const title=first.grade==='A' && first.candidate ? '최초 평가 · A 후보(잠금)' :
-      (first.grade==='F' && first.candidate ? '최초 평가 · F 후보(잠금)' : `최초 평가 · ${first.grade} (잠금)`);
-    document.querySelector('#gradeArea .gradeTitle').textContent=title;
-    $('gradeStamp').textContent=first.grade;
-    $('gradeReason').textContent=(first.reason||'') + ' 이후 수정은 보완학습으로 기록되며 최초 등급은 변경되지 않습니다.';
-  }
 }
 
-// 초기 복원
-setTimeout(()=>{ if($('submitBtn')) $('submitBtn').textContent=growthSession.firstLocked?'📄 보완 제출':'📄 최초 제출'; if(growthSession.firstLocked && growthSession.firstResult){ $('analysisArea').style.display='block'; $('coachIntro').style.display='none'; $('gradeArea').style.display='block'; renderGrowthPanel(growthSession.firstResult); } },0);
+function calculateGrowthStatus(current){
 
+if(!growthSession.firstResult)
+return '최초 제출 전';
+
+const first=
+growthSession.firstResult;
+
+const completenessGain=
+(current.completeness||0)-
+(first.completeness||0);
+
+const currentSpec=
+current.integrity?.specificity||0;
+
+const firstSpec=
+first.integrity?.specificity||0;
+
+if(completenessGain>=8)
+return '보완 완료';
+
+if(currentSpec-firstSpec>=10)
+return '성찰 개선 우수';
+
+if(completenessGain>0)
+return '보완 진행 중';
+
+return '최초 제출본 유지';
+
+}
+
+function renderGrowthPanel(current){
+
+const first=
+growthSession.firstResult;
+
+$('lockedGradeText').textContent=
+first?
+first.grade+
+(first.candidate?' 후보':''):
+'미제출';
+
+$('coachingCountText').textContent=
+growthSession.coachingCount+'회';
+
+$('revisionCountText').textContent=
+growthSession.revisionCount+'회';
+
+$('growthStatusText').textContent=
+growthSession.growthStatus;
+
+$('submitBtn').textContent=
+growthSession.firstLocked?
+'📄 보완 제출':
+'📄 최초 제출';
+
+if(first){
+
+$('gradeStamp').textContent=
+first.grade;
+
+$('gradeReason').textContent=
+(first.reason||'')+
+' 최초 제출 등급은 이후 수정해도 변경되지 않습니다.';
+
+document.querySelector(
+'#gradeArea .gradeTitle'
+).textContent=
+`최초 평가 · ${first.grade}${first.candidate?' 후보':''} (잠금)`;
+
+}
+
+}
 
 const photoInput=$('photo');
-const photoSelectBtn=$('photoSelectBtn');
-const photoCameraBtn=$('photoCameraBtn');
-const cameraPanel=$('cameraPanel');
-const cameraVideo=$('cameraVideo');
-const cameraCanvas=$('cameraCanvas');
-const cameraShotBtn=$('cameraShotBtn');
-const cameraCloseBtn=$('cameraCloseBtn');
-const capturedPanel=$('capturedPanel');
-const capturedPreview=$('capturedPreview');
-const retakeBtn=$('retakeBtn');
-const usePhotoBtn=$('usePhotoBtn');
+
+const photoSelectBtn=
+$('photoSelectBtn');
+
+const photoCameraBtn=
+$('photoCameraBtn');
+
+const cameraPanel=
+$('cameraPanel');
+
+const cameraVideo=
+$('cameraVideo');
+
+const cameraCanvas=
+$('cameraCanvas');
+
+const capturedPanel=
+$('capturedPanel');
+
+const capturedPreview=
+$('capturedPreview');
 
 let cameraStream=null;
+
 let capturedDataUrl='';
 
 function stopCamera(){
-  if(cameraStream){
-    cameraStream.getTracks().forEach(track=>track.stop());
-    cameraStream=null;
-  }
-  if(cameraVideo) cameraVideo.srcObject=null;
+
+if(cameraStream){
+
+cameraStream
+.getTracks()
+.forEach(track=>track.stop());
+
+cameraStream=null;
+
+}
+
+cameraVideo.srcObject=null;
+
 }
 
 async function openCamera(){
-  if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
-    alert('이 브라우저에서는 카메라 직접 촬영 기능을 지원하지 않습니다. 「사진 선택」을 이용해 주세요.');
-    return;
-  }
 
-  try{
-    stopCamera();
-    cameraStream=await navigator.mediaDevices.getUserMedia({
-      video:{facingMode:{ideal:'environment'}},
-      audio:false
-    });
+if(
+!navigator.mediaDevices ||
+!navigator.mediaDevices.getUserMedia
+){
 
-    cameraVideo.srcObject=cameraStream;
-    cameraPanel.style.display='block';
-    capturedPanel.style.display='none';
-    capturedDataUrl='';
-  }catch(err){
-    let msg='카메라를 열 수 없습니다.';
-    if(err && err.name==='NotAllowedError') msg='카메라 권한이 허용되지 않았습니다. 브라우저 주소창의 카메라 권한을 허용한 뒤 다시 시도해 주세요.';
-    else if(err && err.name==='NotFoundError') msg='사용 가능한 카메라를 찾지 못했습니다.';
-    else if(err && err.name==='NotReadableError') msg='다른 프로그램이 카메라를 사용 중일 수 있습니다.';
-    alert(msg);
-  }
+alert(
+'이 브라우저에서는 카메라 직접 촬영 기능을 지원하지 않습니다.'
+);
+
+return;
+
+}
+
+try{
+
+cameraStream=
+await navigator.mediaDevices.getUserMedia({
+
+video:{
+facingMode:{ideal:'environment'}
+},
+
+audio:false
+
+});
+
+cameraVideo.srcObject=
+cameraStream;
+
+cameraPanel.style.display=
+'block';
+
+capturedPanel.style.display=
+'none';
+
+}catch(err){
+
+alert(
+'카메라 권한을 허용해 주세요.'
+);
+
+}
+
 }
 
 function captureCameraPhoto(){
-  if(!cameraVideo || !cameraVideo.videoWidth){
-    alert('카메라 화면이 준비될 때까지 잠시 기다린 뒤 다시 촬영해 주세요.');
-    return;
-  }
 
-  cameraCanvas.width=cameraVideo.videoWidth;
-  cameraCanvas.height=cameraVideo.videoHeight;
-  const ctx=cameraCanvas.getContext('2d');
-  ctx.drawImage(cameraVideo,0,0,cameraCanvas.width,cameraCanvas.height);
-  capturedDataUrl=cameraCanvas.toDataURL('image/jpeg',0.9);
+if(!cameraVideo.videoWidth){
 
-  capturedPreview.src=capturedDataUrl;
-  capturedPanel.style.display='block';
-  cameraPanel.style.display='none';
-  stopCamera();
+alert(
+'카메라 준비 후 다시 촬영해 주세요.'
+);
+
+return;
+
+}
+
+cameraCanvas.width=
+cameraVideo.videoWidth;
+
+cameraCanvas.height=
+cameraVideo.videoHeight;
+
+cameraCanvas
+.getContext('2d')
+.drawImage(
+cameraVideo,
+0,
+0,
+cameraCanvas.width,
+cameraCanvas.height
+);
+
+capturedDataUrl=
+cameraCanvas.toDataURL(
+'image/jpeg',
+0.9
+);
+
+capturedPreview.src=
+capturedDataUrl;
+
+capturedPanel.style.display=
+'block';
+
+cameraPanel.style.display=
+'none';
+
+stopCamera();
+
 }
 
 function useCapturedPhoto(){
-  if(!capturedDataUrl) return;
-  $('preview').src=capturedDataUrl;
-  $('preview').style.display='block';
-  if($('photoFileName')) $('photoFileName').textContent='촬영한 사진 사용 중';
-  capturedPanel.style.display='none';
+
+$('preview').src=
+capturedDataUrl;
+
+$('preview').style.display=
+'block';
+
+$('photoFileName').textContent=
+'촬영한 사진 사용 중';
+
+capturedPanel.style.display=
+'none';
+
 }
 
 function handleSelectedPhoto(file){
-  if(!file){
-    if($('photoFileName')) $('photoFileName').textContent='선택된 사진 없음';
-    return;
-  }
 
-  if(!file.type.startsWith('image/')){
-    alert('이미지 파일만 사용할 수 있습니다.');
-    return;
-  }
+if(!file)return;
 
-  const r=new FileReader();
-  r.onload=()=>{
-    $('preview').src=r.result;
-    $('preview').style.display='block';
-    if($('photoFileName')) $('photoFileName').textContent=`선택 사진: ${file.name}`;
-  };
-  r.onerror=()=>alert('사진을 불러오지 못했습니다.');
-  r.readAsDataURL(file);
+if(
+!file.type.startsWith('image/')
+){
+
+alert(
+'이미지 파일만 선택할 수 있습니다.'
+);
+
+return;
+
 }
 
-if(photoCameraBtn) photoCameraBtn.addEventListener('click',openCamera);
-if(photoSelectBtn && photoInput) photoSelectBtn.addEventListener('click',()=>photoInput.click());
-if(cameraShotBtn) cameraShotBtn.addEventListener('click',captureCameraPhoto);
-if(cameraCloseBtn) cameraCloseBtn.addEventListener('click',()=>{
-  stopCamera();
-  cameraPanel.style.display='none';
-});
-if(retakeBtn) retakeBtn.addEventListener('click',()=>{
-  capturedPanel.style.display='none';
-  capturedDataUrl='';
-  openCamera();
-});
-if(usePhotoBtn) usePhotoBtn.addEventListener('click',useCapturedPhoto);
+const reader=
+new FileReader();
 
-if(photoInput){
-  photoInput.addEventListener('change',e=>{
-    stopCamera();
-    cameraPanel.style.display='none';
-    capturedPanel.style.display='none';
-    capturedDataUrl='';
-    handleSelectedPhoto(e.target.files?.[0]);
-  });
+reader.onload=()=>{
+
+$('preview').src=
+reader.result;
+
+$('preview').style.display=
+'block';
+
+$('photoFileName').textContent=
+`선택 사진: ${file.name}`;
+
+};
+
+reader.readAsDataURL(file);
+
 }
 
-window.addEventListener('beforeunload',stopCamera);
+photoCameraBtn.addEventListener(
+'click',
+openCamera
+);
+
+photoSelectBtn.addEventListener(
+'click',
+()=>photoInput.click()
+);
+
+$('cameraShotBtn').addEventListener(
+'click',
+captureCameraPhoto
+);
+
+$('cameraCloseBtn').addEventListener(
+'click',
+()=>{
+
+stopCamera();
+
+cameraPanel.style.display=
+'none';
+
+}
+);
+
+$('retakeBtn').addEventListener(
+'click',
+()=>{
+
+capturedPanel.style.display=
+'none';
+
+openCamera();
+
+}
+);
+
+$('usePhotoBtn').addEventListener(
+'click',
+useCapturedPhoto
+);
+
+photoInput.addEventListener(
+'change',
+e=>{
+
+handleSelectedPhoto(
+e.target.files?.[0]
+);
+
+}
+);
 
 function coach(){
-  const p=getProduct();
-  const topTemp=Number($('topTemp').value||0);
-  const bottomTemp=Number($('bottomTemp').value||0);
-  const time=Number($('time').value||0);
-  const change=$('change').value.trim();
-  const diff=$('difficulty').value.trim();
-  const strength=$('strength').value.trim();
-  const reflection=$('reflection').value.trim();
-  const improvement=$('improvement').value.trim();
 
-  let positives=[];
-  if(strength.length>=12) positives.push(strength);
-  else if(($('formula').value.trim().length+$('process').value.trim().length)>20) positives.push('표준 배합과 공정을 비교적 충실하게 기록했습니다.');
-  else positives.push('실습 결과를 스스로 돌아보고 다음 실습을 개선하려는 태도가 좋습니다.');
+const product=
+getProduct();
 
-  let causes=[];
-  if(reflection.length>=12){
-    causes.push('학생이 기록한 반성 내용: '+reflection);
-  }else{
-    causes.push('반성 내용이 짧아 실패나 아쉬움의 원인을 구체적으로 판단하기 어렵습니다.');
-  }
-  if(change.length>=10) causes.push('실습 중 달라진 조건도 함께 기록되어 있으므로 표준 공정과 비교해 원인을 찾아볼 수 있습니다.');
-  if(topTemp && (topTemp<100 || topTemp>300)) causes.push('입력한 윗불 온도가 일반적인 제과·제빵 범위에서 크게 벗어나 있으므로 기록값을 다시 확인해 보세요.');
-  if(bottomTemp && (bottomTemp<100 || bottomTemp>300)) causes.push('입력한 아랫불 온도가 일반적인 제과·제빵 범위에서 크게 벗어나 있으므로 기록값을 다시 확인해 보세요.');
-  if(time && (time<3 || time>90)) causes.push('입력한 굽기 시간이 매우 짧거나 길어 기록값 확인이 필요합니다.');
+const strength=
+$('strength').value.trim();
 
-  let fixes=[];
-  if(improvement.length>=12){
-    fixes.push('학생이 계획한 보완 행동: '+improvement);
-  }else{
-    fixes.push('다음 실습에서 바꿀 행동을 한 가지 정하고, 온도·시간·반죽 상태·성형 방법처럼 확인 가능한 표현으로 적어 보세요.');
-  }
-  if(diff.length>=10) fixes.push('가장 어려웠던 점을 다음 실습의 집중 관찰 항목으로 정해 전·후 결과를 비교해 보세요.');
+const reflection=
+$('reflection').value.trim();
 
-  $('good').innerHTML='<strong>👍 잘한 점</strong><br>'+positives.join('<br>');
-  $('cause').innerHTML='<strong>🔎 돌아볼 점</strong><br>'+causes.map((x,i)=>(i+1)+'. '+x).join('<br>');
-  $('fix').innerHTML='<strong>🛠 다음 실습 보완</strong><br>'+fixes.map((x,i)=>(i+1)+'. '+x).join('<br>');
-  $('question').innerHTML='<strong>💬 코치 질문</strong><br>“'+p+'을 다시 만든다면, 오늘보다 더 나은 결과를 위해 <b>가장 먼저 바꿀 한 가지 행동</b>은 무엇인가요?”';
+const improvement=
+$('improvement').value.trim();
 
-  const m1=Math.min(100, ($('formula').value.length)+($('process').value.length)+($('topTemp').value?10:0)+($('bottomTemp').value?10:0)+($('time').value?15:0));
-  const m2=Math.min(100, reflection.length*2 + improvement.length*2);
-  const m3=Math.min(100, strength.length + reflection.length + improvement.length + Number($('score').value)*5);
-  setMetric('m1',m1);setMetric('m2',m2);setMetric('m3',m3);
+const change=
+$('change').value.trim();
 
-  const missionText = improvement.length>=12
-    ? `🎯 <b>다음 실습 미션:</b> “${escapeHtml(improvement)}”을 실제로 적용하고, 오늘 결과와 비교하여 달라진 점을 기록하세요.`
-    : '🎯 <b>다음 실습 미션:</b> 오늘의 반성 내용을 바탕으로 다음 실습에서 바꿀 행동 한 가지를 정하고 결과를 비교하세요.';
-  $('mission').innerHTML=missionText;
-  $('analysisArea').style.display='block';
-  $('coachIntro').style.display='none';
+const difficulty=
+$('difficulty').value.trim();
 
-  growthSession.coachingCount=(growthSession.coachingCount||0)+1;
-  const currentResult=evaluateLog();
-  window.lastGradeResult=currentResult;
+let positives=[];
 
-  if(!growthSession.firstLocked){
-    document.querySelector('#gradeArea .gradeTitle').textContent='제출 전 학습 코칭';
-    $('gradeStamp').textContent='—';
-    $('gradeReason').textContent='코칭은 여러 번 받아도 등급에 영향을 주지 않습니다. 충분히 작성한 뒤 「최초 제출」을 눌렀을 때만 최초 등급이 확정됩니다.';
-    if($('lockedGradeText')) $('lockedGradeText').textContent='미제출';
-    if($('growthStatusText')) $('growthStatusText').textContent='코칭 진행 중';
-  }else{
-    renderGrowthPanel(currentResult);
-  }
-  if($('coachingCountText')) $('coachingCountText').textContent=(growthSession.coachingCount||0)+'회';
-  saveSession();
+if(strength){
 
-  // ===== API 연결 지점 =====
-  // 추후 서버의 AI 모델에 학생의 주관식 자기평가와 완제품 사진을 보내면
-  // 더 구체적인 원인 분석·피드백·사진 평가를 제공할 수 있습니다.
-  // API Key는 HTML에 직접 넣지 말고 서버에서 보관하세요.
+positives.push(
+strength
+);
+
+}else{
+
+positives.push(
+'실습 과정에서 잘한 점을 한 가지 이상 구체적으로 적어 보세요.'
+);
+
+}
+
+let causes=[];
+
+if(reflection){
+
+causes.push(
+reflection
+);
+
+}else{
+
+causes.push(
+'아쉬웠던 점과 원인을 연결하여 적어 보세요.'
+);
+
+}
+
+if(change){
+
+causes.push(
+`실습 중 달라진 점: ${change}`
+);
+
+}
+
+let fixes=[];
+
+if(improvement){
+
+fixes.push(
+improvement
+);
+
+}else{
+
+fixes.push(
+'다음 실습에서 바꿀 행동을 한 가지 정해 보세요.'
+);
+
+}
+
+if(difficulty){
+
+fixes.push(
+`어려웠던 점을 다음 실습의 관찰 항목으로 활용하세요: ${difficulty}`
+);
+
+}
+
+$('good').innerHTML=
+'<strong>👍 잘한 점</strong><br>'+
+positives.join('<br>');
+
+$('cause').innerHTML=
+'<strong>🔎 돌아볼 점</strong><br>'+
+causes.join('<br>');
+
+$('fix').innerHTML=
+'<strong>🛠 다음 실습 보완</strong><br>'+
+fixes.join('<br>');
+
+$('question').innerHTML=
+`<strong>💬 코치 질문</strong><br>
+“${product}을 다시 만든다면
+가장 먼저 바꿀 한 가지 행동은 무엇인가요?”`;
+
+const m1=
+Math.min(
+100,
+$('formula').value.length+
+$('process').value.length+
+($('topTemp').value?10:0)+
+($('bottomTemp').value?10:0)+
+($('time').value?10:0)
+);
+
+const m2=
+Math.min(
+100,
+reflection.length*2+
+improvement.length*2
+);
+
+const m3=
+Math.min(
+100,
+strength.length+
+reflection.length+
+improvement.length+
+Number($('score').value)*5
+);
+
+setMetric('m1',m1);
+setMetric('m2',m2);
+setMetric('m3',m3);
+
+$('mission').innerHTML=
+improvement?
+`🎯 <b>다음 실습 미션:</b> ${escapeHtml(improvement)}`:
+'🎯 <b>다음 실습 미션:</b> 오늘의 반성 내용을 바탕으로 다음 행동을 정하세요.';
+
+$('analysisArea').style.display=
+'block';
+
+$('coachIntro').style.display=
+'none';
+
+growthSession.coachingCount++;
+
+const current=
+evaluateLog();
+
+window.lastGradeResult=
+current;
+
+if(!growthSession.firstLocked){
+
+document.querySelector(
+'#gradeArea .gradeTitle'
+).textContent=
+'제출 전 학습 코칭';
+
+$('gradeStamp').textContent=
+'—';
+
+$('gradeReason').textContent=
+'코칭은 여러 번 받아도 등급에 영향을 주지 않습니다. 최초 제출 시에만 등급이 확정됩니다.';
+
+$('lockedGradeText').textContent=
+'미제출';
+
+$('growthStatusText').textContent=
+'코칭 진행 중';
+
+}else{
+
+growthSession.growthStatus=
+calculateGrowthStatus(current);
+
+renderGrowthPanel(current);
+
+}
+
+$('coachingCountText').textContent=
+growthSession.coachingCount+'회';
+
+saveSession();
+
 }
 
 function escapeHtml(text){
-  return String(text).replace(/[&<>'"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+
+return String(text)
+.replace(
+/[&<>'"]/g,
+c=>({
+'&':'&amp;',
+'<':'&lt;',
+'>':'&gt;',
+"'":'&#39;',
+'"':'&quot;'
+}[c])
+);
+
 }
 
 function evaluateLog(){
-  const now=new Date();
-  const practiceDate=$('date').value;
-  const pad=n=>String(n).padStart(2,'0');
-  const todayStr=`${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;
-  const onTime = REVIEW_MODE ? true : (!!practiceDate && practiceDate === todayStr);
-  const isLate = REVIEW_MODE ? false : (!!practiceDate && practiceDate < todayStr);
 
-  const formula=$('formula').value.trim();
-  const process=$('process').value.trim();
-  const change=$('change').value.trim();
-  const difficulty=$('difficulty').value.trim();
-  const strength=$('strength').value.trim();
-  const reflection=$('reflection').value.trim();
-  const improvement=$('improvement').value.trim();
+const now=
+new Date();
 
-  // 핵심 원칙: 글자 수보다 실제 제조 과정 근거·원인·개선 행동을 더 중요하게 평가
-  const hasTop=$('topTemp').value.trim().length>0;
-  const hasBottom=$('bottomTemp').value.trim().length>0;
-  const hasTime=$('time').value.trim().length>0;
-  const bundle=[formula,process,change,difficulty,strength,reflection,improvement].join(' ');
-  const hasNumbers=/\d/.test(bundle);
-  const hasUnits=/(℃|도|분|초|g|그램|%|회|개|cm|mm|ml|배|단계)/i.test(bundle);
-  const hasCause=/(때문|원인|그래서|따라서|결과|부족|과다|높|낮|진|연|균일|불균일|발효|반죽|성형|팬닝|굽|혼합|휴지|온도|시간|중량|수분)/.test(reflection+' '+change+' '+difficulty);
-  const hasAction=/(다음에는|다음 실습|확인하|측정하|계량하|조절하|줄이|늘리|유지하|비교하|기록하|바꾸|개선하|적용하)/.test(improvement+' '+strength);
+const practiceDate=
+$('date').value;
 
-  const processQuality=Math.min(100,
-    (formula ? 15:0) + (process ? 20:0) +
-    (hasTop?12:0)+(hasBottom?12:0)+(hasTime?12:0) +
-    (hasNumbers?12:0)+(hasUnits?12:0) +
-    (formula.length>=8?5:0)+(process.length>=12?5:0)
-  );
+const pad=
+n=>String(n).padStart(2,'0');
 
-  const reflectionQuality=Math.round(
-    (specificityScore(strength)+specificityScore(reflection)+specificityScore(improvement))/3
-  );
+const today=
+`${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;
 
-  const reasoningQuality=Math.min(100,
-    (change ? 18:0)+(difficulty ? 18:0)+(reflection ? 20:0)+(improvement ? 20:0) +
-    (hasCause?12:0)+(hasAction?12:0)
-  );
+const onTime=
+REVIEW_MODE?
+true:
+practiceDate===today;
 
-  const coreItems=[
-    getProduct().trim().length>0,
-    !!practiceDate,
-    $('goal').value.trim().length>0,
-    !!formula,
-    !!process,
-    hasTop,hasBottom,hasTime,
-    !!change,!!difficulty,!!strength,!!reflection,!!improvement
-  ];
-  const completeness=Math.round(coreItems.filter(Boolean).length/coreItems.length*100);
+const isLate=
+REVIEW_MODE?
+false:
+practiceDate &&
+practiceDate<today;
 
-  const integrity=analyzeIntegrity();
-  const evidenceScore=Math.round(
-    processQuality*0.35 +
-    reflectionQuality*0.35 +
-    reasoningQuality*0.20 +
-    completeness*0.10
-  );
+const formula=
+$('formula').value.trim();
 
-  let grade='C', reason='', candidate=false;
+const process=
+$('process').value.trim();
 
-  if(evidenceScore>=82 && completeness>=85 && reflection && improvement){
-    grade='A'; candidate=true;
-    reason='A 후보입니다. 실제 제조 과정 근거, 원인 분석, 자기성찰과 개선 행동이 모두 구체적입니다.';
-  }else if(evidenceScore>=68 && completeness>=72){
-    grade='B';
-    reason='제조 과정 이해와 자기성찰이 전반적으로 충실합니다. 일부 기록을 조금 더 구체화하면 더욱 좋습니다.';
-  }else if(evidenceScore>=50 && completeness>=55){
-    grade='C';
-    reason='핵심 실습 내용은 작성했지만 제조 과정 근거, 원인 분석 또는 개선 행동 중 일부 보완이 필요합니다.';
-  }else if(evidenceScore>=35 || completeness>=40){
-    grade='D';
-    reason='실습 기록의 핵심 내용이 부족하여 제조 과정과 자기성찰을 더 구체적으로 작성할 필요가 있습니다.';
-  }else if(evidenceScore>=18 || completeness>=22){
-    grade='E';
-    reason='평가 가능한 기록이 매우 부족합니다. 실습 조건과 자기성찰의 핵심 항목을 보완해 주세요.';
-  }else{
-    grade='F'; candidate=true;
-    reason='F 후보입니다. 평가할 수 있는 실습 기록이 거의 없습니다.';
-  }
+const change=
+$('change').value.trim();
 
-  // 지각 제출은 내용 등급에서 한 단계만 조정
-  if(isLate){
-    const order=['A','B','C','D','E','F'];
-    grade=order[Math.min(order.length-1,order.indexOf(grade)+1)];
-    candidate=false;
-    reason += ' 다만 실습일 당일 최초 제출 원칙을 지키지 않아 한 단계 조정되었습니다.';
-  }
+const difficulty=
+$('difficulty').value.trim();
 
-  // 작성 진정성 감점은 매우 높은 위험 신호가 함께 있을 때만 한 단계 반영
-  if(integrity.penalty>=25){
-    const order=['A','B','C','D','E','F'];
-    grade=order[Math.min(order.length-1,order.indexOf(grade)+1)];
-    candidate=false;
-    reason += ' 작성 진정성 점검에서 높은 유사성과 낮은 구체성이 함께 확인되어 한 단계 조정되었습니다.';
-  }
+const strength=
+$('strength').value.trim();
 
-  const missing=[];
-  if(!formula) missing.push('표준 배합');
-  if(!process) missing.push('만드는 방법');
-  if(!hasTop) missing.push('오븐 윗불');
-  if(!hasBottom) missing.push('오븐 아랫불');
-  if(!hasTime) missing.push('굽기 시간');
-  if(!reflection) missing.push('반성할 점');
-  if(!improvement) missing.push('보완할 점');
+const reflection=
+$('reflection').value.trim();
 
-  const deadlineText = REVIEW_MODE ? '과거 기록 평가모드' :
-    (!practiceDate ? '실습일 미입력' : (onTime ? '당일 제출' : (isLate ? '제출 지연' : '실습일 확인 필요')));
+const improvement=
+$('improvement').value.trim();
 
-  const titleText = grade==='A' && candidate ? '실습일지 자동 평가 · A 후보' :
-    (grade==='F' && candidate ? '실습일지 자동 평가 · F 후보' : `실습일지 자동 평가 · ${grade}`);
+const hasTop=
+!!$('topTemp').value;
 
-  document.querySelector('#gradeArea .gradeTitle').textContent=titleText;
-  $('gradeStamp').textContent=grade;
-  $('gradeReason').textContent=reason;
-  $('gradeMeta').textContent=`실습 근거 ${evidenceScore}% · 작성 충실도 ${completeness}% · 성찰 구체성 ${reflectionQuality}% · ${deadlineText}` +
-    (missing.length ? ` · 보완: ${missing.slice(0,3).join(', ')}${missing.length>3?' 외':''}` : ' · 핵심 기록 충실');
+const hasBottom=
+!!$('bottomTemp').value;
 
-  const cls=integrity.penalty===0?'integrityGood':(integrity.penalty<18?'integrityWarn':'integrityBad');
-  const detail=integrity.flags.length?integrity.flags.join(' · '):'개인 실습의 구체적 기록이 확인되었습니다.';
-  $('integrityBox').innerHTML=`<b>작성 진정성</b> <span class="${cls}">${integrity.status}</span> · 독창성 ${integrity.originality}%${integrity.penalty?` · 감점 ${integrity.penalty}점`:''}<br><span class="small">${escapeHtml(detail)} ※ 붙여넣기 사용만으로 AI·친구 복사로 단정하지 않습니다.</span>`;
-  $('gradeArea').style.display='block';
+const hasTime=
+!!$('time').value;
 
-  return {
-    grade,candidate,completeness,onTime,deadlineText,missing,integrity,reason,
-    evidenceScore,reflectionQuality,processQuality,reasoningQuality,
-    evaluatedAt:now.toISOString(),classSize:20,aMax:4,fMax:2,
-    policy: grade==='A' ? '평균 20명 기준 최대 4명(20%) 범위에서 최종 A 확정' :
-      (grade==='F' ? '평균 20명 기준 필요 시 최대 2명(10%), 해당자 없으면 F 미부여' : '실습 근거·제조 과정 이해·성찰 중심 자동 판정')
-  };
+const bundle=
+[
+formula,
+process,
+change,
+difficulty,
+strength,
+reflection,
+improvement
+].join(' ');
+
+const hasNumbers=
+/\d/.test(bundle);
+
+const hasCause=
+/(원인|때문|결과|부족|과다|높|낮|반죽|굽|온도|시간|휴지|성형)/.test(
+reflection+
+change+
+difficulty
+);
+
+const hasAction=
+/(다음에는|조절|확인|측정|개선|바꾸|유지|줄이|늘리)/.test(
+improvement+
+strength
+);
+
+const processQuality=
+Math.min(
+100,
+(formula?20:0)+
+(process?25:0)+
+(hasTop?10:0)+
+(hasBottom?10:0)+
+(hasTime?10:0)+
+(hasNumbers?10:0)+
+(process.length>=20?15:0)
+);
+
+const reflectionQuality=
+Math.round(
+(
+specificityScore(strength)+
+specificityScore(reflection)+
+specificityScore(improvement)
+)/3
+);
+
+const reasoningQuality=
+Math.min(
+100,
+(change?15:0)+
+(difficulty?15:0)+
+(reflection?20:0)+
+(improvement?20:0)+
+(hasCause?15:0)+
+(hasAction?15:0)
+);
+
+const coreItems=[
+!!getProduct(),
+!!practiceDate,
+!!$('goal').value,
+!!formula,
+!!process,
+hasTop,
+hasBottom,
+hasTime,
+!!change,
+!!difficulty,
+!!strength,
+!!reflection,
+!!improvement
+];
+
+const completeness=
+Math.round(
+coreItems.filter(Boolean).length/
+coreItems.length*
+100
+);
+
+const integrity=
+analyzeIntegrity();
+
+const evidenceScore=
+Math.round(
+processQuality*0.35+
+reflectionQuality*0.35+
+reasoningQuality*0.20+
+completeness*0.10
+);
+
+let grade='C';
+let reason='';
+let candidate=false;
+
+if(
+evidenceScore>=82 &&
+completeness>=85 &&
+reflection &&
+improvement
+){
+
+grade='A';
+candidate=true;
+
+reason=
+'A 후보입니다. 실제 제조 과정 근거, 원인 분석, 자기성찰과 개선 행동이 구체적입니다.';
+
+}
+else if(
+evidenceScore>=68 &&
+completeness>=72
+){
+
+grade='B';
+
+reason=
+'제조 과정 이해와 자기성찰이 전반적으로 충실합니다.';
+
+}
+else if(
+evidenceScore>=50 &&
+completeness>=55
+){
+
+grade='C';
+
+reason=
+'핵심 실습 내용은 작성했지만 원인 분석이나 개선 행동의 보완이 필요합니다.';
+
+}
+else if(
+evidenceScore>=35 ||
+completeness>=40
+){
+
+grade='D';
+
+reason=
+'핵심 실습 기록이 부족합니다.';
+
+}
+else if(
+evidenceScore>=18 ||
+completeness>=22
+){
+
+grade='E';
+
+reason=
+'평가 가능한 기록이 매우 부족합니다.';
+
+}
+else{
+
+grade='F';
+
+candidate=true;
+
+reason=
+'F 후보입니다. 평가 가능한 실습 기록이 거의 없습니다.';
+
+}
+
+if(isLate){
+
+const order=[
+'A','B','C','D','E','F'
+];
+
+grade=
+order[
+Math.min(
+order.length-1,
+order.indexOf(grade)+1
+)
+];
+
+candidate=false;
+
+reason+=
+' 실습일 당일 최초 제출 원칙을 지키지 않아 한 단계 조정되었습니다.';
+
+}
+
+if(integrity.penalty>=25){
+
+const order=[
+'A','B','C','D','E','F'
+];
+
+grade=
+order[
+Math.min(
+order.length-1,
+order.indexOf(grade)+1
+)
+];
+
+candidate=false;
+
+reason+=
+' 작성 진정성 점검 결과 한 단계 조정되었습니다.';
+
+}
+
+const deadlineText=
+REVIEW_MODE?
+'과거 기록 평가모드':
+onTime?
+'당일 제출':
+isLate?
+'제출 지연':
+'실습일 확인 필요';
+
+document.querySelector(
+'#gradeArea .gradeTitle'
+).textContent=
+candidate?
+`실습일지 자동 평가 · ${grade} 후보`:
+`실습일지 자동 평가 · ${grade}`;
+
+$('gradeStamp').textContent=
+grade;
+
+$('gradeReason').textContent=
+reason;
+
+$('gradeMeta').textContent=
+`실습 근거 ${evidenceScore}% · 작성 충실도 ${completeness}% · 성찰 구체성 ${reflectionQuality}% · ${deadlineText}`;
+
+const cls=
+integrity.penalty===0?
+'integrityGood':
+integrity.penalty<18?
+'integrityWarn':
+'integrityBad';
+
+$('integrityBox').innerHTML=
+`<b>작성 진정성</b>
+<span class="${cls}">
+${integrity.status}
+</span>
+· 독창성 ${integrity.originality}%`;
+
+$('gradeArea').style.display=
+'block';
+
+return{
+
+grade,
+
+candidate,
+
+completeness,
+
+deadlineText,
+
+integrity,
+
+evidenceScore,
+
+reflectionQuality,
+
+reason
+
+};
+
 }
 
 function setMetric(id,val){
-  $(id).style.width=val+'%';
-  $(id+'t').textContent=Math.round(val);
-}
 
+$(id).style.width=
+val+'%';
+
+$(id+'t').textContent=
+Math.round(val);
+
+}
 
 function plainTextFrom(id){
-  const el=$(id);
-  return el ? el.innerText.replace(/\s+/g,' ').trim() : '';
+
+const el=$(id);
+
+return el?
+el.innerText
+.replace(/\s+/g,' ')
+.trim():
+'';
+
 }
 
-function fitText(text, max=230){
-  const t=(text||'').trim();
-  return t || '-';
+function fitText(text){
+
+const t=
+String(text||'')
+.trim();
+
+return t||'-';
+
 }
 
 function submitPractice(){
-  const currentResult=evaluateLog();
-  window.lastGradeResult=currentResult;
 
-  if(!growthSession.firstLocked){
-    lockFirstAssessment(currentResult,'최초 제출');
-    growthSession.growthStatus='최초 평가 완료';
-  }else{
-    registerRevisionIfChanged();
-    growthSession.growthStatus=calculateGrowthStatus(currentResult);
-  }
+const current=
+evaluateLog();
 
-  renderGrowthPanel(currentResult);
-  saveSession();
-  showSubmitView();
+window.lastGradeResult=
+current;
+
+if(!growthSession.firstLocked){
+
+lockFirstAssessment(current);
+
+growthSession.growthStatus=
+'최초 평가 완료';
+
+}else{
+
+registerRevisionIfChanged();
+
+growthSession.growthStatus=
+calculateGrowthStatus(current);
+
+}
+
+renderGrowthPanel(current);
+
+saveSession();
+
+showSubmitView();
+
 }
 
 function showSubmitView(){
-  const currentResult=evaluateLog();
-  window.lastGradeResult=currentResult;
-  renderGrowthPanel(currentResult);
-  saveSession();
 
-  const d=collect();
-  const r=currentResult||{};
-  const first=growthSession.firstResult||currentResult;
-  const month=(new Date()).getMonth()+1;
-  const theme=monthlyThemes[month]||monthlyThemes[1];
+const current=
+evaluateLog();
 
-  $('a4Theme').textContent=`${month}월 ${theme.season} · ${theme.name} ${theme.icon} · 제출 확인용 A4 출력본 · 내용에 따라 자동 1~2장`;
-  $('a4Product').textContent=d.product||'-';
-  $('a4Date').textContent=d.date||'-';
-  $('a4Deadline').textContent=(growthSession.firstResult?.deadlineText)||r.deadlineText||'확인 필요';
-  $('a4FirstGrade').textContent=first ? (first.grade+(first.candidate?' 후보':'')) : '-';
-  $('a4CoachCount').textContent=(growthSession.coachingCount||0)+'회';
-  $('a4RevisionCount').textContent=(growthSession.revisionCount||0)+'회';
-  $('a4Growth').textContent=growthSession.growthStatus||'최초 제출 전';
-  $('a4Grade').textContent=first?.grade || '-';
-  $('a4Goal').textContent=fitText(d.goal);
-  $('a4TopTemp').textContent=d.topTemp ? d.topTemp+'℃' : '-';
-  $('a4BottomTemp').textContent=d.bottomTemp ? d.bottomTemp+'℃' : '-';
-  $('a4Time').textContent=d.time ? d.time+'분' : '-';
-  $('a4Score').textContent=(d.score||'-')+' / 5';
-  $('a4Formula').textContent=fitText(d.formula);
-  $('a4Process').textContent=fitText(d.process);
-  $('a4Change').textContent=fitText(d.change);
-  $('a4Difficulty').textContent=fitText(d.difficulty);
-  $('a4Strength').textContent=fitText(d.strength);
-  $('a4Reflection').textContent=fitText(d.reflection);
-  $('a4Improvement').textContent=fitText(d.improvement);
-  $('a4Completeness').textContent=`최초 작성 충실도 ${first?.completeness ?? '-'}% · 최초 ${first?.deadlineText||'제출 상태 확인 필요'}`;
-  const ir=r.integrity||{};
-  $('a4Integrity').textContent=`작성 진정성 ${ir.status||'-'}${ir.originality!==undefined?' · 독창성 '+ir.originality+'%':''}`;
+window.lastGradeResult=
+current;
 
-  const coachParts=[plainTextFrom('good'),plainTextFrom('cause'),plainTextFrom('fix'),plainTextFrom('question')].filter(Boolean);
-  $('a4CoachText').textContent=fitText(coachParts.join('\n\n'));
+if(growthSession.firstLocked){
 
-  const wrap=$('a4PhotoWrap');
-  wrap.innerHTML='';
-  if($('preview').src && $('preview').style.display!=='none'){
-    const img=document.createElement('img'); img.src=$('preview').src; img.alt='완제품 사진'; wrap.appendChild(img);
-  }else{
-    const s=document.createElement('span'); s.className='a4NoPhoto'; s.textContent='완제품 사진 없음'; wrap.appendChild(s);
-  }
+growthSession.growthStatus=
+calculateGrowthStatus(current);
 
-  $('submitView').style.display='block';
-  $('submitView').setAttribute('aria-hidden','false');
-  document.body.style.overflow='hidden';
+renderGrowthPanel(current);
+
+}
+
+const d=
+collect();
+
+const first=
+growthSession.firstResult||
+current;
+
+const month=
+new Date().getMonth()+1;
+
+const theme=
+monthlyThemes[month];
+
+$('a4Theme').textContent=
+`${month}월 ${theme.season} · ${theme.name} ${theme.icon} · 제출 확인용`;
+
+$('a4Product').textContent=
+d.product||'-';
+
+$('a4Date').textContent=
+d.date||'-';
+
+$('a4Deadline').textContent=
+first.deadlineText||'-';
+
+$('a4FirstGrade').textContent=
+first.grade+
+(first.candidate?' 후보':'');
+
+$('a4CoachCount').textContent=
+growthSession.coachingCount+'회';
+
+$('a4RevisionCount').textContent=
+growthSession.revisionCount+'회';
+
+$('a4Growth').textContent=
+growthSession.growthStatus;
+
+$('a4Grade').textContent=
+first.grade;
+
+$('a4Goal').textContent=
+fitText(d.goal);
+
+$('a4TopTemp').textContent=
+d.topTemp?
+d.topTemp+'℃':
+'-';
+
+$('a4BottomTemp').textContent=
+d.bottomTemp?
+d.bottomTemp+'℃':
+'-';
+
+$('a4Time').textContent=
+d.time?
+d.time+'분':
+'-';
+
+$('a4Score').textContent=
+d.score+'/5';
+
+$('a4Formula').textContent=
+fitText(d.formula);
+
+$('a4Process').textContent=
+fitText(d.process);
+
+$('a4Change').textContent=
+fitText(d.change);
+
+$('a4Difficulty').textContent=
+fitText(d.difficulty);
+
+$('a4Strength').textContent=
+fitText(d.strength);
+
+$('a4Reflection').textContent=
+fitText(d.reflection);
+
+$('a4Improvement').textContent=
+fitText(d.improvement);
+
+$('a4Completeness').textContent=
+`최초 작성 충실도 ${first.completeness}%`;
+
+$('a4Integrity').textContent=
+`작성 진정성 ${current.integrity.status} · 독창성 ${current.integrity.originality}%`;
+
+const coachParts=[
+plainTextFrom('good'),
+plainTextFrom('cause'),
+plainTextFrom('fix'),
+plainTextFrom('question')
+].filter(Boolean);
+
+$('a4CoachText').textContent=
+fitText(
+coachParts.join('\n\n')
+);
+
+const wrap=
+$('a4PhotoWrap');
+
+wrap.innerHTML='';
+
+if(
+$('preview').src &&
+$('preview').style.display!=='none'
+){
+
+const img=
+document.createElement('img');
+
+img.src=
+$('preview').src;
+
+wrap.appendChild(img);
+
+}else{
+
+const span=
+document.createElement('span');
+
+span.className=
+'a4NoPhoto';
+
+span.textContent=
+'완제품 사진 없음';
+
+wrap.appendChild(span);
+
+}
+
+$('submitView').style.display=
+'block';
+
+document.body.style.overflow=
+'hidden';
+
 }
 
 function closeSubmitView(){
-  $('submitView').style.display='none';
-  $('submitView').setAttribute('aria-hidden','true');
-  document.body.style.overflow='';
+
+$('submitView').style.display=
+'none';
+
+document.body.style.overflow=
+'';
+
 }
 
 function collect(){
-  return {
-    category:$('category').value, product:getProduct(), date:$('date').value,
-    goal:$('goal').value, formula:$('formula').value, process:$('process').value, topTemp:$('topTemp').value,
-    bottomTemp:$('bottomTemp').value, time:$('time').value, change:$('change').value, difficulty:$('difficulty').value,
-    score:$('score').value, strength:$('strength').value, reflection:$('reflection').value,
-    improvement:$('improvement').value,
-    grade:(window.lastGradeResult||{}).grade||'', candidate:(window.lastGradeResult||{}).candidate||false,
-    completeness:(window.lastGradeResult||{}).completeness||'',
-    deadlineStatus:(window.lastGradeResult||{}).deadlineText||'', policy:(window.lastGradeResult||{}).policy||'',
-    evaluatedAt:(window.lastGradeResult||{}).evaluatedAt||'',
-    integrity:(window.lastGradeResult||{}).integrity||analyzeIntegrity(),
-    firstGrade:growthSession.firstResult?.grade||'',
-    firstCandidate:growthSession.firstResult?.candidate||false,
-    coachingCount:growthSession.coachingCount||0,
-    revisionCount:growthSession.revisionCount||0,
-    growthStatus:growthSession.growthStatus||'최초 제출 전',
-    firstLockedAt:growthSession.firstLockedAt||'',
-    savedAt:new Date().toISOString()
-  };
+
+return{
+
+category:
+$('category').value,
+
+product:
+getProduct(),
+
+date:
+$('date').value,
+
+goal:
+$('goal').value,
+
+formula:
+$('formula').value,
+
+process:
+$('process').value,
+
+topTemp:
+$('topTemp').value,
+
+bottomTemp:
+$('bottomTemp').value,
+
+time:
+$('time').value,
+
+change:
+$('change').value,
+
+difficulty:
+$('difficulty').value,
+
+score:
+$('score').value,
+
+strength:
+$('strength').value,
+
+reflection:
+$('reflection').value,
+
+improvement:
+$('improvement').value,
+
+grade:
+window.lastGradeResult?.grade||'',
+
+completeness:
+window.lastGradeResult?.completeness||'',
+
+integrity:
+window.lastGradeResult?.integrity||
+analyzeIntegrity()
+
+};
+
 }
 
 function saveLog(){
-  window.lastGradeResult=evaluateLog();
-  renderGrowthPanel(window.lastGradeResult);
-  const data=collect();
-  const logs=JSON.parse(localStorage.getItem('bakingPracticeLogs')||'[]');
-  logs.push(data);
-  localStorage.setItem('bakingPracticeLogs',JSON.stringify(logs));
-  $('saved').style.display='block';
-  setTimeout(()=>$('saved').style.display='none',3000);
+
+const current=
+evaluateLog();
+
+window.lastGradeResult=
+current;
+
+const data=
+collect();
+
+const logs=
+JSON.parse(
+localStorage.getItem('bakingPracticeLogs')||
+'[]'
+);
+
+logs.push(data);
+
+localStorage.setItem(
+'bakingPracticeLogs',
+JSON.stringify(logs)
+);
+
+$('saved').style.display=
+'block';
+
+setTimeout(
+()=>$('saved').style.display='none',
+2500
+);
+
 }
 
 function downloadTxt(){
-  const d=collect();
-  const text=`[제과·제빵 AI 실습일지]\n실습 품목: ${d.product}\n실습일: ${d.date}\n제출기준: 코칭은 자유롭게 사용 가능 / 최초 제출 시 등급 확정\n최초 평가 등급: ${d.firstGrade ? (d.firstGrade + (d.firstCandidate ? ' 후보' : '')) : '최초 제출 후 확정'}
-현재 자동 분석 등급: ${d.grade ? (d.grade + (d.candidate ? ' 후보' : '')) : '코칭 후 산출'}
-코칭 횟수: ${d.coachingCount}회
-보완 제출: ${d.revisionCount}회
-성장 상태: ${d.growthStatus}\n등급 적용 기준: ${d.policy || '코칭 후 산출'}\n작성 충실도: ${d.completeness === '' ? '코칭 후 산출' : d.completeness+'%'}\n제출 상태: ${d.deadlineStatus || '코칭 후 산출'}\n작성 진정성: ${d.integrity?.status || '코칭 후 산출'}\n독창성 점수: ${d.integrity?.originality ?? '-'}%\n진정성 감점: ${d.integrity?.penalty ?? 0}점\n\n1. 요구사항\n${d.goal}\n\n2. 표준 배합/만드는 방법\n${d.process}\n\n4. 실제 조건\n오븐 윗불: ${d.topTemp}℃\n오븐 아랫불: ${d.bottomTemp}℃\n굽기 시간: ${d.time}분\n\n5. 실습 중 달라진 점\n${d.change}\n\n6. 가장 어려웠던 점\n${d.difficulty}\n\n7. 자기평가\n만족도: ${d.score}/5\n오늘의 잘한 점: ${d.strength}\n반성할 점: ${d.reflection}\n보완할 점: ${d.improvement}\n`;
-  const blob=new Blob([text],{type:'text/plain;charset=utf-8'});
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(blob);
-  const safeProduct=(d.product||'실습').replace(/[\\/:*?"<>|]/g,'_');
-  a.download=`AI실습일지_${safeProduct}_${d.date||'날짜'}.txt`;
-  a.click();
-  URL.revokeObjectURL(a.href);
+
+const d=
+collect();
+
+const first=
+growthSession.firstResult;
+
+const text=
+`[제과·제빵 AI 실습일지]
+
+실습 품목: ${d.product}
+실습일: ${d.date}
+
+최초 평가:
+${first?
+first.grade+
+(first.candidate?' 후보':''):
+'미제출'}
+
+코칭 횟수:
+${growthSession.coachingCount}회
+
+보완 제출:
+${growthSession.revisionCount}회
+
+성장 상태:
+${growthSession.growthStatus}
+
+1. 요구사항
+${d.goal}
+
+2. 표준 배합
+${d.formula}
+
+3. 만드는 방법
+${d.process}
+
+4. 실제 조건
+윗불: ${d.topTemp}℃
+아랫불: ${d.bottomTemp}℃
+굽기 시간: ${d.time}분
+
+5. 실습 중 달라진 점
+${d.change}
+
+6. 가장 어려웠던 점
+${d.difficulty}
+
+7. 자기평가
+만족도: ${d.score}/5
+
+잘한 점:
+${d.strength}
+
+반성할 점:
+${d.reflection}
+
+보완할 점:
+${d.improvement}
+`;
+
+const blob=
+new Blob(
+[text],
+{
+type:
+'text/plain;charset=utf-8'
+}
+);
+
+const a=
+document.createElement('a');
+
+a.href=
+URL.createObjectURL(blob);
+
+const safe=
+(d.product||'실습')
+.replace(/[\\/:*?"<>|]/g,'_');
+
+a.download=
+`AI실습일지_${safe}_${d.date||'날짜'}.txt`;
+
+a.click();
+
+URL.revokeObjectURL(a.href);
+
 }
 
 function resetForm(){
-  if(!confirm('현재 입력 내용을 지우고 새 실습을 시작할까요?')) return;
-  ['formula','process','topTemp','bottomTemp','time','change','difficulty','strength','reflection','improvement','customProduct'].forEach(id=>$(id).value='');
-  $('category').value='pastry'; updateProducts();
-  $('score').value=3;$('scoreText').textContent='3 / 5';
-  $('preview').style.display='none'; $('preview').src=''; $('photo').value=''; stopCamera(); if(cameraPanel) cameraPanel.style.display='none'; if(capturedPanel) capturedPanel.style.display='none'; capturedDataUrl=''; if($('photoFileName')) $('photoFileName').textContent='선택된 사진 없음';
-  $('analysisArea').style.display='none';$('coachIntro').style.display='block';$('gradeArea').style.display='none';window.lastGradeResult=null;
-  $('date').valueAsDate=new Date();
-  writingAudit.pasteCount=0; writingAudit.pasteChars=0; writingAudit.pastedFields={}; writingAudit.inputEvents={};
-  growthSession=freshSession(); saveSession();
-  if($('lockedGradeText')) $('lockedGradeText').textContent='미제출';
-  if($('coachingCountText')) $('coachingCountText').textContent='0회';
-  if($('revisionCountText')) $('revisionCountText').textContent='0회';
-  if($('growthStatusText')) $('growthStatusText').textContent='최초 제출 전';
-  if($('submitBtn')) $('submitBtn').textContent='📄 최초 제출';
+
+if(
+!confirm(
+'현재 입력 내용을 지우고 새 실습을 시작할까요?'
+)
+)return;
+
+[
+'formula',
+'process',
+'topTemp',
+'bottomTemp',
+'time',
+'change',
+'difficulty',
+'strength',
+'reflection',
+'improvement',
+'customProduct'
+].forEach(
+id=>$(id).value=''
+);
+
+$('category').value=
+'pastry';
+
+updateProducts();
+
+$('score').value=
+3;
+
+$('scoreText').textContent=
+'3 / 5';
+
+$('preview').style.display=
+'none';
+
+$('preview').src=
+'';
+
+$('photo').value=
+'';
+
+stopCamera();
+
+cameraPanel.style.display=
+'none';
+
+capturedPanel.style.display=
+'none';
+
+capturedDataUrl='';
+
+$('photoFileName').textContent=
+'선택된 사진 없음';
+
+$('analysisArea').style.display=
+'none';
+
+$('coachIntro').style.display=
+'block';
+
+$('gradeArea').style.display=
+'none';
+
+window.lastGradeResult=
+null;
+
+$('date').valueAsDate=
+new Date();
+
+writingAudit.pasteCount=
+0;
+
+writingAudit.pasteChars=
+0;
+
+growthSession=
+freshSession();
+
+saveSession();
+
+$('lockedGradeText').textContent=
+'미제출';
+
+$('coachingCountText').textContent=
+'0회';
+
+$('revisionCountText').textContent=
+'0회';
+
+$('growthStatusText').textContent=
+'최초 제출 전';
+
+$('submitBtn').textContent=
+'📄 최초 제출';
+
 }
 
+window.addEventListener(
+'beforeunload',
+stopCamera
+);
 
+if(
+growthSession.firstLocked &&
+growthSession.firstResult
+){
 
+$('analysisArea').style.display=
+'block';
+
+$('coachIntro').style.display=
+'none';
+
+$('gradeArea').style.display=
+'block';
+
+renderGrowthPanel(
+growthSession.firstResult
+);
+
+}
 </script>
 </body>
 </html>
