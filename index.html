@@ -3,13 +3,10 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<meta name="theme-color" content="#c983b7"/>
-<meta name="apple-mobile-web-app-capable" content="yes"/>
-<meta name="apple-mobile-web-app-status-bar-style" content="default"/>
-<meta name="apple-mobile-web-app-title" content="실습코치"/>
-<link rel="manifest" href="manifest.webmanifest"/>
-<link rel="apple-touch-icon" href="icon-192.png"/>
-<title>제과·제빵 AI 실습코치 | V6 실시간 카메라 촬영형</title>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+<meta http-equiv="Pragma" content="no-cache"/>
+<meta http-equiv="Expires" content="0"/>
+<title>제과·제빵 AI 실습코치 | V7 주소배포 최신반영형</title>
 <style>
 :root{
   --bg:#fff8f7; --bg2:#fffdfc; --card:#ffffff; --ink:#2f2726; --muted:#7c6f6c;
@@ -138,7 +135,7 @@ hr{border:0;border-top:1px solid var(--line);margin:16px 0}
 .progressItem b{display:block;font-size:11px;color:var(--muted);margin-bottom:4px}.progressItem span{font-size:15px;font-weight:900;color:var(--accent2)}
 .lockedGrade{color:#d81e3f!important}
 .growthBadge{display:inline-block;padding:5px 9px;border-radius:999px;background:var(--soft);color:var(--accent2);font-weight:800;font-size:12px;margin-top:6px}
-.installBtn{display:none;margin-top:9px;padding:8px 12px;border-radius:999px;background:var(--accent);color:#fff;border:0;font-size:12px;font-weight:900;cursor:pointer}
+
 .a4Progress{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:7px 0 9px}
 .a4Progress .a4MetaItem{text-align:center}
 @media(max-width:760px){.progressPanel{grid-template-columns:1fr 1fr}.a4Progress{grid-template-columns:1fr 1fr}}
@@ -168,10 +165,9 @@ hr{border:0;border-top:1px solid var(--line);margin:16px 0}
     <h1>제과·제빵 AI 실습코치</h1>
     <div class="sub">제과·제빵·디저트 등 다양한 실습에 사용할 수 있는 코칭형 AI 실습일지</div>
     <div class="badges">
-      <span class="badge">범용 실습일지</span><span class="badge">학습성장형 평가</span><span class="badge">설치형 앱(PWA)</span><span class="badge" id="themeBadge">이번 달 테마</span>
+      <span class="badge">범용 실습일지</span><span class="badge">학습성장형 평가</span><span class="badge">주소 접속형</span><span class="badge">V7 최신반영형</span><span class="badge" id="themeBadge">이번 달 테마</span>
     </div>
     <div class="themeHint" id="themeHint">이번 달 디저트 테마를 불러오는 중입니다.</div>
-    <button id="installBtn" class="installBtn" type="button">📲 앱으로 설치</button>
   </div>
 </header>
 
@@ -328,7 +324,7 @@ hr{border:0;border-top:1px solid var(--line);margin:16px 0}
 
 </div>
 
-<div class="footer">제과·제빵 실습코치 · 월별 디저트 테마 · 구체성·독창성·제출기한 자동 평가</div>
+<div class="footer">제과·제빵 실습코치 · 주소 접속형 · 월별 디저트 테마 · 최신 버전 자동 반영</div>
 </div>
 
 
@@ -1178,28 +1174,7 @@ function resetForm(){
   if($('submitBtn')) $('submitBtn').textContent='📄 최초 제출';
 }
 
-// ===== PWA 설치 =====
-let deferredInstallPrompt=null;
-window.addEventListener('beforeinstallprompt',e=>{
-  e.preventDefault();
-  deferredInstallPrompt=e;
-  if($('installBtn')) $('installBtn').style.display='inline-block';
-});
-if($('installBtn')){
-  $('installBtn').addEventListener('click',async()=>{
-    if(deferredInstallPrompt){
-      deferredInstallPrompt.prompt();
-      await deferredInstallPrompt.userChoice;
-      deferredInstallPrompt=null;
-      $('installBtn').style.display='none';
-    }else{
-      alert('브라우저 메뉴에서 “홈 화면에 추가” 또는 “앱 설치”를 선택해 주세요.');
-    }
-  });
-}
-if('serviceWorker' in navigator){
-  window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
-}
+
 
 </script>
 </body>
